@@ -166,7 +166,8 @@ const Example = () => {
             <br />
 
             <h2>Form example</h2>
-            <Form className="container-grey2">
+            
+            <Form className="chula-form container-grey2">
                 <Row className="mb-3">
                     <h1 style={{color: '#7949FF'}}>Title</h1>
                     <Form.Group as={Col} controlId="formGridEmail">
@@ -178,6 +179,14 @@ const Example = () => {
                     <Form.Label>Password</Form.Label>
                     <Form.Control type="password" placeholder="Password" />
                     </Form.Group>
+                   
+                    <Form.Group className="mb-3" controlId="formGridAddress2">
+                    <Form.Label>Address 2</Form.Label>
+                    <Form.Control 
+                        placeholder="Apartment, studio, or floor" 
+                        className="purple-placeholder" // Apply class here
+                    />
+                </Form.Group>
                 </Row>
 
                 {/* Address */}
@@ -224,9 +233,6 @@ const Example = () => {
                 </Button>
             </Form>
             <br />
-
-
-
 
         </>
     )

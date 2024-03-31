@@ -120,3 +120,8 @@ code {
   /* CustomModal.css */
 
 
+/* Form */
+.chula-form input::placeholder{
+  color: rgb(156,87,252) !important;
+}
+
