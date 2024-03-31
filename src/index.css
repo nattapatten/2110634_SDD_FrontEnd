@@ -50,6 +50,15 @@ code {
   color: #ffffff;
 }
 
+.container-grey2{
+  background-color: #F7F6FA;
+  padding: 20px;
+  padding: 20px;
+  border: 1px solid #787381;
+  border-radius: 25px;
+  color: #ffffff;
+}
+
 /* Custom CSS to change border and outline color of active Accordion header */
 .accordion-button:focus {
   border-color: #333 !important; /* Dark border color */
