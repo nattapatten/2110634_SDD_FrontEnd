@@ -27,6 +27,8 @@ const Example = () => {
             
             <h1>Example Code</h1>
             <br />
+
+            <h2>FontAwesomeIcon example</h2>
             <div className='container-grey'>
                 Icons from front awesome <a>https://fontawesome.com/search?o=r&m=free</a>
                 <br/>
@@ -38,12 +40,7 @@ const Example = () => {
             </div>
             <br />
 
-            <div className="container-purple">
-            Purple container example with className="container-purple"
-            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p>
-            </div>
-            <br />
-
+            <h2>Container example</h2>
             <div className="container-grey">
             Grey container example with className="container-grey"
             <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p>
@@ -52,6 +49,12 @@ const Example = () => {
 
             <div className="container-grey2" style={{ color: 'Black'}}>
             Grey container example with className="container-grey2"
+            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p>
+            </div>
+            <br />
+
+            <div className="container-purple">
+            Purple container example with className="container-purple"
             <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p>
             </div>
             <br />
@@ -167,7 +170,7 @@ const Example = () => {
 
             <h2>Form example</h2>
             
-            <Form className="chula-form container-grey2">
+            <Form className="chula-form">
                 <Row className="mb-3">
                     <h1 style={{color: '#7949FF'}}>Title</h1>
                     <Form.Group as={Col} controlId="formGridEmail">
@@ -179,26 +182,12 @@ const Example = () => {
                     <Form.Label>Password</Form.Label>
                     <Form.Control type="password" placeholder="Password" />
                     </Form.Group>
-                   
-                    <Form.Group className="mb-3" controlId="formGridAddress2">
-                    <Form.Label>Address 2</Form.Label>
-                    <Form.Control 
-                        placeholder="Apartment, studio, or floor" 
-                        className="purple-placeholder" // Apply class here
-                    />
-                </Form.Group>
                 </Row>
 
                 {/* Address */}
                 <Form.Group className="mb-3" controlId="formGridAddress1">
                     <Form.Label>Address</Form.Label>
                     <Form.Control placeholder="1234 Main St" />
-                </Form.Group>
-
-                {/* Address 2 */}
-                <Form.Group className="mb-3" controlId="formGridAddress2">
-                    <Form.Label>Address 2</Form.Label>
-                    <Form.Control placeholder="Apartment, studio, or floor" />
                 </Form.Group>
 
                 {/* City, State, Zip */}
@@ -211,7 +200,8 @@ const Example = () => {
                     <Form.Group as={Col} controlId="formGridState">
                     <Form.Label>State</Form.Label>
                     <Form.Select defaultValue="Choose...">
-                        <option>Choose...</option>
+                        <option>Option1</option>
+                        <option>Option2</option>
                         {/* Add more options here */}
                     </Form.Select>
                     </Form.Group>
@@ -222,17 +212,17 @@ const Example = () => {
                     </Form.Group>
                 </Row>
 
-                {/* Checkbox */}
-                <Form.Group className="mb-3" id="formGridCheckbox">
-                    <Form.Check type="checkbox" label="Check me out" />
-                </Form.Group>
-
                 {/* Submit Button */}
                 <Button variant="primary" type="submit">
                     Submit
                 </Button>
+                
+                
             </Form>
             <br />
+            
+
+            
 
         </>
     )
