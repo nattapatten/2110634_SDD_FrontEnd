@@ -5,7 +5,7 @@ import Offcanvas from 'react-bootstrap/Offcanvas';
 import "./Layout.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
-
+import chulaLogo from '../assets/chula_logo.png';
 const Layout = () => {
   const [show, setShow] = useState(false);
 
@@ -26,7 +26,13 @@ const Layout = () => {
       {/* Offcanvas Sidebar */}
       <Offcanvas show={show} onHide={handleClose} placement="start">
         <Offcanvas.Header closeButton>
-          <Offcanvas.Title>Chula Dashboard</Offcanvas.Title>
+        <Offcanvas.Title style={{ display: 'flex', alignItems: 'center' }}>
+          <img src={chulaLogo} alt="Chula Logo" style={{ width: '50px', marginRight: '15px' }} />
+          <div>
+            <h4 style={{ margin: 0 }}>CHULA DASHBOARD</h4>
+            <h6 style={{ paddingTop : '5px', fontSize: '14px'  }}>Trace Your Progress at Chula</h6>
+          </div>
+        </Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body>
           {/* Navigation Links within the Sidebar */}
@@ -34,6 +40,9 @@ const Layout = () => {
             <ul>
               <li>
                 <Link to="/" onClick={handleClose}>DashboardStudent</Link>
+              </li>
+              <li>
+                <Link to="/Example" onClick={handleClose}>!!Click to see example!!</Link>
               </li>
               <li>
                 <Link to="/Login" onClick={handleClose}>Login</Link>
@@ -50,9 +59,7 @@ const Layout = () => {
               <li>
                 <Link to="/SelectPath" onClick={handleClose}>SelectPath</Link>
               </li>
-              <li>
-                <Link to="/AllComponents" onClick={handleClose}>AllComponents</Link>
-              </li>
+              
             </ul>
           </nav>
           

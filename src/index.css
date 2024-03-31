@@ -11,3 +11,72 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.container-main{
+  background: linear-gradient(to top, rgba(96, 69, 129, 0.5), rgba(96, 69, 129, 0.1));  /* Background color with transparency */
+  backdrop-filter: blur(10px); /* Apply blur effect */
+  padding: 20px;
+  padding: 20px;
+  border: 1px solid #787381;
+  border-radius: 25px;
+  color: #ffffff;
+}
+
+/* Custom CSS to change border and outline color of active Accordion header */
+.accordion-button:focus {
+  border-color: #333 !important; /* Dark border color */
+  outline: none !important; /* Remove the default outline */
+  box-shadow: 0 0 0 0.25rem rgba(51, 51, 51, 0.5) !important; /* Custom shadow in dark color */
+}
+
+/* Adjustments for when the accordion is open and focused */
+.accordion-button:not(.collapsed):focus {
+  background-color: #333 !important; /* Dark background for consistency */
+  color: white !important; /* White text color for better readability */
+  box-shadow: 0 0 0 0.25rem rgba(51, 51, 51, 0.5) !important; /* Custom shadow in dark color */
+}
+
+
+/*Button style*/
+  /* Primary button variant */
+  .btn-primary {
+    background-color: #7949FF;
+    color: #ffffff;
+    border-color: #7949FF;
+  }
+  
+  .btn-primary:hover {
+    background-color: #5633b7;
+    border-color: #7949FF;
+  }
+  .btn-primary:focus:active {
+    color: #ffffff; /* Change text color when button is clicked */
+    background-color: #7949FF; /* Maintain background color when button is clicked */
+    border-color: #7949FF; /* Maintain border color when button is clicked */
+  }
+  
+  .btn-secondary{
+    background-color: #ffffff; /* White background */
+    color: #7949FF; /* Text color */
+    border-color: #7949FF; /* Border color */
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+  }
+  
+  .btn-secondary:hover, .btn-secondary:focus {
+    background-color: #7949FF; /* Reverse - background color */
+    color: #ffffff; /* Reverse - text color */
+    border-color: #ffffff;
+  }
+
+/* Disabled button state */
+.btn-dark, button:disabled {
+    background-color: #6c757d; /* Same as the secondary button, adjust if needed */
+    color: #ffffff;
+    cursor: not-allowed; /* Optional: Changes the cursor to indicate the button is disabled */
+    pointer-events: none;
+  }
+  
+  /* Ensures hover effects are not applied to disabled buttons */
+  .btn-dark:hover, button:disabled:hover {
+    background-color: #6c757d; /* Keeps the background color the same when hovered */
+  }

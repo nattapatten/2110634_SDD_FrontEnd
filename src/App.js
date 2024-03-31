@@ -9,7 +9,7 @@ import Register from './pages/Register';
 import RegisterOTP from './pages/RegisterOTP';
 import SelectPath from './pages/SelectPath';
 import DashboardStudent from './pages/DashboardStudent';
-import AllComponents from './pages/Example';
+import Example from './pages/Example';
 
 function App() {
   return (
@@ -24,7 +24,7 @@ function App() {
             <Route path="Register" element={<Register />} />
             <Route path="RegisterOTP" element={<RegisterOTP />} />
             <Route path="SelectPath" element={<SelectPath />} />
-            <Route path="AllComponents" element={<AllComponents />} />
+            <Route path="Example" element={<Example />} />
           </Route>
         </Routes>
       </BrowserRouter>
