@@ -1,4 +1,6 @@
 body {
+  background-color: #121212; /* Dark gray background */
+  color: #e0e0e0; /* Light gray text color for readability */
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
