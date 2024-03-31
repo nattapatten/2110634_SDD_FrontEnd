@@ -12,8 +12,34 @@ code {
     monospace;
 }
 
-.container-main{
+.container-purple{
   background: linear-gradient(to top, rgba(96, 69, 129, 0.5), rgba(96, 69, 129, 0.1));  /* Background color with transparency */
+  backdrop-filter: blur(10px); /* Apply blur effect */
+  padding: 20px;
+  padding: 20px;
+  border: 1px solid #787381;
+  border-radius: 25px;
+  color: #ffffff;
+}
+
+.container-purple2{
+  background: rgb(156,87,252);
+  background: linear-gradient(35deg, rgba(156,87,252,1) 5%, rgba(119,35,237,1) 100%);
+  border: 1px solid #787381;
+  border-radius: 25px;
+  color: #ffffff;
+}
+
+.container-purple3{
+  background: rgb(225,99,139);
+  background: linear-gradient(35deg, rgba(225,99,139,1) 5%, rgba(119,35,237,1) 100%);
+  border: 1px solid #787381;
+  border-radius: 25px;
+  color: #ffffff;
+}
+
+.container-grey{
+  background: linear-gradient(to top, rgba(53, 53, 53, 0.5), rgba(0, 0, 0, 0.1));  /* Background color with transparency */
   backdrop-filter: blur(10px); /* Apply blur effect */
   padding: 20px;
   padding: 20px;
@@ -80,3 +106,7 @@ code {
   .btn-dark:hover, button:disabled:hover {
     background-color: #6c757d; /* Keeps the background color the same when hovered */
   }
+
+  /* CustomModal.css */
+
+

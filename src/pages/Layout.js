@@ -42,7 +42,7 @@ const Layout = () => {
                 <Link to="/" onClick={handleClose}>DashboardStudent</Link>
               </li>
               <li>
-                <Link to="/Example" onClick={handleClose}>!!Click to see example!!</Link>
+                <Link to="/Example" onClick={handleClose}>Style Guides</Link>
               </li>
               <li>
                 <Link to="/Login" onClick={handleClose}>Login</Link>
