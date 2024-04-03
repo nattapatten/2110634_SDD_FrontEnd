@@ -36,16 +36,26 @@
   }
   
   .modal-apply-button {
-    background-color: #7949FF;
+    display: block;
+    margin: auto;
+    width: 40%;
+    padding: 0.75rem;
     border: none;
-    padding: 0.5rem 1rem;
+    border-radius: 18px;
+    background-color: #7949FF; /* Button color to match the design */
     color: white;
-    border-radius: 5px;
+    font-size: 1rem; /* Adjusted font size */
     cursor: pointer;
-    font-size: 1rem;
-    margin-top: 1.5rem;
+    margin-top: 1rem;
+    transition: background-color 0.3s ease; /* Add transition for smooth effect */
+  
+    /* New hover effect */
+  }
+  .modal-apply-button:hover {
+    background-color: #5633b7; /* New background color on hover */
   }
   
+
   .modal-header h1 {
     color: #7949FF;
     
@@ -58,5 +68,11 @@
     line-height: 1.6;
   }
   
-  /* Add any additional styling you need here */
+  .modal-image img {
+    float: left; /* Aligns the image to the left */
+    max-width: 100%; /* Adjusts the maximum width of the image */
+    max-height: 200px; /* Sets the maximum height of the image */
+    border-radius: 10px; /* Rounds the corners of the image */
+  }
+  
   

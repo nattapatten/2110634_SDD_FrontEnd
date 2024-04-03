@@ -68,6 +68,7 @@ function SelectPath() {
         </div>
       </div>
       <Modal
+        image={selectedPath.icon}
         isOpen={isModalOpen}
         handleClose={handleCloseModal}
         handleConfirm={handlePathConfirmation}
