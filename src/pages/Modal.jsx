@@ -1,8 +1,7 @@
-// Modal.js
 import React from 'react';
 import './Modal.css';
 
-const Modal = ({ isOpen, handleClose, title, content }) => {
+const Modal = ({ isOpen, handleClose, title, content, handleApply }) => {
   if (!isOpen) return null;
 
   return (
@@ -15,7 +14,7 @@ const Modal = ({ isOpen, handleClose, title, content }) => {
         <div className="modal-body">
           <p>{content}</p>
         </div>
-        <button className="modal-apply-button" onClick={handleClose}>Apply</button>
+        <button className="modal-apply-button" onClick={handleApply}>Apply</button>
       </div>
     </div>
   );

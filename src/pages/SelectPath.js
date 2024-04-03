@@ -10,7 +10,8 @@ import projectManager from '../assets/projectManager.png';
 import softwareTeacher from '../assets/softwareTeacher.png';
 import softwareResearcher from '../assets/softwareResearcher.png';
 import Modal from './Modal';
- 
+import Modal1 from './Modal1';
+
 const paths = [
   { name: 'Software Engineer', icon: softwareEngineer, detail: 'More detail' },
   { name: 'System Analyst', icon: systemAnalyst, detail: 'More detail' },
@@ -20,22 +21,31 @@ const paths = [
   { name: 'Project Manager', icon: projectManager, detail: 'More detail' },
   { name: 'Software Teacher', icon: softwareTeacher, detail: 'More detail' },
   { name: 'Software Researcher', icon: softwareResearcher, detail: 'More detail' },
-  
 ];
 
 function SelectPath() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedPath, setSelectedPath] = useState({});
+  const [showConfirmationModal, setShowConfirmationModal] = useState(false);
 
-  // Function to handle opening the modal
   const handleOpenModal = (path) => {
     setSelectedPath(path);
     setIsModalOpen(true);
   };
 
-  // Function to handle closing the modal
+  const handleApply = () => {
+    setShowConfirmationModal(true);
+  };
+
+  const handlePathConfirmation = () => {
+    console.log(`Confirmed path: ${selectedPath.name}`);
+    setIsModalOpen(false);
+    setShowConfirmationModal(false);
+  };
+
   const handleCloseModal = () => {
     setIsModalOpen(false);
+    setShowConfirmationModal(false);
   };
 
   return (
@@ -50,7 +60,6 @@ function SelectPath() {
             <div className="card" key={index}>
               <img src={path.icon} alt={`${path.name} Icon`} />
               <div className="card-title">{path.name}</div>
-              {/* Changed to a button for better accessibility, as per the second function */}
               <button className="card-link" onClick={() => handleOpenModal(path)}>
                 {path.detail}
               </button>
@@ -58,12 +67,22 @@ function SelectPath() {
           ))}
         </div>
       </div>
-      {/* Modal component with props. Ensure that your Modal component can handle these props */}
       <Modal
         isOpen={isModalOpen}
         handleClose={handleCloseModal}
+        handleConfirm={handlePathConfirmation}
+        handleApply={handleApply}
         title={selectedPath.name}
-        content="A magical tech wizard who conjures up software from the abyss of their mind. They apply mystical principles to make computers do things without blowing up – most of the time." // Consider dynamically changing this content based on the selected path
+        content="A magical tech wizard who conjures up software from the abyss of their mind. They apply mystical principles to make computers do things without blowing up – most of the time."
+        showConfirmation={showConfirmationModal}
+      />
+      <Modal1
+        isOpen={isModalOpen && showConfirmationModal}
+        handleClose={handleCloseModal}
+        handleConfirm={handlePathConfirmation}
+        title={selectedPath.name}
+        content={`Are you sure you want to apply for the ${selectedPath.name} path?`}
+        showConfirmation={showConfirmationModal}
       />
     </div>
   );

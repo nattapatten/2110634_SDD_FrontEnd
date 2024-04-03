@@ -1,0 +1,16 @@
+/* In Modal1.css */
+
+.modal-confirm-button {
+    background-color: #4CAF50; /* A green color to indicate a positive action */
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    margin-top: 1.5rem;
+    margin-left: 1rem; /* To add space between the Cancel and Confirm buttons */
+  }
+  
+  /* You might also want to define or adjust styles for .modal-cancel-button if needed */
+  
