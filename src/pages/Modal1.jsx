@@ -7,20 +7,23 @@ const Modal1 = ({ isOpen, handleClose, handleConfirm, title, content, showConfir
 
   return (
     <div className="modal-overlay">
-      <div className="modal-content">
+      <div className="modal-content1">
         <div className="modal-header">
-          <button onClick={handleClose}>&lt; Back</button>
+          
         </div>
         {/* Conditional rendering for confirmation content */}
         {showConfirmation ? (
           <>
             <div className="modal-body">
-            <img src={Tokjai} alt="Tokjai" className="modal-image" />
+            <img src={Tokjai} alt="Tokjai" className="warning-icon" style={{ width: '200px', height: '230px', paddingTop: '30px' }}/>
             <p style={{ color: '#FFB900', fontWeight: 700, fontSize: '32px' }}>Are you sure?</p>
-              <p style={{ color: '#7949FF', fontSize: '20px' }}>You've select {title} </p>
+            <p style={{ color: '#7949FF', fontSize: '20px', fontWeight: 'bold' }}>You've select {title}</p>
+
             </div>
-            <button className="modal-confirm-button" onClick={handleConfirm}>Yes, I'm sure</button>
-            <button className="modal-cancel-button" onClick={handleClose}>Cancel</button>
+            <div className="modal-button-container">
+  <button className="modal-cancel-button" onClick={handleClose}>Cancel</button>
+  <button className="modal-confirm-button" onClick={handleConfirm}>Yes, I'm sure</button>
+</div>
           </>
         ) : (
           <>

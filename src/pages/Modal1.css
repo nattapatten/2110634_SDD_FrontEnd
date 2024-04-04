@@ -1,70 +1,67 @@
-/* Assuming the overlay is already correctly styled and centered in the viewport. */
-
-.modal-content {
-    background: #FFFFFF;
-    padding: 20px;
-    border-radius: 8px;
-    width: auto; /* Adjust width as needed or use max-width for responsiveness */
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2); /* Adjust for desired shadow strength */
-}
-
-/* Modal header not needed as there's no visible header section in the image provided. */
-
-/* Modal body styles for confirmation */
-.modal-body {
-    font-family: 'Arial', sans-serif; /* Example font, adjust as needed */
-}
-
-/* Warning icon */
-.warning-icon {
-    width: 48px; /* Adjust based on your icon's resolution */
-    height: 48px; /* Adjust based on your icon's resolution */
-    margin: 20px auto; /* Centers the icon with margin and sets space */
-}
-
-/* Title styles */
-.modal-body h1 {
-    font-size: 22px; /* Large font size for the title */
-    color: #333333; /* Dark font color for contrast */
-    font-weight: bold;
-    margin: 16px auto; /* Space above and below the title */
-}
-.modal-image {
-    float: center; /* Aligns the image to the left */
-    max-width: 150%; /* Adjusts the maximum width of the image */
-    max-height: 150px; /* Sets the maximum height of the image */
-    border-radius: 10px; /* Rounds the corners of the image */
-    padding: 3%
-  }
-
-/* Body content styles */
-.modal-body p {
-    font-size: 16px; /* Adjust as needed */
-    margin: 16px auto 32px; /* More space below the paragraph */
+/* Button container styles */
+.modal-button-container {
+    display: flex;
+    justify-content: space-between; /* This will place one button on the left, the other on the right */
+    margin: 0 0; /* Spacing above and below the button container */
 }
 
 /* Confirm button styles */
 .modal-confirm-button {
-    background: linear-gradient(120deg, #9575cd, #7986cb); /* Example gradient, adjust as needed */
+    background: #7949FF; /* Placeholder color, replace with your gradient start color */
     color: white;
-    padding: 10px 24px; /* Adjust as needed */
+    padding: 14px 24px; /* Adjust padding as needed */
     font-size: 16px;
+    font-weight: bold;
     border: none;
-    border-radius: 4px; /* Rounded corners */
+    border-radius: 0 0 50px 0; /* Rounded on the left side */
     cursor: pointer;
-    margin-right: 8px; /* Space to the right */
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); /* Button shadow for depth */
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+    flex: 1; /* Allows the button to grow and take available space */
+    
 }
 
 /* Cancel button styles */
 .modal-cancel-button {
-    background: none;
-    border: none;
-    color: #333333; /* Match the modal text color */
-    padding: 10px 24px; /* Same padding as the confirm button for consistency */
+    background: #d3cee0;
+    color: black;
+    font-weight: bold;
+    padding: 20px 24px;
     cursor: pointer;
     font-size: 16px;
-    border-radius: 4px; /* Consistent rounded corners */
+    border: none;
+    border-radius: 0 0 0 50px; /* Rounded on the right side */
+    flex: 1; /* Allows the button to grow and take available space */
+   
+    box-shadow: none;
 }
 
-/* You may need to include media queries to ensure responsiveness on different devices */
+/* Hover effects */
+.modal-confirm-button:hover {
+    background: #5633b7; /* Lighter color on hover */
+}
+
+.modal-cancel-button:hover {
+    background: #afa7c5; /* Indicate that it's clickable */
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+    .modal-button-container {
+        flex-direction: column; /* Stack buttons vertically on smaller screens */
+    }
+    
+    .modal-confirm-button,
+    .modal-cancel-button {
+        border-radius: 20px; /* Rounded corners on both sides for stacked layout */
+        margin: 10px 0; /* Space between stacked buttons */
+        padding: 14px 0; /* Adjust padding for a taller button on smaller screens */
+    }
+    .warning-icon {
+        width: 50px; /* Adjust the width as needed */
+        height: 50px; /* This will maintain the aspect ratio of the image */
+        display: block;
+        margin: 20px auto; /* This centers the image horizontally and adds space above and below */
+        
+    }
+    
+}
