@@ -3,6 +3,7 @@ import './Register.css';
 import chulaLogo from '../assets/chula_logo_Login.png';
 import axios from 'axios'; // Import Axios for making HTTP requests
 import { Outlet, Link, useNavigate } from "react-router-dom"; // Import useNavigate
+import RegisterOTP from './RegisterOTP'; // Import RegisterOTP component
 
 function Register() {
   const navigate = useNavigate(); // Initialize useNavigate
@@ -40,7 +41,7 @@ function Register() {
         alert('Registration Successful');
         
         // Redirect to LoginOTP page after successful registration
-        navigate('/LoginOTP');
+        navigate('/LoginOTP', { state: { email: formData.email } }); // Pass email as a state
         
       } catch (error) {
         console.error('Registration Failed:', error);
@@ -77,7 +78,6 @@ function Register() {
             <input type="password" id="confirmPassword" placeholder="Enter Re-confirm Password" value={formData.confirmPassword} onChange={onChange} required />
           </div>
           <button type="submit" className="btn-submit">Submit</button>
-          
         </form>
       </div>
     </div>
