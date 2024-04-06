@@ -1,22 +1,28 @@
+// Login.js
 import React, { useState } from 'react';
 import './Login.css';
 import chulaLogo from '../assets/chula_logo_Login.png';
-import axios from 'axios'; // Import axios for making HTTP requests
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate hook
 
 function Login() {
+  const navigate = useNavigate(); // Initialize useNavigate
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(e)
     try {
-      const response = await axios.post('your_backend_login_endpoint', { email, password });
+      const response = await axios.post('http://127.0.0.1:4000/api/v1/auth/login', { email, password });
       // Assuming your backend returns a token upon successful login
       const token = response.data.token;
       // You can store the token in local storage or cookies for further authentication
       // Example: localStorage.setItem('token', token);
       console.log('Login successful, token:', token);
-      // Redirect the user or perform any other action upon successful login
+      // Redirect the user to the "/LoginOTP" page upon successful login
+      navigate('/LoginOTP', { state: { email } }); // Passing email as state
     } catch (error) {
       console.error('Login failed:', error.message);
       // Handle login failure, show error message to the user, etc.
