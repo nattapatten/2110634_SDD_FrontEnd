@@ -3,10 +3,11 @@ import './RegisterOTP.css';
 import chulaLogo from '../assets/chula_logo_Login.png'; 
 import OTP from '../assets/OTP.png'; // Make sure the path and file name are correct
 import axios from 'axios';
-import { useLocation } from 'react-router-dom'; // Import useLocation
+import { useLocation, useNavigate } from 'react-router-dom'; // Import useNavigate instead of useHistory
 
 function RegisterOTP() {
   const location = useLocation(); // Initialize useLocation
+  const navigate = useNavigate(); // Initialize useNavigate
   const [otp, setOtp] = useState(Array(4).fill('')); // Initialize otp as an array of 4 empty strings
   const [email, setEmail] = useState(''); // Initialize email state
 
@@ -24,8 +25,13 @@ function RegisterOTP() {
     console.log(otpString);
     try {
       const response = await axios.post('http://127.0.0.1:4000/api/v1/auth/verify-otp-registration', { email: email, otp: otpString });
-      // Handle the response as needed
+      // Assuming the token is received in the response
+      const token = response.data.token;
+      // Store the token securely, for example, in local storage
+      localStorage.setItem('authToken', token);
+      // Redirect to SelectPath after successful verification
       console.log('Verification successful:', response.data);
+      navigate('/SelectPath'); // Redirect to SelectPath
     } catch (error) {
       console.error('Verification failed:', error);
       // Handle verification failure

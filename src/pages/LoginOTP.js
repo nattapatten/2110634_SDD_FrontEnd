@@ -1,14 +1,15 @@
-// LoginOTP.js
 import React, { useState } from 'react';
 import './LoginOTP.css';
 import chulaLogo from '../assets/chula_logo_Login.png'; 
 import OTP from '../assets/OTP.png';
 import axios from 'axios';
-import { useLocation } from 'react-router-dom'; // Import useLocation hook
+import { useLocation, useNavigate } from 'react-router-dom'; // Import useLocation and useNavigate hooks
 
 function LoginOTP() {
   const location = useLocation(); // Get location object
   const emailFromLogin = location.state?.email || ''; // Get email from location state or use an empty string if it's null
+
+  const navigate = useNavigate(); // Initialize useNavigate
 
   const [email, setEmail] = useState(emailFromLogin); // Set email state with the one from Login component
   const [otp, setOtp] = useState(Array(4).fill('')); // Initialize otp as an array of 4 empty strings
@@ -20,8 +21,13 @@ function LoginOTP() {
     console.log(email, otpString);
     try {
       const response = await axios.post('http://127.0.0.1:4000/api/v1/auth/verify-otp', { email, otp: otpString });
-      // Handle the response as needed
+      // Assuming the token is received in the response
+      const token = response.data.token;
+      // Store the token securely, for example, in local storage
+      localStorage.setItem('authToken', token);
+      // Redirect to /SelectPath after successful verification
       console.log('Verification successful:', response.data);
+      navigate('/');
     } catch (error) {
       console.error('Verification failed:', error);
       // Handle verification failure
