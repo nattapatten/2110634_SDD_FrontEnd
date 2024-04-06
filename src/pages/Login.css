@@ -66,6 +66,9 @@
     cursor: pointer;
     margin-top: 1rem;
   }
+  .btn-primary1:hover {
+    background-color: #5633b7;
+  }
   
   .btn-primary:hover {
     background-color: #5633b7;
