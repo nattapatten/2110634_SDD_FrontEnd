@@ -41,7 +41,7 @@ function Register() {
         alert('Registration Successful');
         
         // Redirect to LoginOTP page after successful registration
-        navigate('/LoginOTP', { state: { email: formData.email } }); // Pass email as a state
+        navigate('/RegisterOTP', { state: { email: formData.email } }); // Pass email as a state
         
       } catch (error) {
         console.error('Registration Failed:', error);
