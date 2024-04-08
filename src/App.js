@@ -10,6 +10,7 @@ import RegisterOTP from './pages/RegisterOTP';
 import SelectPath from './pages/SelectPath';
 import DashboardStudent from './pages/DashboardStudent';
 import Example from './pages/Example';
+import DashboardAdvisor from './pages/DashboardAdvisor';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
             <Route path="RegisterOTP" element={<RegisterOTP />} />
             <Route path="SelectPath" element={<SelectPath />} />
             <Route path="Example" element={<Example />} />
+            <Route path="DashboardAdvisor" element={<DashboardAdvisor />} />
           </Route>
         </Routes>
       </BrowserRouter>

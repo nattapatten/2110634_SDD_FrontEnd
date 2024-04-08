@@ -8,6 +8,7 @@ import { faBars, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import chulaLogo from '../assets/chula_logo.png';
 const Layout = () => {
   const [show, setShow] = useState(false);
+  
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -58,6 +59,9 @@ const Layout = () => {
               </li>
               <li>
                 <Link to="/SelectPath" onClick={handleClose}>SelectPath</Link>
+              </li>
+              <li>
+                <Link to="/DashboardAdvisor" onClick={handleClose}>DashboardAdvisor</Link>
               </li>
               
             </ul>
