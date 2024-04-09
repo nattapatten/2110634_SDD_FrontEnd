@@ -3,8 +3,10 @@ import AdvisorProfile from '../assets/AdvisorProfile.png';
 import StudentCard from '../components/StudentCard';
 import StudentProfile from '../assets/StudentProfile.png';
 import books from '../assets/books.png';
+import homework from '../assets/homework.png';
 import CourseCard from '../components/CourseCard';
 import NotificationCard from '../components/NotificationCard';
+import QuestCard from '../components/QuestCard';
 
 const DashboardAdvisor = () => {
 
@@ -195,6 +197,33 @@ const DashboardAdvisor = () => {
         }
     ];
     
+    const questData = [
+        {
+            title: "New Student Registration",
+            description: "A new student, Emily Johnson, has successfully completed her registration process for the upcoming academic year under your advisement. Emily is pursuing a degree in Computer Science with a focus on artificial intelligence. It is essential to review her academic file, previous coursework, and plan an initial meeting to discuss her academic goals, course selections, and any specific needs or accommodations she may require.",
+            image: homework,
+        },
+        {
+            title: "Grade Alert: Low Performance",
+            description: "Student John Smith's performance in the Calculus II course has recently dropped below the academic satisfactory threshold, with his latest test scores indicating a potential risk of failing. This situation calls for a proactive approach to understand the challenges John is facing and to develop an intervention plan. Suggestions include arranging tutoring sessions, discussing study habits, and possibly considering course withdrawal before the deadline to avoid an adverse impact on his GPA.",
+            image: homework,
+        },
+        {
+            title: "Scholarship Application Deadline",
+            description: "The deadline for the upcoming academic scholarship applications is quickly approaching on April 30th. There are several scholarships available that target students excelling in academic performance, demonstrating community service, or in need of financial aid. Please make an effort to remind your eligible students to prepare their applications, ensuring they include all required documents and personal statements. Holding a brief workshop on how to write a compelling application could significantly benefit our students.",
+            image: homework,
+        },
+        {
+            title: "Updated Course Catalog",
+            description: "The course catalog for the next academic year has been thoroughly updated, including several new courses that reflect the latest trends and technologies in the field of computer science, such as Advanced Machine Learning, Cybersecurity Ethics, and Blockchain Fundamentals. Please take the time to review these updates and discuss with your advisees how these new courses could fit into their academic and career plans, particularly those students who are nearing the completion of their degree requirements.",
+            image: homework,
+        },
+        {
+            title: "Internship Opportunities",
+            description: "Our department has recently partnered with several leading tech companies to offer new internship opportunities in software development, data analysis, and cybersecurity. These internships not only provide valuable hands-on experience but also offer potential pathways to full-time positions upon graduation. Encourage students, especially those in their junior and senior years, to apply by May 15th. Assistance with resume writing and interview preparation is available through our career services office.",
+            image: homework,
+        },
+    ];
     
 
     studentData.sort((a, b) => {
@@ -260,6 +289,16 @@ const DashboardAdvisor = () => {
             </div>
             <dic className='advisor-quest container-grey'>
                 <p style={{fontSize: '20px', fontWeight: 'bold'}}>Quests</p>
+                <div className='notification-list'>
+                    {questData.map((quest, index,) => (
+                        <QuestCard
+                            key={index}
+                            title={quest.title}
+                            description={quest.description}
+                            image = {quest.image}
+                        />
+                    ))}
+                </div>
             </dic>
         </section>
     </div>
