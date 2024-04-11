@@ -52,13 +52,14 @@
     overflow: hidden; /* Hide any overflow on the container */
     height: 343px;
     border-radius: 25px;
-    padding: 8px; /* Add padding for better appearance */
+    padding: 8px; 
 }
 
 .student-list, .course-list {
     display: flex;
     gap: 18px;
     overflow-x: auto; /* Enable horizontal scrolling when content overflows */
+    flex-grow: 1;
 }
 
 .advisor-notification {
@@ -78,3 +79,34 @@
     overflow-y: auto; /* Enable vertical scrolling */
     overflow-x: hidden; /* Hide horizontal scrollbar */
 }
+
+.top-of-student-container {
+    display: flex;
+    justify-content: space-between; /* Aligns items to each end */
+    align-items: center; /* Aligns items vertically */
+}
+
+.student-container-title {
+    flex-grow: 1; /* Allows the title to grow and take available space, helping with centering */
+    text-align: center; /* Centers the text within the title element */
+}
+
+.close-button {
+    position: absolute;
+    right: 20px;
+    top: 10px;
+}
+
+.students-container{
+    display: flex;
+    width: 100vw;
+}
+
+.all-courses-container{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 10px;
+    justify-items: center;
+}
+
+

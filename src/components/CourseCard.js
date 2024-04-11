@@ -23,7 +23,6 @@ const CourseCard = ({ courseName, courseNumber, maxStudents, currentStudents, im
         <img src={image} className="card-image round-image" />
       </div>
       <p className="course-name">{courseName}</p>
-      {/* {courseName} */}
       <div className='bottom-contents'>
         <StatusBar percentage={status} />
         <p className='student-number' >Student: {maxStudents}</p>

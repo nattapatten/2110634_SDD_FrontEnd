@@ -4,9 +4,17 @@
     align-items: center;
     width: 178px;
     height: 244px;
-    padding-bottom: 5px;
+    /* padding-bottom: 5px; */
+    border-radius: 20px; /* Ensure this matches your desired border-radius */
+    transition: border-color 0.3s ease; /* Smooth transition for border color */
 }
 
+.student-card:hover, .student-card.selected, .student-card:focus {
+    border: 2px solid rgb(255, 255, 255); /* Change border to blue */
+    background-color: rgba(156,87,252,1);
+    outline: none; /* Removes the default focus outline */
+    border-radius: 20px; /* Ensure rounded corners are maintained */
+}
 
 .card-image {
     height: 130px; 

@@ -1,3 +1,5 @@
+import React, { useState } from 'react';
+import { Button, Fade } from 'react-bootstrap';
 import './DashboardAdvisor.css';
 import AdvisorProfile from '../assets/AdvisorProfile.png';
 import StudentCard from '../components/StudentCard';
@@ -7,6 +9,9 @@ import homework from '../assets/homework.png';
 import CourseCard from '../components/CourseCard';
 import NotificationCard from '../components/NotificationCard';
 import QuestCard from '../components/QuestCard';
+import StudentInfoCard from '../components/StudentInfoCard';
+
+import StudentAllCourses from '../components/StudentAllCourses';
 
 const DashboardAdvisor = () => {
 
@@ -74,82 +79,102 @@ const DashboardAdvisor = () => {
         {
             title: "Graduated",
             image: StudentProfile,
+            path: "Software Engineer",
             name: "James James",
+            studentID: "11111111",
             status: "100",
             gpa: "3.80",
-            lastUpdated: "2023-12-15T08:30:00"
+            lastUpdated: "2023-12-15T08:30:00",
         },
         {
             title: "Graduated",
             image: StudentProfile,
+            path: "Project Managerr",
             name: "Jane Jane",
+            studentID: "22222222",
             status: "100",
             gpa: "4.00",
-            lastUpdated: "2023-11-30T14:45:00"
+            lastUpdated: "2023-11-30T14:45:00",
         },
         {
             title: "In Progress",
             image: StudentProfile,
+            path: "Software Engineer",
             name: "John John",
+            studentID: "33333333",
             status: "70",
             gpa: "2.80",
-            lastUpdated: "2024-01-10T10:20:00"
+            lastUpdated: "2024-01-10T10:20:00",
         },
         {
             title: "In Progress",
             image: StudentProfile,
+            path: "Software Engineer",
             name: "Alice Smith",
+            studentID: "44444444",
             status: "80",
             gpa: "3.20",
-            lastUpdated: "2024-02-05T11:15:00"
+            lastUpdated: "2024-02-05T11:15:00",
         },
         {
             title: "Graduated",
             image: StudentProfile,
+            path: "DevOps Engineer",
             name: "Michael Johnson",
+            studentID: "55555555",
             status: "100",
             gpa: "3.75",
-            lastUpdated: "2023-10-20T09:00:00"
+            lastUpdated: "2023-10-20T09:00:00",
         },
         {
             title: "In Progress",
             image: StudentProfile,
+            path: "Software Engineer",
             name: "Emily Williams",
+            studentID: "66666666",
             status: "60",
             gpa: "3.00",
-            lastUpdated: "2024-03-15T13:30:00"
+            lastUpdated: "2024-03-15T13:30:00",
         },
         {
             title: "Resigned",
             image: StudentProfile,
+            path: "Software Engineer",
             name: "Matthew Brown",
+            studentID: "77777777",
             status: "50",
             gpa: "2.50",
-            lastUpdated: "2023-12-01T16:00:00"
+            lastUpdated: "2023-12-01T16:00:00",
         },
         {
             title: "In Progress",
             image: StudentProfile,
+            path: "Software Engineer",
             name: "Emma Davis",
+            studentID: "88888888",
             status: "40",
             gpa: "2.90",
-            lastUpdated: "2024-04-05T09:45:00"
+            lastUpdated: "2024-04-05T09:45:00",
         },
         {
             title: "In Progress",
             image: StudentProfile,
+            path: "Software Engineer",
             name: "Daniel Wilson",
+            studentID: "12345678",
             status: "30",
             gpa: "2.80",
-            lastUpdated: "2024-02-25T14:00:00"
+            lastUpdated: "2024-02-25T14:00:00",
         },
         {
             title: "Resigned",
             image: StudentProfile,
+            path: "Software Engineer",
             name: "Olivia Miller",
+            studentID: "12345678",
             status: "20",
             gpa: "2.70",
-            lastUpdated: "2023-11-15T10:30:00"
+            lastUpdated: "2023-11-15T10:30:00",
         },
         // Add more student data objects with lastUpdated field including time
     ];
@@ -197,6 +222,7 @@ const DashboardAdvisor = () => {
         }
     ];
     
+    //All quests this advisor created
     const questData = [
         {
             title: "New Student Registration",
@@ -224,84 +250,125 @@ const DashboardAdvisor = () => {
             image: homework,
         },
     ];
-    
 
     studentData.sort((a, b) => {
         return new Date(b.lastUpdated) - new Date(a.lastUpdated);
     });
 
+    const [selectedStudent, setSelectedStudent] = useState(null);
+    const [showStudentInfo, setShowStudentInfo] = useState(false);
+    const [showNotificationsAndQuests, setShowNotificationsAndQuests] = useState(true);
+
+    const handleStudentClick = (student) => {
+        setSelectedStudent(student);
+        setShowStudentInfo(true);
+        setShowNotificationsAndQuests(false); // Hide Notifications and Quests
+    };
+
+    const handleClose = () => {
+        setShowStudentInfo(false);
+        setSelectedStudent(null);
+        setShowNotificationsAndQuests(true); // Show Notifications and Quests
+    };
+
     return (
-    <div className='advisor-container'>
-        <section  className='section1'>
-            <div className="container-grey advisor-box">
-                <p style={{fontSize: '20px', fontWeight: 'bold'}}>Advisor</p>
-                <div className='advisorProfile'>
-                    <img src={AdvisorProfile} />
+        <div className='advisor-container'>
+            <section className='section1'>
+                <div className="container-grey advisor-box">
+                    <p style={{fontSize: '20px', fontWeight: 'bold'}}>Advisor</p>
+                    <div className='advisorProfile'>
+                        <img src={AdvisorProfile} alt="Advisor" />
+                    </div>
+                    <p style={{fontSize: '18px'}}>John Smith</p>
                 </div>
-                <p style={{fontSize: '18px'}}>John Smith</p>
-            </div>
-            <div className='container-grey students-container'>
-                <p style={{fontSize: '20px', fontWeight: 'bold'}}>Your Students</p>
-                <div className='student-list'>
-                    {/* Map through studentData array and render StudentCard components */}
-                    {studentData.map((student, index) => (
-                        <StudentCard
-                            key={index}
-                            title={student.title}
-                            image={student.image}
-                            name={student.name}
-                            status={student.status}
-                            gpa={student.gpa}
-                            
-                        />
-                    ))}
+                <div className='container-grey students-container'>
+                    <div className='top-of-student-container'>
+                        <p className='student-container-title' style={{fontSize: '20px', fontWeight: 'bold'}}>Your Students</p>
+                        {showStudentInfo && <Button className='close-button' onClick={handleClose}>x</Button>}
+                    </div>
+                    {showStudentInfo ? (
+                        <StudentInfoCard student={selectedStudent} onClose={handleClose} />
+                    ) : (
+                        <div className='student-list'>
+                            {studentData.map((student, index) => (
+                                <div 
+                                    key={index}
+                                    onClick={() => handleStudentClick(student)}
+                                    className='student-card-wrapper'
+                                    tabIndex="0"
+                                >
+                                    <StudentCard
+                                        title={student.title}
+                                        image={student.image}
+                                        name={student.name}
+                                        status={student.status}
+                                        gpa={student.gpa}
+                                    />
+                                </div>
+                            ))}
+                        </div>
+                    )}
                 </div>
-            </div>
-        </section>
-        <section className="section2 container-grey">
-            <p style={{fontSize: '20px', fontWeight: 'bold'}}>Your Courses</p>
-            <div className='course-list'>
-                {/* Map through studentData array and render StudentCard components */}
-                {courseData.map((course, index) => (
-                    <CourseCard 
-                        key={index}
-                        image={course.image}
-                        courseNumber = {course.courseNumber}
-                        courseName = {course.courseName}
-                        maxStudents = {course.maxStudents}
-                        currentStudents = {course.currentStudents}
-                    />
-                ))}
-            </div>
-        </section>
-        <section className="section3 container-grey">
-            <div className=' advisor-notification container-grey'>
-                <p style={{fontSize: '20px', fontWeight: 'bold'}}>Notifications</p>
-                <div className='notification-list'>
-                    {notificationData.map((notification, index) => (
-                        <NotificationCard
-                            key={index}
-                            title={notification.title}
-                            description={notification.description}
-                        />
-                    ))}
+            </section>
+                {showStudentInfo && (
+                    <div className='container-grey'>
+                    <p style={{fontSize: '20px', fontWeight: 'bold'}}>Student's Courses</p>
+                            <div className='all-courses-container'>
+                                <StudentAllCourses studentID={selectedStudent.studentID} onClose={handleClose} />
+                            </div>
+                    </div>
+                        )}
+                    
+
+            <Fade in={showNotificationsAndQuests}>
+            <section className={showNotificationsAndQuests ? "visible" : "hidden"}>
+                <div className="section2 container-grey">
+                    <p style={{fontSize: '20px', fontWeight: 'bold'}}>Your Courses</p>
+                    <div className='course-list'>
+                        {courseData.map((course, index) => (
+                            <CourseCard 
+                                key={index}
+                                courseNumber={course.courseNumber}
+                                courseName={course.courseName}
+                                maxStudents={course.maxStudents}
+                                currentStudents={course.currentStudents}
+                                image={course.image}
+                            />
+                        ))}
+                    </div>
                 </div>
-            </div>
-            <dic className='advisor-quest container-grey'>
-                <p style={{fontSize: '20px', fontWeight: 'bold'}}>Quests</p>
-                <div className='notification-list'>
-                    {questData.map((quest, index,) => (
-                        <QuestCard
-                            key={index}
-                            title={quest.title}
-                            description={quest.description}
-                            image = {quest.image}
-                        />
-                    ))}
-                </div>
-            </dic>
-        </section>
-    </div>
-    )};
-  
-  export default DashboardAdvisor;
+                <br/>
+                    <div className="section3 ">
+                        <div className='advisor-notification container-grey'>
+                            <p style={{fontSize: '20px', fontWeight: 'bold'}}>Notifications</p>
+                            <div className='notification-list'>
+                                {notificationData.map((notification, index) => (
+                                    <NotificationCard
+                                        key={index}
+                                        title={notification.title}
+                                        description={notification.description}
+                                    />
+                                ))}
+                            </div>
+                        </div>
+                        <div className='advisor-quest container-grey'>
+                            <p style={{fontSize: '20px', fontWeight: 'bold'}}>Quests</p>
+                            <div className='notification-list'>
+                                {questData.map((quest, index) => (
+                                    <QuestCard
+                                        key={index}
+                                        title={quest.title}
+                                        description={quest.description}
+                                        image={quest.image}
+                                    />
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </Fade>
+        </div>
+    );
+};
+
+export default DashboardAdvisor;
