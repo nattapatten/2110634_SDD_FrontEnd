@@ -5,7 +5,7 @@ import Modal from 'react-bootstrap/Modal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 
-const NotificationCard = ({ title, description }) => {
+const NotificationCard = ({ title, description, courseID }) => {
   const [show, setShow] = useState(false);
 
   // Function to handle opening the modal
@@ -21,16 +21,16 @@ const NotificationCard = ({ title, description }) => {
 
   return (
     <div className='noti-container container-grey2'>
-        <p className='noti-title'>{title}</p>
+        <p className='noti-title'>{courseID} - {title}</p>
         <p className='noti-description'>{trimDescription(description)}</p>
         <div className='button-container'>
           <Button size="sm" variant="secondary" onClick={handleShow}>See more &nbsp; <FontAwesomeIcon icon={faArrowRight} />
-</Button>
+          </Button>
         </div>
 
         <Modal show={show} onHide={handleClose} size="lg">
             <Modal.Header closeButton>
-                <Modal.Title className='noti-title'>{title}</Modal.Title>
+                <Modal.Title className='noti-title'>{courseID} - {title}</Modal.Title>
             </Modal.Header>
             <Modal.Body className='noti-description'>{description}</Modal.Body>
             <Modal.Footer>

@@ -7,6 +7,13 @@
     width: 200px;
 }
 
+/* .course-card:hover, .course-card.selected, .course-card:focus {
+    border: 2px solid rgb(255, 255, 255); 
+    background-color: rgba(156,87,252,1);
+    outline: none; 
+    border-radius: 20px;
+} */
+
 .card-image {
     /* height: 130px;  */
     /* width: 183px; */
