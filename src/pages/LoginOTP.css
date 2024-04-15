@@ -1,0 +1,102 @@
+.otp-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #261E35; 
+  }
+  
+  .otp-container {
+    background: #ffffff;
+    color: #7949FF;
+    padding: 2rem;
+    border-radius: 30px;
+    width: 100%;
+    max-width: 500px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .otp-form-group {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+  }
+  
+  .otp-form-group input {
+    width: 90px;
+    padding: 0.75rem;
+    border: 5px solid #ddd;
+    border-radius: 15px;
+    font-size: 2.5rem;
+    text-align: center;
+  }
+  
+  .otp-resend {
+    background: none;
+    border: none;
+    color: #7949FF;
+    cursor: pointer;
+  }
+  
+  .otp-actions {
+    display: flex;
+    justify-content: space-between ;
+    margin-top: 1rem;
+    margin-left: 3rem;
+    margin-right: 3rem;
+  }
+  
+  .otp-cancel2 {
+    background: none;
+    border: 2px solid #7949FF;
+    border-radius: 18px;
+    padding: 0.75rem;
+    color: #7949FF;
+    cursor: pointer;
+    width : 150px;
+    
+  }
+  .otp-cancel2:hover {
+    background: #c1bccd; /* Lighter color on hover */
+}
+  
+  .btn-primary2 {
+    background-color: #7949FF;
+    border-radius: 18px;
+    padding: 0.75rem;
+    border: none;
+    color: white;
+    cursor: pointer;
+    width : 150px;
+
+  }
+  .btn-primary2:hover {
+    background: #5633b7; /* Lighter color on hover */
+}
+  
+  .otp-logo img {
+    max-width: 90%;
+    height: auto;
+  }
+  
+  /* Add this if you want to include transition effects for your inputs/buttons */
+  input:focus, button:focus {
+    outline: none;
+    border-color: #7949FF;
+    box-shadow: 0 0 10px #719ECE;
+  }
+  .chula-logo {
+    width: 120px; /* Adjust as needed */
+    height: auto;
+    align-items: center;
+    margin-bottom: 1rem;
+
+  }
+  .otp-icon {
+    width: 100px; /* Adjust as needed */
+    height: auto;
+    margin-top: 10px;
+    margin-bottom: 20px;
+  }
