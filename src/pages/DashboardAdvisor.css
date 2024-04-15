@@ -77,19 +77,13 @@
     flex-grow: 1;
 }
 
-.notification-list, .quest-list {
+.notification-list {
     display: flex;
     flex-direction: column;
     gap: 18px;
     max-height: 380px; /* Set a maximum height for the notification list */
     overflow-y: auto; /* Enable vertical scrolling */
     overflow-x: hidden; /* Hide horizontal scrollbar */
-}
-
-.loading-noti{
-    padding-top: 35%;
-    align-items: center;
-    justify-items: center;
 }
 
 .top-of-student-container {
@@ -133,4 +127,3 @@
     justify-content: center;
     align-items: center;
 }
-
