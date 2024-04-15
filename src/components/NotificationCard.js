@@ -44,4 +44,3 @@ const NotificationCard = ({ title, description, courseID }) => {
 };
 
 export default NotificationCard;
-

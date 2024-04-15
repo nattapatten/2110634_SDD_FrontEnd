@@ -227,26 +227,25 @@ const DashboardAdvisor = () => {
     const [courseID, setCourseID] = useState('');
     const [summary, setSummary] = useState('');
     const [description, setDescription] = useState('');
-    
 
     //State for query
     const [notifications, setNotifications] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
 
-    const fetchNotifications = async () => {
-        setIsLoading(true);  // Start loading
-        try {
-            const response = await axios.get('http://127.0.0.1:4000/api/v1/notifications');
-            setNotifications(response.data.data);
-        } catch (error) {
-            console.error('Failed to fetch notifications:', error);
-            // Optionally update state to indicate an error
-        }
-        setIsLoading(false);  // Stop loading
-    };
-
     // Fetch notifications from an API when component mounts
     useEffect(() => {
+        const fetchNotifications = async () => {
+            setIsLoading(true);  // Start loading
+            try {
+                const response = await axios.get('http://127.0.0.1:4000/api/v1/notifications');
+                setNotifications(response.data.data);
+            } catch (error) {
+                console.error('Failed to fetch notifications:', error);
+                // Optionally update state to indicate an error
+            }
+            setIsLoading(false);  // Stop loading
+        };
+    
         fetchNotifications();
     }, []);
     
@@ -265,43 +264,32 @@ const DashboardAdvisor = () => {
     const handleSummaryChange = (e) => setSummary(e.target.value);
     const handleDescriptionChange = (e) => setDescription(e.target.value);
 
-
+    //noti submit
     const handleSubmit = async () => {
+        // Construct the payload using the state
         const payload = {
             courseID: courseID,
-            title: summary,
+            title: summary,  // Assuming 'summary' is the field for 'title'
             description: description
         };
-
+    
         setIsSubmitting(true);
-        setSubmitError('');
-
+        setSubmitError(''); // Clear any previous errors
+    
         try {
-            // POST request to add a new notification
             const response = await axios.post('http://127.0.0.1:4000/api/v1/notifications', payload);
-            console.log('Notification posted successfully:', response.data.data);
-
-            // Update state to trigger re-render with new notifications
-            // setNotifications(prevNotifications => [
-            //     ...prevNotifications,
-            //     response.data.data
-            // ]);
-
-            // Reset form state and close modal after submission
+            console.log('Notification posted successfully:', response.data);
+            // Perform any additional actions upon successful submission, e.g., show success message
+            handleCloseNotiModal(); // Close modal after submission
             setCourseID('');
             setSummary('');
             setDescription('');
-            handleCloseNotiModal();
-    
-            fetchNotifications();
         } catch (error) {
             console.error('Failed to post notification:', error);
             setSubmitError('Failed to post notification. Please try again.');
         }
         setIsSubmitting(false);
     };
-    
-    
 
     // quest form state
     const [questCourseID, setQuestCourseID] = useState('');
