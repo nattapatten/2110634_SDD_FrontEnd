@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Button, Fade } from 'react-bootstrap';
+import React, { useState, useEffect } from 'react';
+import { Button, Fade, Spinner } from 'react-bootstrap';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import './DashboardAdvisor.css';
@@ -13,6 +13,7 @@ import NotificationCard from '../components/NotificationCard';
 import QuestCard from '../components/QuestCard';
 import StudentInfoCard from '../components/StudentInfoCard';
 import StudentAllCourses from '../components/StudentAllCourses';
+import axios from 'axios';
 
 const DashboardAdvisor = () => {
 
@@ -167,59 +168,7 @@ const DashboardAdvisor = () => {
         // Add more student data objects with lastUpdated field including time
     ];
 
-    const notificationData = [
-        {
-            courseID: "2110634",
-            title: "New Student Registration",
-            description: "A new student, Emily Johnson, has successfully completed her registration process for the upcoming academic year under your advisement. Emily is pursuing a degree in Computer Science with a focus on artificial intelligence. It is essential to review her academic file, previous coursework, and plan an initial meeting to discuss her academic goals, course selections, and any specific needs or accommodations she may require."
-        },
-        {
-            courseID: "2110645",
-            title: "Grade Alert: Low Performance",
-            description: "Student John Smith's performance in the Calculus II course has recently dropped below the academic satisfactory threshold, with his latest test scores indicating a potential risk of failing. This situation calls for a proactive approach to understand the challenges John is facing and to develop an intervention plan. Suggestions include arranging tutoring sessions, discussing study habits, and possibly considering course withdrawal before the deadline to avoid an adverse impact on his GPA."
-        },
-        {
-            courseID: "2110645",
-            title: "Scholarship Application Deadline",
-            description: "The deadline for the upcoming academic scholarship applications is quickly approaching on April 30th. There are several scholarships available that target students excelling in academic performance, demonstrating community service, or in need of financial aid. Please make an effort to remind your eligible students to prepare their applications, ensuring they include all required documents and personal statements. Holding a brief workshop on how to write a compelling application could significantly benefit our students."
-        },
-        {
-            courseID: "2110656",
-            title: "Updated Course Catalog",
-            description: "The course catalog for the next academic year has been thoroughly updated, including several new courses that reflect the latest trends and technologies in the field of computer science, such as Advanced Machine Learning, Cybersecurity Ethics, and Blockchain Fundamentals. Please take the time to review these updates and discuss with your advisees how these new courses could fit into their academic and career plans, particularly those students who are nearing the completion of their degree requirements."
-        },
-        {
-            courseID: "2110656",
-            title: "Internship Opportunities",
-            description: "Our department has recently partnered with several leading tech companies to offer new internship opportunities in software development, data analysis, and cybersecurity. These internships not only provide valuable hands-on experience but also offer potential pathways to full-time positions upon graduation. Encourage students, especially those in their junior and senior years, to apply by May 15th. Assistance with resume writing and interview preparation is available through our career services office."
-        },
-        {
-            courseID: "2110656",
-            title: "Student Withdrawal Notice",
-            description: "Student Alice Williams has formally notified the administration of her decision to withdraw from the semester due to personal health reasons. Alice was making satisfactory progress in her studies, and her decision was not made lightly. Please update your records to reflect this change and reach out to Alice to offer support and discuss plans for her return to her studies, ensuring she is aware of the resources available to her during this time."
-        },
-        {
-            courseID: "2110690",
-            title: "Advisory Meeting Schedule",
-            description: "The next advisory board meeting is scheduled for June 5th at 10:00 AM in the main conference hall. The meeting's agenda includes critical discussions on curriculum updates, strategies for increasing student engagement and retention, and the integration of new educational technologies into our teaching methodologies. Your participation and insights into these topics are highly valued, and you are encouraged to submit any additional items for discussion ahead of the meeting."
-        },
-        {
-            courseID: "2110690",
-            title: "Final Exam Schedules Posted",
-            description: "The final exam schedules for this semester have now been posted on the university portal. These exams are a crucial component of the academic assessment process, and it is vital that all students are aware of their exam times, locations, and the materials permitted in the exam room. Please ensure your advisees review their schedules promptly and begin their preparations early to avoid any last-minute stress. Consider hosting review sessions for courses with historically high rates of difficulty."
-        },
-        {
-            courseID: "2110690",
-            title: "Student Achievement",
-            description: "We are thrilled to announce that your advisee, Mark Lee, has won the prestigious National Coding Competition, showcasing his exceptional skills in algorithm design and problem-solving. This remarkable achievement not only highlights Mark's talent and hard work but also brings honor and recognition to our department. We encourage you to acknowledge Mark's achievement, perhaps by featuring him in the department's newsletter or organizing a small celebration within the department to inspire his peers."
-        },
-        {
-            courseID: "2110690",
-            title: "Summer Course Enrollment",
-            description: "Enrollment for summer courses will begin next week, offering students the opportunity to advance their studies, explore new interests, or catch up on credits needed for graduation. The summer session provides a range of courses, including some that are typically highly subscribed during the regular semesters. Discuss with your students whether taking summer courses aligns with their academic plans, particularly those who may benefit from the smaller class sizes and more intensive study environment."
-        }
-    ];
-    
+
     //All quests this advisor created
     const questData = [
         {
@@ -278,6 +227,34 @@ const DashboardAdvisor = () => {
     const [courseID, setCourseID] = useState('');
     const [summary, setSummary] = useState('');
     const [description, setDescription] = useState('');
+    
+
+    //State for query
+    const [notifications, setNotifications] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
+
+    const fetchNotifications = async () => {
+        setIsLoading(true);  // Start loading
+        try {
+            const response = await axios.get('http://127.0.0.1:4000/api/v1/notifications');
+            setNotifications(response.data.data);
+        } catch (error) {
+            console.error('Failed to fetch notifications:', error);
+            // Optionally update state to indicate an error
+        }
+        setIsLoading(false);  // Stop loading
+    };
+
+    // Fetch notifications from an API when component mounts
+    useEffect(() => {
+        fetchNotifications();
+    }, []);
+    
+    
+
+    //handle query loading error
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [submitError, setSubmitError] = useState('');
 
     //noti modal
     const handleCloseNotiModal = () => setShowNotiModal(false);
@@ -288,21 +265,43 @@ const DashboardAdvisor = () => {
     const handleSummaryChange = (e) => setSummary(e.target.value);
     const handleDescriptionChange = (e) => setDescription(e.target.value);
 
-    //noti submit
-    const handleSubmit = () => {
-        const formData = {
-            courseID,
-            summary,
-            description,
-        };
-        console.log('inside noti')
-        // Process formData here (e.g., update state or send to an API)
-        console.log(formData); // Example action
-    
-        handleCloseNotiModal(); // Close modal after submission
-        // Optionally reset form fields here if needed
-    };
 
+    const handleSubmit = async () => {
+        const payload = {
+            courseID: courseID,
+            title: summary,
+            description: description
+        };
+
+        setIsSubmitting(true);
+        setSubmitError('');
+
+        try {
+            // POST request to add a new notification
+            const response = await axios.post('http://127.0.0.1:4000/api/v1/notifications', payload);
+            console.log('Notification posted successfully:', response.data.data);
+
+            // Update state to trigger re-render with new notifications
+            // setNotifications(prevNotifications => [
+            //     ...prevNotifications,
+            //     response.data.data
+            // ]);
+
+            // Reset form state and close modal after submission
+            setCourseID('');
+            setSummary('');
+            setDescription('');
+            handleCloseNotiModal();
+    
+            fetchNotifications();
+        } catch (error) {
+            console.error('Failed to post notification:', error);
+            setSubmitError('Failed to post notification. Please try again.');
+        }
+        setIsSubmitting(false);
+    };
+    
+    
 
     // quest form state
     const [questCourseID, setQuestCourseID] = useState('');
@@ -422,15 +421,21 @@ const DashboardAdvisor = () => {
                             </div>
                             
                             <div className='notification-list'>
-                                {notificationData.map((notification, index) => (
-                                    <NotificationCard
-                                        key={index}
-                                        title={notification.title}
-                                        description={notification.description}
-                                        courseID={notification.courseID}
-                                    />
-                                ))}
+                                {isLoading ? (
+                                    <div className='loading-noti'>Loading notifications...</div>
+                                ) : (
+                                    notifications.map((notification, index) => (
+                                        <NotificationCard
+                                            key={index} // It's better to use notification._id if available for keys
+                                            title={notification.title}
+                                            description={notification.description}
+                                            courseID={notification.courseID}
+                                        />
+                                    ))
+                                )}
                             </div>
+
+
                         </div>
 
                         {/* Noti Modal */}
@@ -439,7 +444,7 @@ const DashboardAdvisor = () => {
                                 <Modal.Title style={{color: '#7949FF'}}>Create Notification</Modal.Title>
                             </Modal.Header>
                             <Modal.Body>
-                                <Form className="chula-form">
+                                <Form className='chula-form'>
                                     <Form.Group className="mb-3" controlId="formCourseID">
                                         <Form.Label>Course ID</Form.Label>
                                         <Form.Control type="text" placeholder="Enter course ID" value={courseID} onChange={handleCourseIDChange} />
@@ -450,13 +455,33 @@ const DashboardAdvisor = () => {
                                     </Form.Group>
                                     <Form.Group className="mb-3" controlId="formDescription">
                                         <Form.Label>Description</Form.Label>
-                                        <Form.Control as="textarea" rows={3} placeholder="Enter description"  value={description} onChange={handleDescriptionChange} />
+                                        <Form.Control as="textarea" rows={3} placeholder="Enter description" value={description} onChange={handleDescriptionChange} />
                                     </Form.Group>
+                                    {submitError && <div className="text-danger">{submitError}</div>}
                                 </Form>
                             </Modal.Body>
                             <Modal.Footer>
                                 <Button variant="secondary" onClick={handleCloseNotiModal}>Close</Button>
-                                <Button variant="primary" onClick={handleSubmit}>Save Changes</Button>
+                                <Button
+                                variant={isSubmitting ? "secondary" : "primary"} // Change variant based on isSubmitting
+                                onClick={handleSubmit}
+                                disabled={isSubmitting} // Disable button while submitting
+                                >
+                                {isSubmitting ? (
+                                    <>
+                                    <Spinner
+                                        as="span"
+                                        animation="border"
+                                        size="sm"
+                                        role="status"
+                                        aria-hidden="true"
+                                        style={{ marginRight: '5px' }}
+                                    />
+                                    Saving...
+                                    </>
+                                ) : 'Save Changes'}
+                                </Button>
+
                             </Modal.Footer>
                         </Modal>
 
@@ -466,7 +491,7 @@ const DashboardAdvisor = () => {
                                 <p style={{fontSize: '20px', fontWeight: 'bold'}}>Quests</p>
                                 <Button className='noti-create-button' variant="primary" size='sm' onClick={handleShowQuestModal} >Create</Button>
                             </div>
-                            <div className='notification-list'>
+                            <div className='quest-list'>
                                 {questData.map((quest, index) => (
                                     <QuestCard
                                         key={index}
