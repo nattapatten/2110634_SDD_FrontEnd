@@ -5,19 +5,23 @@ import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import "./DashboardStudent.css";
 import AdvisorProfile from "../assets/AdvisorProfile.png";
-import StudentCard from "../components/StudentCard";
+import MissionCard from "../components/MissionCard";
 import StudentProfile from "../assets/StudentProfile.png";
 import books from "../assets/books.png";
 import homework from "../assets/homework.png";
 import CourseCard from "../components/CourseCard";
 import NotificationCard from "../components/NotificationCard";
 import QuestCard from "../components/QuestCard";
-import StudentInfoCard from "../components/StudentInfoCard";
+import MissionInfoCard from "../components/MissionInfoCard";
 import StudentAllCourses from "../components/StudentAllCourses";
 import Radialbar_Charts_Gradient from "../components/Radialbar_Charts_Gradient";
+import AchievementBandages from "../components/AchievementBandages"
 
 const DashboardStudent = () => {
   //#region Mock Data
+
+
+
   const courseData = [
     {
       courseID: "2110634",
@@ -381,10 +385,10 @@ const DashboardStudent = () => {
           <div className="top-of-student-container">
             <p
               className="student-container-title"
-              style={{ fontSize: "20px", fontWeight: "bold" }}
+              style={{ fontSize: "30px", fontWeight: "bold" }}
             >
-              Your Students
-            </p>
+              Main Mission<span style={{ fontSize: "40px" }}>📌</span></p>
+
             {showStudentInfo && (
               <Button className="close-button" onClick={handleClose}>
                 x
@@ -392,7 +396,7 @@ const DashboardStudent = () => {
             )}
           </div>
           {showStudentInfo ? (
-            <StudentInfoCard student={selectedStudent} onClose={handleClose} />
+            <MissionInfoCard student={selectedStudent} onClose={handleClose} />
           ) : (
             <div className="student-list">
               {studentData.map((student, index) => (
@@ -402,7 +406,7 @@ const DashboardStudent = () => {
                   className="student-card-wrapper"
                   tabIndex="0"
                 >
-                  <StudentCard
+                  <MissionCard
                     title={student.title}
                     image={student.image}
                     name={student.name}
@@ -430,7 +434,7 @@ const DashboardStudent = () => {
       )}
       <Fade in={showNotificationsAndQuests}>
         <section className={showNotificationsAndQuests ? "visible" : "hidden"}>
-          <div className="section_comulative container-grey">
+          {/* <div className="section_comulative container-grey">
             <p style={{ fontSize: "20px", fontWeight: "bold" }}>
               Comulative Scores
             </p>
@@ -451,16 +455,18 @@ const DashboardStudent = () => {
                 label="Gauge 3"
               />
             </div>
+          </div> */}
+          {/* <br /> */}
+
+          <div className="section_achievement container-grey">
+            <p style={{ fontSize: "30px", fontWeight: "bold", textAlign: "center" }}> Achievements <span style={{ fontSize: "40px" }}>🏆</span></p>
+            <div className="archivement-list-row">
+              <AchievementBandages />
+            </div>
           </div>
           <br />
 
-          <div className="section_archivement container-grey">
-            <p style={{ fontSize: "20px", fontWeight: "bold" }}>Achievements</p>
-            <div className="chart-list-row"></div>
-          </div>
-          <br />
-
-          <div className="section2 container-grey">
+          {/* <div className="section2 container-grey">
             <p style={{ fontSize: "20px", fontWeight: "bold" }}>Your Courses</p>
             <div className="course-list">
               {courseData.map((course, index) => (
@@ -474,24 +480,23 @@ const DashboardStudent = () => {
                 />
               ))}
             </div>
-          </div>
-          <br />
+          </div> */}
+          {/* <br />
 
-          <br />
+          <br /> */}
           <div className="section3 ">
             <div className="advisor-notification container-grey">
+              <p style={{ fontSize: "30px", fontWeight: "bold", textAlign: "center" }}> Notifications <span style={{ fontSize: "40px" }}>📢</span></p>
               <div className="top-of-notification">
-                <p style={{ fontSize: "20px", fontWeight: "bold" }}>
-                  Notifications
-                </p>
-                <Button
+                {/* <p style={{ fontSize: "20px", fontWeight: "bold", textAlign: "center" }}> Notifications <span style={{ fontSize: "40px" }}>📢</span></p> */}
+                {/* <Button
                   className="noti-create-button"
                   variant="primary"
                   size="sm"
                   onClick={handleShowNotiModal}
                 >
                   Create
-                </Button>
+                </Button> */}
               </div>
 
               <div className="notification-list">
@@ -556,16 +561,17 @@ const DashboardStudent = () => {
             </Modal>
 
             <div className="advisor-quest container-grey">
+              <p style={{ fontSize: "30px", fontWeight: "bold", textAlign: "center" }}> Your Upcoming Quests <span style={{ fontSize: "40px" }}>📜</span></p>
               <div className="top-of-quest">
-                <p style={{ fontSize: "20px", fontWeight: "bold" }}>Quests</p>
-                <Button
+
+                {/* <Button
                   className="noti-create-button"
                   variant="primary"
                   size="sm"
                   onClick={handleShowQuestModal}
                 >
                   Create
-                </Button>
+                </Button> */}
               </div>
               <div className="notification-list">
                 {questData.map((quest, index) => (

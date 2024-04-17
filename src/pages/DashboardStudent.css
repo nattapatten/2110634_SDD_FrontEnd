@@ -31,12 +31,51 @@
     height: auto;
 }
 
-.section_archivement {
+
+
+.section_achievement {
     display: flex;
     flex-direction: column;
+    align-items: center;
     width: 100%;
-    height: auto;
+    padding: 20px;
+    background-color: #f0f0f0;
+    border-radius: 10px;
 }
+
+.archivement-list-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center; /* Center items horizontally */
+    flex-wrap: wrap; /* Allow the items to wrap */
+    overflow-x: auto; /* Allows horizontal scrolling */
+    width: 100%; /* Ensures the container stretches horizontally */
+    gap: 10px; /* Space between each badge */
+}
+
+.achievement-badge {
+    flex: 0 0 auto; /* Do not grow, do not shrink, stay auto based on content */
+    display: flex;
+    align-items: center;
+    /* border: 2px solid #ccc; */
+    border-radius: 0px;
+    padding: 10px;
+}
+
+.badge-icon {
+    font-size: 30px;
+    margin-right: 15px;
+}
+
+.badge-info h3, .badge-info p {
+    margin: 0;
+}
+
+
+
+
+
 
 .chart-list-row {
     display: flex;
@@ -78,13 +117,25 @@
     height: 343px;
     border-radius: 25px;
     padding: 8px; 
+    justify-content: center; /* Center items horizontally */
+
+
 }
 
 .student-list, .course-list {
-    display: flex;
+    /* display: flex;
     gap: 18px;
-    overflow-x: auto; /* Enable horizontal scrolling when content overflows */
-    flex-grow: 1;
+    overflow-x: auto; 
+    flex-grow: 1; */
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center; /* Center items horizontally */
+    flex-wrap: wrap; /* Allow the items to wrap */
+    overflow-x: auto; /* Allows horizontal scrolling */
+    width: 100%; /* Ensures the container stretches horizontally */
+    gap: 10px; /* Space between each badge */
+    
 
 }
 
@@ -175,3 +226,5 @@
     height: 50vh; /* Increase height for better visibility*/
   }
 }
+
+
