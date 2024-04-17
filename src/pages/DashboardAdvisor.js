@@ -16,7 +16,11 @@ import StudentAllCourses from '../components/StudentAllCourses';
 import axios from 'axios';
 
 const DashboardAdvisor = () => {
+    const advisorID = "ADV002";
+    
+    const baseURL = 'http://127.0.0.1:4000';
 
+    
     const courseData = [
         {
             courseID: "2110634",
@@ -64,109 +68,109 @@ const DashboardAdvisor = () => {
         
     ];
 
-    const studentData = [
-        {
-            title: "Graduated",
-            image: StudentProfile,
-            path: "Software Engineer",
-            name: "James James",
-            studentID: "11111111",
-            status: "100",
-            gpa: "3.80",
-            lastUpdated: "2023-12-15T08:30:00",
-        },
-        {
-            title: "Graduated",
-            image: StudentProfile,
-            path: "Project Managerr",
-            name: "Jane Jane",
-            studentID: "22222222",
-            status: "100",
-            gpa: "4.00",
-            lastUpdated: "2023-11-30T14:45:00",
-        },
-        {
-            title: "In Progress",
-            image: StudentProfile,
-            path: "Software Engineer",
-            name: "John John",
-            studentID: "33333333",
-            status: "70",
-            gpa: "2.80",
-            lastUpdated: "2024-01-10T10:20:00",
-        },
-        {
-            title: "In Progress",
-            image: StudentProfile,
-            path: "Software Engineer",
-            name: "Alice Smith",
-            studentID: "44444444",
-            status: "80",
-            gpa: "3.20",
-            lastUpdated: "2024-02-05T11:15:00",
-        },
-        {
-            title: "Graduated",
-            image: StudentProfile,
-            path: "DevOps Engineer",
-            name: "Michael Johnson",
-            studentID: "55555555",
-            status: "100",
-            gpa: "3.75",
-            lastUpdated: "2023-10-20T09:00:00",
-        },
-        {
-            title: "In Progress",
-            image: StudentProfile,
-            path: "Software Engineer",
-            name: "Emily Williams",
-            studentID: "66666666",
-            status: "60",
-            gpa: "3.00",
-            lastUpdated: "2024-03-15T13:30:00",
-        },
-        {
-            title: "Resigned",
-            image: StudentProfile,
-            path: "Software Engineer",
-            name: "Matthew Brown",
-            studentID: "77777777",
-            status: "50",
-            gpa: "2.50",
-            lastUpdated: "2023-12-01T16:00:00",
-        },
-        {
-            title: "In Progress",
-            image: StudentProfile,
-            path: "Software Engineer",
-            name: "Emma Davis",
-            studentID: "88888888",
-            status: "40",
-            gpa: "2.90",
-            lastUpdated: "2024-04-05T09:45:00",
-        },
-        {
-            title: "In Progress",
-            image: StudentProfile,
-            path: "Software Engineer",
-            name: "Daniel Wilson",
-            studentID: "12345678",
-            status: "30",
-            gpa: "2.80",
-            lastUpdated: "2024-02-25T14:00:00",
-        },
-        {
-            title: "Resigned",
-            image: StudentProfile,
-            path: "Software Engineer",
-            name: "Olivia Miller",
-            studentID: "12345678",
-            status: "20",
-            gpa: "2.70",
-            lastUpdated: "2023-11-15T10:30:00",
-        },
-        // Add more student data objects with lastUpdated field including time
-    ];
+    // const studentData = [
+    //     {
+    //         title: "Graduated",
+    //         image: StudentProfile,
+    //         path: "Software Engineer",
+    //         name: "James James",
+    //         studentID: "11111111",
+    //         status: "100",
+    //         gpa: "3.80",
+    //         lastUpdated: "2023-12-15T08:30:00",
+    //     },
+    //     {
+    //         title: "Graduated",
+    //         image: StudentProfile,
+    //         path: "Project Managerr",
+    //         name: "Jane Jane",
+    //         studentID: "22222222",
+    //         status: "100",
+    //         gpa: "4.00",
+    //         lastUpdated: "2023-11-30T14:45:00",
+    //     },
+    //     {
+    //         title: "In Progress",
+    //         image: StudentProfile,
+    //         path: "Software Engineer",
+    //         name: "John John",
+    //         studentID: "33333333",
+    //         status: "70",
+    //         gpa: "2.80",
+    //         lastUpdated: "2024-01-10T10:20:00",
+    //     },
+    //     {
+    //         title: "In Progress",
+    //         image: StudentProfile,
+    //         path: "Software Engineer",
+    //         name: "Alice Smith",
+    //         studentID: "44444444",
+    //         status: "80",
+    //         gpa: "3.20",
+    //         lastUpdated: "2024-02-05T11:15:00",
+    //     },
+    //     {
+    //         title: "Graduated",
+    //         image: StudentProfile,
+    //         path: "DevOps Engineer",
+    //         name: "Michael Johnson",
+    //         studentID: "55555555",
+    //         status: "100",
+    //         gpa: "3.75",
+    //         lastUpdated: "2023-10-20T09:00:00",
+    //     },
+    //     {
+    //         title: "In Progress",
+    //         image: StudentProfile,
+    //         path: "Software Engineer",
+    //         name: "Emily Williams",
+    //         studentID: "66666666",
+    //         status: "60",
+    //         gpa: "3.00",
+    //         lastUpdated: "2024-03-15T13:30:00",
+    //     },
+    //     {
+    //         title: "Resigned",
+    //         image: StudentProfile,
+    //         path: "Software Engineer",
+    //         name: "Matthew Brown",
+    //         studentID: "77777777",
+    //         status: "50",
+    //         gpa: "2.50",
+    //         lastUpdated: "2023-12-01T16:00:00",
+    //     },
+    //     {
+    //         title: "In Progress",
+    //         image: StudentProfile,
+    //         path: "Software Engineer",
+    //         name: "Emma Davis",
+    //         studentID: "88888888",
+    //         status: "40",
+    //         gpa: "2.90",
+    //         lastUpdated: "2024-04-05T09:45:00",
+    //     },
+    //     {
+    //         title: "In Progress",
+    //         image: StudentProfile,
+    //         path: "Software Engineer",
+    //         name: "Daniel Wilson",
+    //         studentID: "12345678",
+    //         status: "30",
+    //         gpa: "2.80",
+    //         lastUpdated: "2024-02-25T14:00:00",
+    //     },
+    //     {
+    //         title: "Resigned",
+    //         image: StudentProfile,
+    //         path: "Software Engineer",
+    //         name: "Olivia Miller",
+    //         studentID: "12345678",
+    //         status: "20",
+    //         gpa: "2.70",
+    //         lastUpdated: "2023-11-15T10:30:00",
+    //     },
+    //     // Add more student data objects with lastUpdated field including time
+    // ];
 
 
     //All quests this advisor created
@@ -213,9 +217,6 @@ const DashboardAdvisor = () => {
         },
     ];
 
-    studentData.sort((a, b) => {
-        return new Date(b.lastUpdated) - new Date(a.lastUpdated);
-    });
 
     const [selectedStudent, setSelectedStudent] = useState(null);
     const [showStudentInfo, setShowStudentInfo] = useState(false);
@@ -231,12 +232,14 @@ const DashboardAdvisor = () => {
 
     //State for query
     const [notifications, setNotifications] = useState([]);
+    const [quests, setQuests] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
 
     const fetchNotifications = async () => {
         setIsLoading(true);  // Start loading
         try {
-            const response = await axios.get('http://127.0.0.1:4000/api/v1/notifications');
+            const response = await axios.get(`${baseURL}/api/v1/notifications`);
+            console.log('noti response', response)
             setNotifications(response.data.data);
         } catch (error) {
             console.error('Failed to fetch notifications:', error);
@@ -248,6 +251,25 @@ const DashboardAdvisor = () => {
     // Fetch notifications from an API when component mounts
     useEffect(() => {
         fetchNotifications();
+    }, []);
+
+    const fetchQuests = async () => {
+        setIsLoading(true);
+        try {
+            const response = await axios.get(`${baseURL}/api/v1/assignments`);
+            if (response.data && response.data.data) {
+                setQuests(response.data.data); // Set the quests state to the nested data array
+            } else {
+                console.error('Quest data not found');
+            }
+        } catch (error) {
+            console.error('Failed to fetch quests:', error);
+        }
+        setIsLoading(false);
+    }    
+
+    useEffect(() => {
+        fetchQuests();
     }, []);
     
     
@@ -278,7 +300,7 @@ const DashboardAdvisor = () => {
 
         try {
             // POST request to add a new notification
-            const response = await axios.post('http://127.0.0.1:4000/api/v1/notifications', payload);
+            const response = await axios.post(`${baseURL}/api/v1/notifications`, payload);
             console.log('Notification posted successfully:', response.data.data);
 
             // Update state to trigger re-render with new notifications
@@ -347,6 +369,50 @@ const DashboardAdvisor = () => {
         setShowNotificationsAndQuests(true); // Show Notifications and Quests
     };
 
+    //Advisor info
+    const [advisorInfo, setAdvisorInfo] = useState({});
+    const fetchAdvisorData = async () => {
+        try {
+            const response = await axios.get(`${baseURL}/api/v1/advisor/${advisorID}`);
+            setAdvisorInfo(response.data.data);
+            console.log('Advisor Data:', response.data.data);
+        } catch (error) {
+            console.error('Error fetching advisor data:', error);
+        }
+    };
+
+    useEffect(() => {
+        fetchAdvisorData();
+    }, []);
+
+    //Student data
+    const [studentData, setStudentData] = useState([]);
+    const fetchStudentData = async () => {
+        try {
+            const response = await axios.get(`${baseURL}/api/v1/student/${advisorID}`);
+            if (response.data.success && response.data.data) {
+                const updatedStudentData = response.data.data.map(student => ({
+                    ...student,
+                    image: StudentProfile  // Assign the static image to each student
+                }));
+                setStudentData(updatedStudentData);
+            } else {
+                console.error('No student data found or unsuccessful fetch');
+            }
+        } catch (error) {
+            console.error('Error fetching student data:', error);
+        }
+    };
+    useEffect(() => {
+    fetchStudentData();
+    }, []);  // Empty dependency array to ensure it runs only once after the component mounts
+
+    useEffect(() => {
+        // Sort studentData after it has been initialized
+        studentData.sort((a, b) => {
+            return new Date(b.lastUpdated) - new Date(a.lastUpdated);
+        });
+    }, [studentData]);
 
     return (
         <div className='advisor-container'>
@@ -356,7 +422,7 @@ const DashboardAdvisor = () => {
                     <div className='advisorProfile'>
                         <img src={AdvisorProfile} alt="Advisor" />
                     </div>
-                    <p style={{fontSize: '18px'}}>John Smith</p>
+                    <p style={{fontSize: '18px'}}>{advisorInfo.name || 'Loading...'}</p>
                 </div>
                 <div className='container-grey students-container'>
                     <div className='top-of-student-container'>
@@ -369,7 +435,7 @@ const DashboardAdvisor = () => {
                         <div className='student-list'>
                             {studentData.map((student, index) => (
                                 <div 
-                                    key={index}
+                                    key={student._id}  // Use student._id for the key if available, for better React performance
                                     onClick={() => handleStudentClick(student)}
                                     className='student-card-wrapper'
                                     tabIndex="0"
@@ -378,8 +444,8 @@ const DashboardAdvisor = () => {
                                         title={student.title}
                                         image={student.image}
                                         name={student.name}
-                                        status={student.status}
-                                        gpa={student.gpa}
+                                        status={student.status.toString()}  // Ensure status is a string if needed
+                                        gpa={student.gpa.toString()}  // Ensure GPA is a string if needed
                                     />
                                 </div>
                             ))}
@@ -491,7 +557,7 @@ const DashboardAdvisor = () => {
                                 <p style={{fontSize: '20px', fontWeight: 'bold'}}>Quests</p>
                                 <Button className='noti-create-button' variant="primary" size='sm' onClick={handleShowQuestModal} >Create</Button>
                             </div>
-                            <div className='quest-list'>
+                            {/* <div className='quest-list'>
                                 {questData.map((quest, index) => (
                                     <QuestCard
                                         key={index}
@@ -503,6 +569,25 @@ const DashboardAdvisor = () => {
                                         dueDate={quest.dueDate}
                                     />
                                 ))}
+                            </div> */}
+                            <div className='quest-list'>
+                                {isLoading ? (
+                                    <div className='loading-noti'>Loading notifications...</div>
+                                ) : (
+                                    quests.map((quest, index) => (
+                                            <QuestCard
+                                            key={index}
+                                            title={quest.title}
+                                            description={quest.description}
+                                            image={books}
+                                            courseID={quest.courseID}
+                                            time={quest.time}
+                                            dueDate={quest.dueDate}
+                                        />
+                                    ))
+                                )}
+
+
                             </div>
                         </div>
                         <Modal show={showQuestModal} onHide={handleCloseQuestModal}>

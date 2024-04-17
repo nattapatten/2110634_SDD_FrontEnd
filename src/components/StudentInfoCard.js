@@ -19,9 +19,9 @@ const StudentInfoCard = ({ student, onClose }) => {
                     <p>Name: {student.name}</p>
                     <p>Path: {student.path}</p>
                     <p>Graduation Status: {student.status}%</p>
-                    <p>Course Taken: 5/6</p>
+                    {/* <p>Course Taken: 5/6</p> */}
                     <p>GPA: {student.gpa}</p>
-                    <p>Last Updated: {student.lastUpdated}</p>
+                    {/* <p>Last Updated: {student.lastUpdated}</p> */}
                     
                 </div>
             </div>
