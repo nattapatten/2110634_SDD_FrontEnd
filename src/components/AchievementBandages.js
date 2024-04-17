@@ -14,170 +14,170 @@ const images = importAll(require.context('../assets/Bandage_Icon', false, /\.(pn
 
 
 
+//Mock Data
+// const BandageData = [
+//     {
+//         courseID: "2110634",
+//         courseName: "Math for Software Engineering",
+//         Grade: "A",
+//         image: "course Icon Image",
+//         dueDate:"2024-02-05T11:15:00",
+//         submitDate:"2024-02-04T11:15:00",
 
-const BandageData = [
-    {
-        courseID: "2110634",
-        courseName: "Math for Software Engineering",
-        Grade: "A",
-        image: "course Icon Image",
-        dueDate:"2024-02-05T11:15:00",
-        submitDate:"2024-02-04T11:15:00",
-
-    },
-    {
-        courseID: "2110645",
-        courseName: "Advanced Algorithms",
-        Grade: "A",
-        image: "course Icon Image",
-        dueDate:"2024-02-05T11:15:00",
-        submitDate:"2024-02-04T11:15:00",
-    },
-    {
-        courseID: "2110656",
-        courseName: "System Architecture Design",
-        Grade: "B+",
-        image: "course Icon Image",
-        dueDate:"2024-02-05T11:15:00",
-        submitDate:"2024-02-04T11:15:00",
-    },
-    {
-        courseID: "2110691",
-        courseName: "Cloud Computing",
-        Grade: "C+",
-        image: "course Icon Image",
-        dueDate:"2024-02-05T11:15:00",
-        submitDate:"2024-02-04T11:15:00",
-    },
-    {
-        courseID: "2110692",
-        courseName: "Cloud Computing",
-        Grade: "D",
-        image: "course Icon Image",
-        dueDate:"2024-02-05T11:15:00",
-        submitDate:"2024-02-04T11:15:00",
-    },
-    {
-        courseID: "2110690",
-        courseName: "Cloud Computing",
-        Grade: "A",
-        image: "course Icon Image",
-        dueDate:"2024-02-05T11:15:00",
-        submitDate:"2024-02-04T11:15:00",
-    },
-    {
-        courseID: "2110634",
-        courseName: "Math for Software Engineering",
-        Grade: "A",
-        image: "course Icon Image",
-        dueDate:"2024-02-05T11:15:00",
-        submitDate:"2024-02-04T11:15:00",
-    },
-    {
-        courseID: "2110645",
-        courseName: "Advanced Algorithms",
-        Grade: "A",
-        image: "course Icon Image",
-        dueDate:"2024-02-05T11:15:00",
-        submitDate:"2024-02-04T11:15:00",
-    },
-    {
-        courseID: "2110656",
-        courseName: "System Architecture Design",
-        Grade: "B+",
-        image: "course Icon Image",
-        dueDate:"2024-02-05T11:15:00",
-        submitDate:"2024-02-04T11:15:00",
-    },
-    {
-        courseID: "2110691",
-        courseName: "Cloud Computing",
-        Grade: "C+",
-        image: "course Icon Image",
-        dueDate:"2024-02-05T11:15:00",
-        submitDate:"2024-02-04T11:15:00",
-    },
-    {
-        courseID: "2110692",
-        courseName: "Cloud Computing",
-        Grade: "D",
-        image: "course Icon Image",
-        dueDate:"2024-02-05T11:15:00",
-        submitDate:"2024-02-04T11:15:00",
-    },
-    {
-        courseID: "2110690",
-        courseName: "Cloud Computing",
-        Grade: "A",
-        image: "course Icon Image",
-        dueDate:"2024-02-05T11:15:00",
-        submitDate:"2024-02-04T11:15:00",
-    },
-    {
-        courseID: "2110634",
-        courseName: "Math for Software Engineering",
-        Grade: "A",
-        image: "course Icon Image",
-        dueDate:"2024-02-05T11:15:00",
-        submitDate:"2024-02-04T11:15:00",
-    },
-    {
-        courseID: "2110645",
-        courseName: "Advanced Algorithms",
-        Grade: "A",
-        image: "course Icon Image",
-        dueDate:"2024-02-05T11:15:00",
-        submitDate:"2024-02-04T11:15:00",
-    },
-    {
-        courseID: "2110656",
-        courseName: "System Architecture Design",
-        Grade: "B+",
-        image: "course Icon Image",
-        dueDate:"2024-02-05T11:15:00",
-        submitDate:"2024-02-04T11:15:00",
-    },
-    {
-        courseID: "2110691",
-        courseName: "Cloud Computing",
-        Grade: "C+",
-        image: "course Icon Image",
-        dueDate:"2024-02-05T11:15:00",
-        submitDate:"2024-02-04T11:15:00",
-    },
-    {
-        courseID: "2110692",
-        courseName: "Cloud Computing",
-        Grade: "D",
-        image: "course Icon Image",
-        dueDate:"2024-02-05T11:15:00",
-        submitDate:"2024-02-04T11:15:00",
-    },
-    {
-        courseID: "2110690",
-        courseName: "Cloud Computing",
-        Grade: "A",
-        image: "course Icon Image",
-        dueDate:"2024-02-05T11:15:00",
-        submitDate:"2024-02-04T11:15:00",
-    },
-    {
-        courseID: "2110699",
-        courseName: "Thesis",
-        Grade: "pass",
-        image: "course Icon Image",
-        dueDate:"2024-02-05T11:15:00",
-        submitDate:"2024-02-04T11:15:00",
-    },
-    {
-        courseID: "2110670",
-        courseName: "Comprehensive Test",
-        Grade: "pass",
-        image: "course Icon Image",
-        dueDate:"2024-02-05T11:15:00",
-        submitDate:"2024-02-04T11:15:00",
-    }
-];
+//     },
+//     {
+//         courseID: "2110645",
+//         courseName: "Advanced Algorithms",
+//         Grade: "A",
+//         image: "course Icon Image",
+//         dueDate:"2024-02-05T11:15:00",
+//         submitDate:"2024-02-04T11:15:00",
+//     },
+//     {
+//         courseID: "2110656",
+//         courseName: "System Architecture Design",
+//         Grade: "B+",
+//         image: "course Icon Image",
+//         dueDate:"2024-02-05T11:15:00",
+//         submitDate:"2024-02-04T11:15:00",
+//     },
+//     {
+//         courseID: "2110691",
+//         courseName: "Cloud Computing",
+//         Grade: "C+",
+//         image: "course Icon Image",
+//         dueDate:"2024-02-05T11:15:00",
+//         submitDate:"2024-02-04T11:15:00",
+//     },
+//     {
+//         courseID: "2110692",
+//         courseName: "Cloud Computing",
+//         Grade: "D",
+//         image: "course Icon Image",
+//         dueDate:"2024-02-05T11:15:00",
+//         submitDate:"2024-02-04T11:15:00",
+//     },
+//     {
+//         courseID: "2110690",
+//         courseName: "Cloud Computing",
+//         Grade: "A",
+//         image: "course Icon Image",
+//         dueDate:"2024-02-05T11:15:00",
+//         submitDate:"2024-02-04T11:15:00",
+//     },
+//     {
+//         courseID: "2110634",
+//         courseName: "Math for Software Engineering",
+//         Grade: "A",
+//         image: "course Icon Image",
+//         dueDate:"2024-02-05T11:15:00",
+//         submitDate:"2024-02-04T11:15:00",
+//     },
+//     {
+//         courseID: "2110645",
+//         courseName: "Advanced Algorithms",
+//         Grade: "A",
+//         image: "course Icon Image",
+//         dueDate:"2024-02-05T11:15:00",
+//         submitDate:"2024-02-04T11:15:00",
+//     },
+//     {
+//         courseID: "2110656",
+//         courseName: "System Architecture Design",
+//         Grade: "B+",
+//         image: "course Icon Image",
+//         dueDate:"2024-02-05T11:15:00",
+//         submitDate:"2024-02-04T11:15:00",
+//     },
+//     {
+//         courseID: "2110691",
+//         courseName: "Cloud Computing",
+//         Grade: "C+",
+//         image: "course Icon Image",
+//         dueDate:"2024-02-05T11:15:00",
+//         submitDate:"2024-02-04T11:15:00",
+//     },
+//     {
+//         courseID: "2110692",
+//         courseName: "Cloud Computing",
+//         Grade: "D",
+//         image: "course Icon Image",
+//         dueDate:"2024-02-05T11:15:00",
+//         submitDate:"2024-02-04T11:15:00",
+//     },
+//     {
+//         courseID: "2110690",
+//         courseName: "Cloud Computing",
+//         Grade: "A",
+//         image: "course Icon Image",
+//         dueDate:"2024-02-05T11:15:00",
+//         submitDate:"2024-02-04T11:15:00",
+//     },
+//     {
+//         courseID: "2110634",
+//         courseName: "Math for Software Engineering",
+//         Grade: "A",
+//         image: "course Icon Image",
+//         dueDate:"2024-02-05T11:15:00",
+//         submitDate:"2024-02-04T11:15:00",
+//     },
+//     {
+//         courseID: "2110645",
+//         courseName: "Advanced Algorithms",
+//         Grade: "A",
+//         image: "course Icon Image",
+//         dueDate:"2024-02-05T11:15:00",
+//         submitDate:"2024-02-04T11:15:00",
+//     },
+//     {
+//         courseID: "2110656",
+//         courseName: "System Architecture Design",
+//         Grade: "B+",
+//         image: "course Icon Image",
+//         dueDate:"2024-02-05T11:15:00",
+//         submitDate:"2024-02-04T11:15:00",
+//     },
+//     {
+//         courseID: "2110691",
+//         courseName: "Cloud Computing",
+//         Grade: "C+",
+//         image: "course Icon Image",
+//         dueDate:"2024-02-05T11:15:00",
+//         submitDate:"2024-02-04T11:15:00",
+//     },
+//     {
+//         courseID: "2110692",
+//         courseName: "Cloud Computing",
+//         Grade: "D",
+//         image: "course Icon Image",
+//         dueDate:"2024-02-05T11:15:00",
+//         submitDate:"2024-02-04T11:15:00",
+//     },
+//     {
+//         courseID: "2110690",
+//         courseName: "Cloud Computing",
+//         Grade: "A",
+//         image: "course Icon Image",
+//         dueDate:"2024-02-05T11:15:00",
+//         submitDate:"2024-02-04T11:15:00",
+//     },
+//     {
+//         courseID: "2110699",
+//         courseName: "Thesis",
+//         Grade: "pass",
+//         image: "course Icon Image",
+//         dueDate:"2024-02-05T11:15:00",
+//         submitDate:"2024-02-04T11:15:00",
+//     },
+//     {
+//         courseID: "2110670",
+//         courseName: "Comprehensive Test",
+//         Grade: "pass",
+//         image: "course Icon Image",
+//         dueDate:"2024-02-05T11:15:00",
+//         submitDate:"2024-02-04T11:15:00",
+//     }
+// ];
 
 
 
@@ -205,7 +205,7 @@ function Modal({ show, onClose, children }) {
 }
 
 
-function AchievementBandages() {
+function AchievementBandages({ BandageData }) {
     const [modalShow, setModalShow] = useState(false);
     const [selectedAchievement, setSelectedAchievement] = useState(null);
 
@@ -280,7 +280,7 @@ function AchievementBandages() {
         achievements.push({
             label: "On Time Completion",
             image: images['clock.png'],
-            description: "All courses were completed on time."
+            description: "I'm always on time."
         });
     }
 

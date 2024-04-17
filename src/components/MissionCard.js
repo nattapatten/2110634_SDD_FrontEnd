@@ -6,20 +6,20 @@ const MissionCard = ({ title, name, image, status, gpa }) => {
   let cardClassName = "student-card";
 
   // Check the title and add additional class names accordingly
-  if (title === "In Progress") {
+  if (title === "Studying") {
     cardClassName += " container-purple2";
-  } else if (title === "Graduated") {
+  } else if (title === "Passed") {
     cardClassName += " container-purple3";
-  } else if (title === "Resigned") {
+  } else if (title === "Withdraw") {
     cardClassName += " container-purple2 gray-scale";
   }
 
   // Determine which component or text to render based on the title
   let statusComponent;
-  if (title === "In Progress") {
+  if (title === "Studying") {
     statusComponent = <StatusBar percentage={status} />;
-  } else if (title === "Graduated") {
-    statusComponent = <p style={{fontSize: '14px', margin: '0'}}> GPA: {gpa}</p>;
+  } else if (title === "Passed") {
+    statusComponent = <p style={{fontSize: '14px', margin: '0'}}> Grade: {gpa}</p>;
   }
 
   return (

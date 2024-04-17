@@ -1,6 +1,7 @@
 import './MissionInfoCard.css'; 
 import React from 'react';
 import MissionCard from './MissionCard';
+import homework from "../assets/homework.png";
 
 const MissionInfoCard = ({ student, onClose }) => {
     if (!student) return null; // If no student data is provided, don't render the component
@@ -12,7 +13,7 @@ const MissionInfoCard = ({ student, onClose }) => {
                     name={student.name}
                     status={student.status}
                     gpa={student.gpa}
-                    image={student.image}
+                    image={homework}
                 />
             <div className='left'>  
                 <div className='student-info'>
@@ -20,7 +21,7 @@ const MissionInfoCard = ({ student, onClose }) => {
                     <p>Path: {student.path}</p>
                     <p>Graduation Status: {student.status}%</p>
                     <p>Course Taken: 5/6</p>
-                    <p>GPA: {student.gpa}</p>
+                    <p>Grade: {student.gpa}</p>
                     <p>Last Updated: {student.lastUpdated}</p>
                     
                 </div>
