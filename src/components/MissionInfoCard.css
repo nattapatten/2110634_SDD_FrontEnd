@@ -1,0 +1,10 @@
+.student-info-container{
+    display: flex;
+}
+.student-info{
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+    align-items: start;
+    margin-left: 50px;
+}

@@ -1,0 +1,24 @@
+/* RadialbarChartsGradient.css */
+.container {
+    position: relative;
+    width: 450px;
+    height: 250px;
+  }
+  
+  .label {
+    font-size: 20px; /* Corrected from '20x' to '20px' */
+    color: #FFFFFF;
+    margin-bottom: 10px;
+  }
+  
+  .valueDisplay {
+    position: absolute;
+    top: 90%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 20px;
+    color: #FFFFFF;
+    font-weight: bold;
+    text-align: center;
+  }
+  
