@@ -307,6 +307,26 @@ const DashboardAdvisor = () => {
         });
     }, [studentData]);
 
+    //AssignmentCourse
+    const [assignmentData, setAssignmentData] = useState([]);
+    const fetchAssignmentData = async () => {
+        try {
+            const response = await axios.get(`${baseURL}/api/v1/assignmentCourse/${advisorID}`);
+            if (response.data.success && response.data.data) {
+                console.log('inside')
+                setAssignmentData(response.data.data);  // Update state with fetched data
+            } else {
+                console.error('No assignment data found or unsuccessful fetch');
+            }
+        } catch (error) {
+            console.error('Error fetching assignment data:', error);
+        }
+    };
+    useEffect(() => {
+        fetchAssignmentData();
+    }, []);
+
+    
     return (
         <div className='advisor-container'>
             <section className='section1'>
@@ -450,24 +470,11 @@ const DashboardAdvisor = () => {
                                 <p style={{fontSize: '20px', fontWeight: 'bold'}}>Quests</p>
                                 <Button className='noti-create-button' variant="primary" size='sm' onClick={handleShowQuestModal} >Create</Button>
                             </div>
-                            {/* <div className='quest-list'>
-                                {questData.map((quest, index) => (
-                                    <QuestCard
-                                        key={index}
-                                        title={quest.title}
-                                        description={quest.description}
-                                        image={quest.image}
-                                        courseID={quest.courseID}
-                                        time={quest.time}
-                                        dueDate={quest.dueDate}
-                                    />
-                                ))}
-                            </div> */}
                             <div className='quest-list'>
                                 {isLoading ? (
                                     <div className='loading-noti'>Loading notifications...</div>
                                 ) : (
-                                    quests.map((quest, index) => (
+                                    assignmentData.map((quest, index) => (
                                             <QuestCard
                                             key={index}
                                             title={quest.title}
@@ -479,8 +486,6 @@ const DashboardAdvisor = () => {
                                         />
                                     ))
                                 )}
-
-
                             </div>
                         </div>
                         <Modal show={showQuestModal} onHide={handleCloseQuestModal}>
