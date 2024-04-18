@@ -6,15 +6,15 @@ import Form from "react-bootstrap/Form";
 import "./DashboardStudent.css";
 import AdvisorProfile from "../assets/AdvisorProfile.png";
 import MissionCard from "../components/MissionCard";
-import StudentProfile from "../assets/StudentProfile.png";
+// import StudentProfile from "../assets/StudentProfile.png";
 import books from "../assets/books.png";
 import homework from "../assets/homework.png";
-import CourseCard from "../components/CourseCard";
+// import CourseCard from "../components/CourseCard";
 import NotificationCard from "../components/NotificationCard";
 import QuestCard from "../components/QuestCard";
 import MissionInfoCard from "../components/MissionInfoCard";
 import StudentAllCourses from "../components/StudentAllCourses";
-import Radialbar_Charts_Gradient from "../components/Radialbar_Charts_Gradient";
+// import Radialbar_Charts_Gradient from "../components/Radialbar_Charts_Gradient";
 import AchievementBandages from "../components/AchievementBandages"
 
 const DashboardStudent = () => {
