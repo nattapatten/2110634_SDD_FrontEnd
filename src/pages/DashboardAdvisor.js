@@ -68,50 +68,6 @@ const DashboardAdvisor = () => {
         
     ];
 
-    const questData = [
-        {
-            courseID: "2110634",
-            title: "New Student Registration",
-            description: "A new student, Emily Johnson, has successfully completed her registration process for the upcoming academic year under your advisement. Emily is pursuing a degree in Computer Science with a focus on artificial intelligence. It is essential to review her academic file, previous coursework, and plan an initial meeting to discuss her academic goals, course selections, and any specific needs or accommodations she may require.",
-            image: homework,
-            time: "1 Apr",
-            dueDate: "5 May 2024"
-        },
-        {
-            courseID: "2110645",
-            title: "Grade Alert: Low Performance",
-            description: "Student John Smith's performance in the Calculus II course has recently dropped below the academic satisfactory threshold, with his latest test scores indicating a potential risk of failing. This situation calls for a proactive approach to understand the challenges John is facing and to develop an intervention plan. Suggestions include arranging tutoring sessions, discussing study habits, and possibly considering course withdrawal before the deadline to avoid an adverse impact on his GPA.",
-            image: homework,
-            time: "1 Apr",
-            dueDate: "20 April 2024"
-        },
-        {
-            courseID: "2110656",
-            title: "Scholarship Application Deadline",
-            description: "The deadline for the upcoming academic scholarship applications is quickly approaching on April 30th. There are several scholarships available that target students excelling in academic performance, demonstrating community service, or in need of financial aid. Please make an effort to remind your eligible students to prepare their applications, ensuring they include all required documents and personal statements. Holding a brief workshop on how to write a compelling application could significantly benefit our students.",
-            image: homework,
-            time: "1 Apr",
-            dueDate: "2 April 2024"
-        },
-        {
-            courseID: "2110656",
-            title: "Updated Course Catalog",
-            description: "The course catalog for the next academic year has been thoroughly updated, including several new courses that reflect the latest trends and technologies in the field of computer science, such as Advanced Machine Learning, Cybersecurity Ethics, and Blockchain Fundamentals. Please take the time to review these updates and discuss with your advisees how these new courses could fit into their academic and career plans, particularly those students who are nearing the completion of their degree requirements.",
-            image: homework,
-            time: "1 Apr",
-            dueDate: "5 October 2024"
-        },
-        {
-            courseID: "2110690",
-            title: "Internship Opportunities",
-            description: "Our department has recently partnered with several leading tech companies to offer new internship opportunities in software development, data analysis, and cybersecurity. These internships not only provide valuable hands-on experience but also offer potential pathways to full-time positions upon graduation. Encourage students, especially those in their junior and senior years, to apply by May 15th. Assistance with resume writing and interview preparation is available through our career services office.",
-            image: homework,
-            time: "1 Apr",
-            dueDate: "2 April 2024"
-        },
-    ];
-
-
     const [selectedStudent, setSelectedStudent] = useState(null);
     const [showStudentInfo, setShowStudentInfo] = useState(false);
     const [showNotificationsAndQuests, setShowNotificationsAndQuests] = useState(true);
@@ -233,23 +189,42 @@ const DashboardAdvisor = () => {
     const handleQuestTitleChange = (e) => setQuestTitle(e.target.value);
     const handleQuestDescriptionChange = (e) => setQuestDescription(e.target.value);
 
+    const [questDueDate, setQuestDueDate] = useState('');
+    const [questTime, setQuestTime] = useState('');
+
     //quest submit
-    const handleQuestSubmit = () => {
-        const currentTime = "2024-04-12 05:12:07"; // Replace this with dynamic time if needed
+    const handleQuestSubmit = async () => {
+        // Use the current date and time in ISO format for the time field
+        const currentTime = new Date().toISOString();
     
         const formData = {
-            questCourseID,
-            questTitle,
-            questDescription,
-            time: currentTime, // Add the current time here
+            courseID: questCourseID,
+            title: questTitle,
+            description: questDescription,
+            time: currentTime,  // Automatically set to current time
+            dueDate: questDueDate
         };
-        // console.log('inside quest')
-        // console.log(formData); // This will now include the current time
     
-        handleCloseQuestModal(); // Close modal after submission
-        // Optionally reset form fields here if needed
+        setIsLoading(true); // Start loading indicator
+        try {
+            const response = await axios.post(`${baseURL}/api/v1/assignmentCourse/`, formData);
+            console.log('Quest submitted successfully:', response.data);
+    
+            // Optionally, update your quests list in state to include the new quest
+            setQuests(prevQuests => [...prevQuests, response.data.data]);
+    
+            // Reset form fields
+            setQuestCourseID('');
+            setQuestTitle('');
+            setQuestDescription('');
+            setQuestDueDate('');
+            handleCloseQuestModal(); // Close modal after successful submission
+        } catch (error) {
+            console.error('Failed to submit quest:', error);
+            // Optionally set an error message in state to display in the UI
+        }
+        setIsLoading(false); // Stop loading indicator
     };
-    
 
     const handleStudentClick = (student) => {
         setSelectedStudent(student);
@@ -311,7 +286,7 @@ const DashboardAdvisor = () => {
     const [assignmentData, setAssignmentData] = useState([]);
     const fetchAssignmentData = async () => {
         try {
-            const response = await axios.get(`${baseURL}/api/v1/assignmentCourse/${advisorID}`);
+            const response = await axios.get(`${baseURL}/api/v1/assignmentCourse/getByAdvisor/${advisorID}`);
             if (response.data.success && response.data.data) {
                 console.log('inside')
                 setAssignmentData(response.data.data);  // Update state with fetched data
@@ -488,6 +463,7 @@ const DashboardAdvisor = () => {
                                 )}
                             </div>
                         </div>
+                    
                         <Modal show={showQuestModal} onHide={handleCloseQuestModal}>
                             <Modal.Header closeButton>
                                 <Modal.Title style={{color: '#7949FF'}}>Create Quest</Modal.Title>
@@ -506,6 +482,10 @@ const DashboardAdvisor = () => {
                                         <Form.Label>Description</Form.Label>
                                         <Form.Control as="textarea" rows={3} placeholder="Enter description" value={questDescription} onChange={handleQuestDescriptionChange} />
                                     </Form.Group>
+                                    <Form.Group className="mb-3" controlId="formQuestDueDate">
+                                        <Form.Label>Due Date</Form.Label>
+                                        <Form.Control type="datetime-local" value={questDueDate} onChange={e => setQuestDueDate(e.target.value)} />
+                                    </Form.Group>
                                 </Form>
                             </Modal.Body>
                             <Modal.Footer>
@@ -513,6 +493,7 @@ const DashboardAdvisor = () => {
                                 <Button variant="primary" onClick={handleQuestSubmit}>Save Changes</Button>
                             </Modal.Footer>
                         </Modal>
+
 
                     </div>
                 </section>
