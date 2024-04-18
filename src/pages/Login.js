@@ -1,4 +1,3 @@
-// Login.js
 import React, { useState } from "react";
 import "./Login.css";
 import chulaLogo from "../assets/chula_logo_Login.png";
@@ -19,13 +18,14 @@ function Login() {
         "http://127.0.0.1:4000/api/v1/auth/login",
         { email, password }
       );
-      // Assuming your backend returns a token upon successful login
+      // Assuming your backend returns a token and role upon successful login
+      const role = response.data.role;
       const token = response.data.token;
       // You can store the token in local storage or cookies for further authentication
       // Example: localStorage.setItem('token', token);
-      console.log("Login successful, token:", token);
+      console.log("Login successful, token:", token, "Role:", role);
       // Redirect the user to the "/LoginOTP" page upon successful login
-      navigate("/LoginOTP", { state: { email } }); // Passing email as state
+      navigate("/LoginOTP", { state: { email, role } }); // Passing email and role as state
     } catch (error) {
       console.error("Login failed:", error.message);
       // Handle login failure, show error message to the user, etc.
