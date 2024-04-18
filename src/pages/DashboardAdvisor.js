@@ -88,7 +88,7 @@ const DashboardAdvisor = () => {
     const fetchNotifications = async () => {
         setIsLoading(true);  // Start loading
         try {
-            const response = await axios.get(`${baseURL}/api/v1/notifications`);
+            const response = await axios.get(`${baseURL}/api/v1/notifications/by-advisor/${advisorID}`);
             // console.log('noti response', response)
             setNotifications(response.data.data);
         } catch (error) {
