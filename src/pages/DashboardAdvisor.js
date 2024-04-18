@@ -7,7 +7,7 @@ import AdvisorProfile from '../assets/AdvisorProfile.png';
 import StudentCard from '../components/StudentCard';
 import StudentProfile from '../assets/StudentProfile.png';
 import books from '../assets/books.png';
-import homework from '../assets/homework.png';
+// import homework from '../assets/homework.png';
 import CourseCard from '../components/CourseCard';
 import NotificationCard from '../components/NotificationCard';
 import QuestCard from '../components/QuestCard';
@@ -82,7 +82,7 @@ const DashboardAdvisor = () => {
 
     //State for query
     const [notifications, setNotifications] = useState([]);
-    const [quests, setQuests] = useState([]);
+    // const [quests, setQuests] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
 
     const fetchNotifications = async () => {
@@ -174,7 +174,7 @@ const DashboardAdvisor = () => {
     const handleQuestDescriptionChange = (e) => setQuestDescription(e.target.value);
 
     const [questDueDate, setQuestDueDate] = useState('');
-    const [questTime, setQuestTime] = useState('');
+    // const [questTime, setQuestTime] = useState('');
 
     //quest submit
     const handleQuestSubmit = async () => {
@@ -245,19 +245,27 @@ const DashboardAdvisor = () => {
     const fetchStudentData = async () => {
         try {
             const response = await axios.get(`${baseURL}/api/v1/student/${advisorID}`);
+            console.log('Response data:', response.data);
             if (response.data.success && response.data.data) {
                 const updatedStudentData = response.data.data.map(student => ({
                     ...student,
-                    image: StudentProfile  // Assign the static image to each student
+                    image: StudentProfile // Assuming StudentProfile is the correct path or data
                 }));
+                
                 setStudentData(updatedStudentData);
+
             } else {
                 console.error('No student data found or unsuccessful fetch');
             }
+           
         } catch (error) {
             console.error('Error fetching student data:', error);
         }
     };
+
+    useEffect(() => {
+        fetchStudentData();
+    }, []);
     useEffect(() => {
     fetchStudentData();
     }, []);  // Empty dependency array to ensure it runs only once after the component mounts
@@ -318,7 +326,7 @@ const DashboardAdvisor = () => {
                         <div className='student-list'>
                             {studentData.map((student, index) => (
                                 <div 
-                                    key={student._id}  // Use student._id for the key if available, for better React performance
+                                    key={student._id}
                                     onClick={() => handleStudentClick(student)}
                                     className='student-card-wrapper'
                                     tabIndex="0"
@@ -327,12 +335,13 @@ const DashboardAdvisor = () => {
                                         title={student.title}
                                         image={student.image}
                                         name={student.name}
-                                        status={student.status.toString()}  // Ensure status is a string if needed
-                                        gpa={student.gpa.toString()}  // Ensure GPA is a string if needed
+                                        status={student.status.toString()}
+                                        gpa={student.gpa ? student.gpa.toString() : 'N/A'} // Handle null GPAs
                                     />
                                 </div>
                             ))}
                         </div>
+
                     )}
                 </div>
             </section>
