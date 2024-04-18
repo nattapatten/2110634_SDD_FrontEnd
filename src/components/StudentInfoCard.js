@@ -17,11 +17,14 @@ const StudentInfoCard = ({ student, onClose }) => {
             <div className='left'>  
                 <div className='student-info'>
                     <p>Name: {student.name}</p>
+                    <p>Email: {student.email}</p>
+                    <p>Phone number: {student.phone}</p>
                     <p>Path: {student.path}</p>
                     <p>Graduation Status: {student.status}%</p>
-                    <p>Course Taken: 5/6</p>
+
+                    {/* <p>Course Taken: 5/6</p> */}
                     <p>GPA: {student.gpa}</p>
-                    <p>Last Updated: {student.lastUpdated}</p>
+                    {/* <p>Last Updated: {student.lastUpdated}</p> */}
                     
                 </div>
             </div>
