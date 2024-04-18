@@ -134,3 +134,12 @@
     align-items: center;
 }
 
+/* Styles for the placeholder option in select dropdowns */
+.select-placeholder {
+    color: rgb(121, 73, 255); /* Set your desired placeholder color */
+}
+
+/* Ensuring other options do not inherit the placeholder color */
+.select-placeholder option:not(:first-child) {
+    color: rgb(121, 73, 255); /* Standard color for other options */
+}

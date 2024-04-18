@@ -8,8 +8,8 @@ import { format, parseISO } from 'date-fns';
 
 
 const QuestCard = ({ title, description, image, time, courseID, dueDate }) => {
-  console.log('description');
-  console.log(description);
+  // console.log('description');
+  // console.log(description);
   const [show, setShow] = useState(false);
 
   // Function to handle opening the modal
@@ -20,12 +20,12 @@ const QuestCard = ({ title, description, image, time, courseID, dueDate }) => {
 
   // Function to trim the description to 100 characters for the main view
   const trimDescription = (text) => {
-    console.log('trim')
-    console.log(text)
-    console.log(typeof text)
-    console.log('----')
-    console.log(text.length)
-    console.log(text.slice(0, 100))
+    // console.log('trim')
+    // console.log(text)
+    // console.log(typeof text)
+    // console.log('----')
+    // console.log(text.length)
+    // console.log(text.slice(0, 100))
     return text.length > 100 ? text.substring(0, 100) + "..." : text;
   };
 

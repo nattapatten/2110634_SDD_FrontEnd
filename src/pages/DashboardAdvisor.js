@@ -302,6 +302,14 @@ const DashboardAdvisor = () => {
     }, []);
 
     
+    // Extract courses for easy mapping in the form dropdown
+    const [courseOptions, setCourseOptions] = useState([]);
+    useEffect(() => {
+        if (advisorInfo.courses) {
+            setCourseOptions(advisorInfo.courses);
+        }
+    }, [advisorInfo]);
+
     return (
         <div className='advisor-container'>
             <section className='section1'>
@@ -393,6 +401,7 @@ const DashboardAdvisor = () => {
                         </div>
 
                         {/* Noti Modal */}
+                       
                         <Modal show={showNotiModal} onHide={handleCloseNotiModal}>
                             <Modal.Header closeButton>
                                 <Modal.Title style={{color: '#7949FF'}}>Create Notification</Modal.Title>
@@ -401,8 +410,14 @@ const DashboardAdvisor = () => {
                                 <Form className='chula-form'>
                                     <Form.Group className="mb-3" controlId="formCourseID">
                                         <Form.Label>Course ID</Form.Label>
-                                        <Form.Control type="text" placeholder="Enter course ID" value={courseID} onChange={handleCourseIDChange} />
+                                        <Form.Control as="select" value={courseID} onChange={handleCourseIDChange} className="select-placeholder">
+                                            <option value="" style={{ color: 'gray' }}>Select a Course</option>
+                                            {courseOptions.map(courseID => (
+                                                <option key={courseID} value={courseID}>{courseID}</option>
+                                            ))}
+                                        </Form.Control>
                                     </Form.Group>
+
                                     <Form.Group className="mb-3" controlId="formTitle">
                                         <Form.Label>Summary</Form.Label>
                                         <Form.Control type="text" placeholder="Enter Summary" value={summary} onChange={handleSummaryChange} />
@@ -417,9 +432,9 @@ const DashboardAdvisor = () => {
                             <Modal.Footer>
                                 <Button variant="secondary" onClick={handleCloseNotiModal}>Close</Button>
                                 <Button
-                                variant={isSubmitting ? "secondary" : "primary"} // Change variant based on isSubmitting
-                                onClick={handleSubmit}
-                                disabled={isSubmitting} // Disable button while submitting
+                                    variant={isSubmitting ? "secondary" : "primary"}
+                                    onClick={handleSubmit}
+                                    disabled={isSubmitting}
                                 >
                                 {isSubmitting ? (
                                     <>
@@ -435,9 +450,9 @@ const DashboardAdvisor = () => {
                                     </>
                                 ) : 'Save Changes'}
                                 </Button>
-
                             </Modal.Footer>
                         </Modal>
+
 
 
                         <div className='advisor-quest container-grey'>
@@ -470,10 +485,15 @@ const DashboardAdvisor = () => {
                             </Modal.Header>
                             <Modal.Body>
                                 <Form className="chula-form">
-                                    <Form.Group className="mb-3" controlId="formQuestCourseID">
-                                        <Form.Label>Course ID</Form.Label>
-                                        <Form.Control type="text" placeholder="Enter course ID" value={questCourseID} onChange={handleQuestCourseIDChange} />
-                                    </Form.Group>
+                                <Form.Group className="mb-3" controlId="formQuestCourseID">
+                                    <Form.Label>Course ID</Form.Label>
+                                    <Form.Control as="select" value={questCourseID} onChange={handleQuestCourseIDChange} className="select-placeholder">
+                                        <option value="" style={{ color: 'gray' }}>Select a Course</option>
+                                        {courseOptions.map(courseID => (
+                                            <option key={courseID} value={courseID}>{courseID}</option>
+                                        ))}
+                                    </Form.Control>
+                                </Form.Group>
                                     <Form.Group className="mb-3" controlId="formQuestTitle">
                                         <Form.Label>Title</Form.Label>
                                         <Form.Control type="text" placeholder="Enter title" value={questTitle} onChange={handleQuestTitleChange} />
@@ -488,6 +508,7 @@ const DashboardAdvisor = () => {
                                     </Form.Group>
                                 </Form>
                             </Modal.Body>
+
                             <Modal.Footer>
                                 <Button variant="secondary" onClick={handleCloseQuestModal}>Close</Button>
                                 <Button variant="primary" onClick={handleQuestSubmit}>Save Changes</Button>
