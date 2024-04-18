@@ -1,97 +1,46 @@
-import React from 'react';
-import './StudentAllCourses.css'; // Import CSS file for styling
-import books from '../assets/books.png';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import './StudentAllCourses.css';
 import CourseCardStudent from './CourseCardStudent';
+import books from '../assets/books.png';
 
-const StudentAllCourses = ({studentID}) => {
+const StudentAllCourses = ({ studentID }) => {
+    console.log('studentID',studentID);
+    const [courseData, setCourseData] = useState([]);
+    const baseURL = 'http://127.0.0.1:4000'; // Make sure your baseURL is correct
 
-    const courseData = [
-        {
-            courseNumber: "1111111",
-            courseName: "Course name1",
-            status: "70",
-            image: books,
-            gpa: null
-        },
-        {
-            courseNumber: "2222222",
-            courseName: "Course name2",
-            status: "100",
-            image: books,
-            gpa: "B+"
-        },
-        {
-            courseNumber: "3333333",
-            courseName: "Course name3",
-            status: "100",
-            image: books,
-            gpa: "A"
-        },
-        {
-            courseNumber: "4444444",
-            courseName: "Course name4",
-            status: "100",
-            image: books,
-            gpa: "A"
-        },
-        {
-            courseNumber: "5555555",
-            courseName: "Course name5",
-            status: "80",
-            image: books,
-            gpa: null
-        },
-        {
-            courseNumber: "2666666",
-            courseName: "Course name6",
-            status: "100",
-            image: books,
-            gpa: "A"
-        },
-        {
-            courseNumber: "2110634",
-            courseName: "Course name7",
-            status: "100",
-            image: books,
-            gpa: "A"
-        },
-        {
-            courseNumber: "2110634",
-            courseName: "Course name8",
-            status: "0",
-            image: books,
-            gpa: null
-        },
-        {
-            courseNumber: "2110634",
-            courseName: "Course name9",
-            status: "20",
-            image: books,
-            gpa: null
-        },
-        {
-            courseNumber: "2110634",
-            courseName: "Course name12",
-            status: "100",
-            image: books,
-            gpa: "B+"
-        },
-    ]
+    useEffect(() => {
+        if (!studentID) return; // Ensure there is a studentID before fetching
+        fetchCourseData(studentID);
+    }, [studentID]);
 
-  return (
-    <>
-      {courseData.map((course, index) => (
-            <CourseCardStudent 
-                key={index}
-                courseNumber={course.courseNumber}
-                courseName={course.courseName}
-                status={course.status}
-                image={course.image}
-                gpa={course.gpa}
-            />
-        ))}
-    </>
-  );
+    const fetchCourseData = async (studentID) => {
+        try {
+            const response = await axios.get(`${baseURL}/api/v1/courses/getCourseByStudentID/${studentID}`);
+            if (response.data.success) {
+                setCourseData(response.data.data);
+            } else {
+                console.error('No course data found');
+            }
+        } catch (error) {
+            console.error('Failed to fetch course data:', error);
+        }
+    };
+
+    return (
+        <>
+            {courseData.map((course, index) => (
+                <CourseCardStudent
+                    key={index}
+                    courseNumber={course.courseNumber}
+                    courseName={course.courseName}
+                    status={course.status.toString()} // Assuming status is returned as a number
+                    image={ books} // Use provided image or fallback to default
+                    gpa={course.courseGpa}
+                />
+            ))}
+        </>
+    );
 };
 
 export default StudentAllCourses;
