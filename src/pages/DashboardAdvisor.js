@@ -103,27 +103,11 @@ const DashboardAdvisor = () => {
         fetchNotifications();
     }, []);
 
-    const fetchQuests = async () => {
-        setIsLoading(true);
-        try {
-            const response = await axios.get(`${baseURL}/api/v1/assignments`);
-            if (response.data && response.data.data) {
-                setQuests(response.data.data); // Set the quests state to the nested data array
-            } else {
-                console.error('Quest data not found');
-            }
-        } catch (error) {
-            console.error('Failed to fetch quests:', error);
-        }
-        setIsLoading(false);
-    }    
+    // const sortQuestsByDueDate = (quests) => {
+    //     return quests.sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate));
+    // };
 
-    useEffect(() => {
-        fetchQuests();
-    }, []);
     
-    
-
     //handle query loading error
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [submitError, setSubmitError] = useState('');
@@ -194,37 +178,40 @@ const DashboardAdvisor = () => {
 
     //quest submit
     const handleQuestSubmit = async () => {
-        // Use the current date and time in ISO format for the time field
         const currentTime = new Date().toISOString();
-    
         const formData = {
             courseID: questCourseID,
             title: questTitle,
             description: questDescription,
-            time: currentTime,  // Automatically set to current time
+            time: currentTime, // Automatically set to current time
             dueDate: questDueDate
         };
     
-        setIsLoading(true); // Start loading indicator
+        setIsLoading(true);
         try {
             const response = await axios.post(`${baseURL}/api/v1/assignmentCourse/`, formData);
             console.log('Quest submitted successfully:', response.data);
     
-            // Optionally, update your quests list in state to include the new quest
-            setQuests(prevQuests => [...prevQuests, response.data.data]);
+            // Insert the new quest and re-sort the list
+            // if (response.data && response.data.data) {
+            //     setQuests(prevQuests => sortQuestsByDueDate([...prevQuests, response.data.data]));
+            // }
     
             // Reset form fields
             setQuestCourseID('');
             setQuestTitle('');
             setQuestDescription('');
             setQuestDueDate('');
-            handleCloseQuestModal(); // Close modal after successful submission
+            handleCloseQuestModal();
+            fetchAssignmentData();
         } catch (error) {
             console.error('Failed to submit quest:', error);
             // Optionally set an error message in state to display in the UI
         }
-        setIsLoading(false); // Stop loading indicator
+        setIsLoading(false);
     };
+    
+    
 
     const handleStudentClick = (student) => {
         setSelectedStudent(student);
