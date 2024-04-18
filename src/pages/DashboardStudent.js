@@ -15,175 +15,177 @@ import QuestCard from "../components/QuestCard";
 import MissionInfoCard from "../components/MissionInfoCard";
 import StudentAllCourses from "../components/StudentAllCourses";
 import Radialbar_Charts_Gradient from "../components/Radialbar_Charts_Gradient";
-import AchievementBandages from "../components/AchievementBandages"
+import AchievementBandages from "../components/AchievementBandages";
+import axios from "axios";
 
 const DashboardStudent = () => {
   //#region Mock Data
+  const advisorID = "ADV002";
 
+  const baseURL = "http://127.0.0.1:4000";
 
   const BandageData = [
     {
-        courseID: "2110634",
-        courseName: "Math for Software Engineering",
-        Grade: "A",
-        image: "course Icon Image",
-        dueDate:"2024-02-05T11:15:00",
-        submitDate:"2024-02-04T11:15:00",
-
+      courseID: "2110634",
+      courseName: "Math for Software Engineering",
+      Grade: "A",
+      image: "course Icon Image",
+      dueDate: "2024-02-05T11:15:00",
+      submitDate: "2024-02-04T11:15:00",
     },
     {
-        courseID: "2110645",
-        courseName: "Advanced Algorithms",
-        Grade: "A",
-        image: "course Icon Image",
-        dueDate:"2024-02-05T11:15:00",
-        submitDate:"2024-02-04T11:15:00",
+      courseID: "2110645",
+      courseName: "Advanced Algorithms",
+      Grade: "A",
+      image: "course Icon Image",
+      dueDate: "2024-02-05T11:15:00",
+      submitDate: "2024-02-04T11:15:00",
     },
     {
-        courseID: "2110656",
-        courseName: "System Architecture Design",
-        Grade: "B+",
-        image: "course Icon Image",
-        dueDate:"2024-02-05T11:15:00",
-        submitDate:"2024-02-04T11:15:00",
+      courseID: "2110656",
+      courseName: "System Architecture Design",
+      Grade: "B+",
+      image: "course Icon Image",
+      dueDate: "2024-02-05T11:15:00",
+      submitDate: "2024-02-04T11:15:00",
     },
     {
-        courseID: "2110691",
-        courseName: "Cloud Computing",
-        Grade: "C+",
-        image: "course Icon Image",
-        dueDate:"2024-02-05T11:15:00",
-        submitDate:"2024-02-04T11:15:00",
+      courseID: "2110691",
+      courseName: "Cloud Computing",
+      Grade: "C+",
+      image: "course Icon Image",
+      dueDate: "2024-02-05T11:15:00",
+      submitDate: "2024-02-04T11:15:00",
     },
     {
-        courseID: "2110692",
-        courseName: "Cloud Computing",
-        Grade: "D",
-        image: "course Icon Image",
-        dueDate:"2024-02-05T11:15:00",
-        submitDate:"2024-02-04T11:15:00",
+      courseID: "2110692",
+      courseName: "Cloud Computing",
+      Grade: "D",
+      image: "course Icon Image",
+      dueDate: "2024-02-05T11:15:00",
+      submitDate: "2024-02-04T11:15:00",
     },
     {
-        courseID: "2110690",
-        courseName: "Cloud Computing",
-        Grade: "A",
-        image: "course Icon Image",
-        dueDate:"2024-02-05T11:15:00",
-        submitDate:"2024-02-04T11:15:00",
+      courseID: "2110690",
+      courseName: "Cloud Computing",
+      Grade: "A",
+      image: "course Icon Image",
+      dueDate: "2024-02-05T11:15:00",
+      submitDate: "2024-02-04T11:15:00",
     },
     {
-        courseID: "2110634",
-        courseName: "Math for Software Engineering",
-        Grade: "A",
-        image: "course Icon Image",
-        dueDate:"2024-02-05T11:15:00",
-        submitDate:"2024-02-04T11:15:00",
+      courseID: "2110634",
+      courseName: "Math for Software Engineering",
+      Grade: "A",
+      image: "course Icon Image",
+      dueDate: "2024-02-05T11:15:00",
+      submitDate: "2024-02-04T11:15:00",
     },
     {
-        courseID: "2110645",
-        courseName: "Advanced Algorithms",
-        Grade: "A",
-        image: "course Icon Image",
-        dueDate:"2024-02-05T11:15:00",
-        submitDate:"2024-02-04T11:15:00",
+      courseID: "2110645",
+      courseName: "Advanced Algorithms",
+      Grade: "A",
+      image: "course Icon Image",
+      dueDate: "2024-02-05T11:15:00",
+      submitDate: "2024-02-04T11:15:00",
     },
     {
-        courseID: "2110656",
-        courseName: "System Architecture Design",
-        Grade: "B+",
-        image: "course Icon Image",
-        dueDate:"2024-02-05T11:15:00",
-        submitDate:"2024-02-04T11:15:00",
+      courseID: "2110656",
+      courseName: "System Architecture Design",
+      Grade: "B+",
+      image: "course Icon Image",
+      dueDate: "2024-02-05T11:15:00",
+      submitDate: "2024-02-04T11:15:00",
     },
     {
-        courseID: "2110691",
-        courseName: "Cloud Computing",
-        Grade: "C+",
-        image: "course Icon Image",
-        dueDate:"2024-02-05T11:15:00",
-        submitDate:"2024-02-04T11:15:00",
+      courseID: "2110691",
+      courseName: "Cloud Computing",
+      Grade: "C+",
+      image: "course Icon Image",
+      dueDate: "2024-02-05T11:15:00",
+      submitDate: "2024-02-04T11:15:00",
     },
     {
-        courseID: "2110692",
-        courseName: "Cloud Computing",
-        Grade: "D",
-        image: "course Icon Image",
-        dueDate:"2024-02-05T11:15:00",
-        submitDate:"2024-02-04T11:15:00",
+      courseID: "2110692",
+      courseName: "Cloud Computing",
+      Grade: "D",
+      image: "course Icon Image",
+      dueDate: "2024-02-05T11:15:00",
+      submitDate: "2024-02-04T11:15:00",
     },
     {
-        courseID: "2110690",
-        courseName: "Cloud Computing",
-        Grade: "A",
-        image: "course Icon Image",
-        dueDate:"2024-02-05T11:15:00",
-        submitDate:"2024-02-04T11:15:00",
+      courseID: "2110690",
+      courseName: "Cloud Computing",
+      Grade: "A",
+      image: "course Icon Image",
+      dueDate: "2024-02-05T11:15:00",
+      submitDate: "2024-02-04T11:15:00",
     },
     {
-        courseID: "2110634",
-        courseName: "Math for Software Engineering",
-        Grade: "A",
-        image: "course Icon Image",
-        dueDate:"2024-02-05T11:15:00",
-        submitDate:"2024-02-04T11:15:00",
+      courseID: "2110634",
+      courseName: "Math for Software Engineering",
+      Grade: "A",
+      image: "course Icon Image",
+      dueDate: "2024-02-05T11:15:00",
+      submitDate: "2024-02-04T11:15:00",
     },
     {
-        courseID: "2110645",
-        courseName: "Advanced Algorithms",
-        Grade: "A",
-        image: "course Icon Image",
-        dueDate:"2024-02-05T11:15:00",
-        submitDate:"2024-02-04T11:15:00",
+      courseID: "2110645",
+      courseName: "Advanced Algorithms",
+      Grade: "A",
+      image: "course Icon Image",
+      dueDate: "2024-02-05T11:15:00",
+      submitDate: "2024-02-04T11:15:00",
     },
     {
-        courseID: "2110656",
-        courseName: "System Architecture Design",
-        Grade: "B+",
-        image: "course Icon Image",
-        dueDate:"2024-02-05T11:15:00",
-        submitDate:"2024-02-04T11:15:00",
+      courseID: "2110656",
+      courseName: "System Architecture Design",
+      Grade: "B+",
+      image: "course Icon Image",
+      dueDate: "2024-02-05T11:15:00",
+      submitDate: "2024-02-04T11:15:00",
     },
     {
-        courseID: "2110691",
-        courseName: "Cloud Computing",
-        Grade: "C+",
-        image: "course Icon Image",
-        dueDate:"2024-02-05T11:15:00",
-        submitDate:"2024-02-04T11:15:00",
+      courseID: "2110691",
+      courseName: "Cloud Computing",
+      Grade: "C+",
+      image: "course Icon Image",
+      dueDate: "2024-02-05T11:15:00",
+      submitDate: "2024-02-04T11:15:00",
     },
     {
-        courseID: "2110692",
-        courseName: "Cloud Computing",
-        Grade: "D",
-        image: "course Icon Image",
-        dueDate:"2024-02-05T11:15:00",
-        submitDate:"2024-02-04T11:15:00",
+      courseID: "2110692",
+      courseName: "Cloud Computing",
+      Grade: "D",
+      image: "course Icon Image",
+      dueDate: "2024-02-05T11:15:00",
+      submitDate: "2024-02-04T11:15:00",
     },
     {
-        courseID: "2110690",
-        courseName: "Cloud Computing",
-        Grade: "A",
-        image: "course Icon Image",
-        dueDate:"2024-02-05T11:15:00",
-        submitDate:"2024-02-04T11:15:00",
+      courseID: "2110690",
+      courseName: "Cloud Computing",
+      Grade: "A",
+      image: "course Icon Image",
+      dueDate: "2024-02-05T11:15:00",
+      submitDate: "2024-02-04T11:15:00",
     },
     {
-        courseID: "2110699",
-        courseName: "Thesis",
-        Grade: "pass",
-        image: "course Icon Image",
-        dueDate:"2024-02-05T11:15:00",
-        submitDate:"2024-02-04T11:15:00",
+      courseID: "2110699",
+      courseName: "Thesis",
+      Grade: "pass",
+      image: "course Icon Image",
+      dueDate: "2024-02-05T11:15:00",
+      submitDate: "2024-02-04T11:15:00",
     },
     {
-        courseID: "2110670",
-        courseName: "Comprehensive Test",
-        Grade: "pass",
-        image: "course Icon Image",
-        dueDate:"2024-02-05T11:15:00",
-        submitDate:"2024-02-04T11:15:00",
-    }
-];
+      courseID: "2110670",
+      courseName: "Comprehensive Test",
+      Grade: "pass",
+      image: "course Icon Image",
+      dueDate: "2024-02-05T11:15:00",
+      submitDate: "2024-02-04T11:15:00",
+    },
+  ];
   const courseData = [
     {
       courseID: "2110634",
@@ -533,6 +535,27 @@ const DashboardStudent = () => {
   const staticValue = 300; // These values can also come from props, state, or context
   const maxValue = 500;
 
+  //AssignmentCourse
+  const [assignmentData, setAssignmentData] = useState([]);
+  const fetchAssignmentData = async () => {
+    try {
+      const response = await axios.get(
+        `${baseURL}/api/v1/assignmentCourse/getByAdvisor/${advisorID}`
+      );
+      if (response.data.success && response.data.data) {
+        console.log("inside");
+        setAssignmentData(response.data.data); // Update state with fetched data
+      } else {
+        console.error("No assignment data found or unsuccessful fetch");
+      }
+    } catch (error) {
+      console.error("Error fetching assignment data:", error);
+    }
+  };
+  useEffect(() => {
+    fetchAssignmentData();
+  }, []);
+
   return (
     <div className="advisor-container">
       <section className="section1">
@@ -549,7 +572,8 @@ const DashboardStudent = () => {
               className="student-container-title"
               style={{ fontSize: "30px", fontWeight: "bold" }}
             >
-              Main Mission<span style={{ fontSize: "40px" }}>📌</span></p>
+              Main Mission<span style={{ fontSize: "40px" }}>📌</span>
+            </p>
 
             {showStudentInfo && (
               <Button className="close-button" onClick={handleClose}>
@@ -621,9 +645,18 @@ const DashboardStudent = () => {
           {/* <br /> */}
 
           <div className="section_achievement container-grey">
-            <p style={{ fontSize: "30px", fontWeight: "bold", textAlign: "center" }}> Achievements <span style={{ fontSize: "40px" }}>🏆</span></p>
+            <p
+              style={{
+                fontSize: "30px",
+                fontWeight: "bold",
+                textAlign: "center",
+              }}
+            >
+              {" "}
+              Achievements <span style={{ fontSize: "40px" }}>🏆</span>
+            </p>
             <div className="archivement-list-row">
-            <AchievementBandages BandageData={BandageData} />
+              <AchievementBandages BandageData={BandageData} />
             </div>
           </div>
           <br />
@@ -648,7 +681,16 @@ const DashboardStudent = () => {
           <br /> */}
           <div className="section3 ">
             <div className="advisor-notification container-grey">
-              <p style={{ fontSize: "30px", fontWeight: "bold", textAlign: "center" }}> Notifications <span style={{ fontSize: "40px" }}>📢</span></p>
+              <p
+                style={{
+                  fontSize: "30px",
+                  fontWeight: "bold",
+                  textAlign: "center",
+                }}
+              >
+                {" "}
+                Notifications <span style={{ fontSize: "40px" }}>📢</span>
+              </p>
               <div className="top-of-notification">
                 {/* <p style={{ fontSize: "20px", fontWeight: "bold", textAlign: "center" }}> Notifications <span style={{ fontSize: "40px" }}>📢</span></p> */}
                 {/* <Button
@@ -723,9 +765,18 @@ const DashboardStudent = () => {
             </Modal>
 
             <div className="advisor-quest container-grey">
-              <p style={{ fontSize: "30px", fontWeight: "bold", textAlign: "center" }}> Your Upcoming Quests <span style={{ fontSize: "40px" }}>📜</span></p>
+              <p
+                style={{
+                  fontSize: "30px",
+                  fontWeight: "bold",
+                  textAlign: "center",
+                }}
+              >
+                {" "}
+                Your Upcoming Quests{" "}
+                <span style={{ fontSize: "40px" }}>📜</span>
+              </p>
               <div className="top-of-quest">
-
                 {/* <Button
                   className="noti-create-button"
                   variant="primary"
@@ -736,7 +787,7 @@ const DashboardStudent = () => {
                 </Button> */}
               </div>
               <div className="notification-list">
-                {questData.map((quest, index) => (
+                {assignmentData.map((quest, index) => (
                   <QuestCard
                     key={index}
                     title={quest.title}
