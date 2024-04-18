@@ -18,7 +18,7 @@ import Radialbar_Charts_Gradient from "../components/Radialbar_Charts_Gradient";
 import AchievementBandages from "../components/AchievementBandages"
 
 const DashboardStudent = () => {
-  //#region Mock Data
+  //#region Mock Data//////
 
 
   const BandageData = [
@@ -736,7 +736,7 @@ const DashboardStudent = () => {
                 </Button> */}
               </div>
               <div className="notification-list">
-                {questData.map((quest, index) => (
+                {/* {questData.map((quest, index) => (
                   <QuestCard
                     key={index}
                     title={quest.title}
@@ -746,7 +746,7 @@ const DashboardStudent = () => {
                     time={quest.time}
                     dueDate={quest.dueDate}
                   />
-                ))}
+                ))} */}
               </div>
             </div>
             <Modal show={showQuestModal} onHide={handleCloseQuestModal}>
