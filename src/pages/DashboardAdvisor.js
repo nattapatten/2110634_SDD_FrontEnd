@@ -20,54 +20,6 @@ const DashboardAdvisor = () => {
     
     const baseURL = 'http://127.0.0.1:4000';
 
-    
-    const courseData = [
-        {
-            courseID: "2110634",
-            courseName: "Math for Software Engineering",
-            maxStudents: "30",
-            currentStudents: "17",
-            image: books,
-        },
-        {
-            courseID: "2110645",
-            courseName: "Advanced Algorithms",
-            maxStudents: "25",
-            currentStudents: "20",
-            image: books,
-        },
-        {
-            courseID: "2110656",
-            courseName: "System Architecture Design",
-            maxStudents: "28",
-            currentStudents: "28",
-            image: books,
-        },
-        {
-            courseID: "2110690",
-            courseName: "Cloud Computing",
-            maxStudents: "30",
-            currentStudents: "18",
-            image: books,
-        },
-        {
-            courseID: "2110690",
-            courseName: "Cloud Computing",
-            maxStudents: "30",
-            currentStudents: "18",
-            image: books,
-        },
-        {
-            courseID: "2110690",
-            courseName: "Cloud Computing",
-            maxStudents: "30",
-            currentStudents: "18",
-            image: books,
-        },
-        
-        
-    ];
-
     const [selectedStudent, setSelectedStudent] = useState(null);
     const [showStudentInfo, setShowStudentInfo] = useState(false);
     const [showNotificationsAndQuests, setShowNotificationsAndQuests] = useState(true);
@@ -214,6 +166,8 @@ const DashboardAdvisor = () => {
     
 
     const handleStudentClick = (student) => {
+        // console.log('this is student id');
+        // console.log(student);
         setSelectedStudent(student);
         setShowStudentInfo(true);
         setShowNotificationsAndQuests(false); // Hide Notifications and Quests
@@ -305,6 +259,30 @@ const DashboardAdvisor = () => {
         }
     }, [advisorInfo]);
 
+
+    //Course data from advisor id
+    const [courseData, setCourseData] = useState([]);
+
+    // Add fetching logic in useEffect
+    useEffect(() => {
+        fetchCourseData();
+    }, []);
+    
+    const fetchCourseData = async () => {
+        setIsLoading(true);
+        try {
+            const response = await axios.get(`${baseURL}/api/v1/courses/getCoursesByAdvisor/${advisorID}`);
+            if (response.data.success) {
+                setCourseData(response.data.data);
+            } else {
+                console.error('No course data found');
+            }
+        } catch (error) {
+            console.error('Failed to fetch course data:', error);
+        }
+        setIsLoading(false);
+    };
+
     return (
         <div className='advisor-container'>
             <section className='section1'>
@@ -358,16 +336,22 @@ const DashboardAdvisor = () => {
                 <div className="section2 container-grey">
                     <p style={{fontSize: '20px', fontWeight: 'bold'}}>Your Courses</p>
                     <div className='course-list'>
-                        {courseData.map((course, index) => (
-                            <CourseCard 
-                                key={index}
-                                courseNumber={course.courseID}
-                                courseName={course.courseName}
-                                maxStudents={course.maxStudents}
-                                currentStudents={course.currentStudents}
-                                image={course.image}
-                            />
-                        ))}
+                        {isLoading ? (
+                            <div>Loading courses...</div>
+                        ) : courseData.length > 0 ? (
+                            courseData.map((course, index) => (
+                                <CourseCard 
+                                    key={index}
+                                    courseNumber={course.courseID}
+                                    courseName={course.courseName}
+                                    maxStudents={course.maxStudents.toString()} // Ensure conversion to string if necessary
+                                    currentStudents={course.currentStudents.toString()} // Ensure conversion to string if necessary
+                                    image={books} // Assuming 'books' is a placeholder for all courses
+                                />
+                            ))
+                        ) : (
+                            <div>No courses found</div>
+                        )}
                     </div>
                 </div>
                 <br/>
