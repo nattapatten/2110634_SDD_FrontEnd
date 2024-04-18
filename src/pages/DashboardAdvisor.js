@@ -68,112 +68,6 @@ const DashboardAdvisor = () => {
         
     ];
 
-    // const studentData = [
-    //     {
-    //         title: "Graduated",
-    //         image: StudentProfile,
-    //         path: "Software Engineer",
-    //         name: "James James",
-    //         studentID: "11111111",
-    //         status: "100",
-    //         gpa: "3.80",
-    //         lastUpdated: "2023-12-15T08:30:00",
-    //     },
-    //     {
-    //         title: "Graduated",
-    //         image: StudentProfile,
-    //         path: "Project Managerr",
-    //         name: "Jane Jane",
-    //         studentID: "22222222",
-    //         status: "100",
-    //         gpa: "4.00",
-    //         lastUpdated: "2023-11-30T14:45:00",
-    //     },
-    //     {
-    //         title: "In Progress",
-    //         image: StudentProfile,
-    //         path: "Software Engineer",
-    //         name: "John John",
-    //         studentID: "33333333",
-    //         status: "70",
-    //         gpa: "2.80",
-    //         lastUpdated: "2024-01-10T10:20:00",
-    //     },
-    //     {
-    //         title: "In Progress",
-    //         image: StudentProfile,
-    //         path: "Software Engineer",
-    //         name: "Alice Smith",
-    //         studentID: "44444444",
-    //         status: "80",
-    //         gpa: "3.20",
-    //         lastUpdated: "2024-02-05T11:15:00",
-    //     },
-    //     {
-    //         title: "Graduated",
-    //         image: StudentProfile,
-    //         path: "DevOps Engineer",
-    //         name: "Michael Johnson",
-    //         studentID: "55555555",
-    //         status: "100",
-    //         gpa: "3.75",
-    //         lastUpdated: "2023-10-20T09:00:00",
-    //     },
-    //     {
-    //         title: "In Progress",
-    //         image: StudentProfile,
-    //         path: "Software Engineer",
-    //         name: "Emily Williams",
-    //         studentID: "66666666",
-    //         status: "60",
-    //         gpa: "3.00",
-    //         lastUpdated: "2024-03-15T13:30:00",
-    //     },
-    //     {
-    //         title: "Resigned",
-    //         image: StudentProfile,
-    //         path: "Software Engineer",
-    //         name: "Matthew Brown",
-    //         studentID: "77777777",
-    //         status: "50",
-    //         gpa: "2.50",
-    //         lastUpdated: "2023-12-01T16:00:00",
-    //     },
-    //     {
-    //         title: "In Progress",
-    //         image: StudentProfile,
-    //         path: "Software Engineer",
-    //         name: "Emma Davis",
-    //         studentID: "88888888",
-    //         status: "40",
-    //         gpa: "2.90",
-    //         lastUpdated: "2024-04-05T09:45:00",
-    //     },
-    //     {
-    //         title: "In Progress",
-    //         image: StudentProfile,
-    //         path: "Software Engineer",
-    //         name: "Daniel Wilson",
-    //         studentID: "12345678",
-    //         status: "30",
-    //         gpa: "2.80",
-    //         lastUpdated: "2024-02-25T14:00:00",
-    //     },
-    //     {
-    //         title: "Resigned",
-    //         image: StudentProfile,
-    //         path: "Software Engineer",
-    //         name: "Olivia Miller",
-    //         studentID: "12345678",
-    //         status: "20",
-    //         gpa: "2.70",
-    //         lastUpdated: "2023-11-15T10:30:00",
-    //     },
-    //     // Add more student data objects with lastUpdated field including time
-    // ];
-
-
-    //All quests this advisor created
     const questData = [
         {
             courseID: "2110634",
@@ -239,7 +133,7 @@ const DashboardAdvisor = () => {
         setIsLoading(true);  // Start loading
         try {
             const response = await axios.get(`${baseURL}/api/v1/notifications`);
-            console.log('noti response', response)
+            // console.log('noti response', response)
             setNotifications(response.data.data);
         } catch (error) {
             console.error('Failed to fetch notifications:', error);
@@ -349,8 +243,8 @@ const DashboardAdvisor = () => {
             questDescription,
             time: currentTime, // Add the current time here
         };
-        console.log('inside quest')
-        console.log(formData); // This will now include the current time
+        // console.log('inside quest')
+        // console.log(formData); // This will now include the current time
     
         handleCloseQuestModal(); // Close modal after submission
         // Optionally reset form fields here if needed
@@ -384,7 +278,6 @@ const DashboardAdvisor = () => {
     useEffect(() => {
         fetchAdvisorData();
     }, []);
-
     //Student data
     const [studentData, setStudentData] = useState([]);
     const fetchStudentData = async () => {
