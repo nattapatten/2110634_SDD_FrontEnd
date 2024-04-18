@@ -77,13 +77,19 @@
     flex-grow: 1;
 }
 
-.notification-list {
+.notification-list, .quest-list {
     display: flex;
     flex-direction: column;
     gap: 18px;
     max-height: 380px; /* Set a maximum height for the notification list */
     overflow-y: auto; /* Enable vertical scrolling */
     overflow-x: hidden; /* Hide horizontal scrollbar */
+}
+
+.loading-noti{
+    padding-top: 35%;
+    align-items: center;
+    justify-items: center;
 }
 
 .top-of-student-container {
@@ -126,4 +132,14 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+/* Styles for the placeholder option in select dropdowns */
+.select-placeholder {
+    color: rgb(121, 73, 255); /* Set your desired placeholder color */
+}
+
+/* Ensuring other options do not inherit the placeholder color */
+.select-placeholder option:not(:first-child) {
+    color: rgb(121, 73, 255); /* Standard color for other options */
 }
