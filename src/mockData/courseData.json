@@ -1,0 +1,61 @@
+{
+    "courseData": [
+      {
+        "courseNumber": "2110634",
+        "courseName": "Math for Software Engineering",
+        "maxStudents": "30",
+        "currentStudents": "17",
+        "image": "books"
+      },
+      {
+        "courseNumber": "2110645",
+        "courseName": "Advanced Algorithms",
+        "maxStudents": "25",
+        "currentStudents": "20",
+        "image": "books"
+      },
+      {
+        "courseNumber": "2110656",
+        "courseName": "System Architecture Design",
+        "maxStudents": "28",
+        "currentStudents": "28",
+        "image": "books"
+      },
+      {
+        "courseNumber": "2110667",
+        "courseName": "Software Project Management",
+        "maxStudents": "30",
+        "currentStudents": "25",
+        "image": "books"
+      },
+      {
+        "courseNumber": "2110678",
+        "courseName": "Database Systems",
+        "maxStudents": "30",
+        "currentStudents": "22",
+        "image": "books"
+      },
+      {
+        "courseNumber": "2110689",
+        "courseName": "Machine Learning for Developers",
+        "maxStudents": "27",
+        "currentStudents": "27",
+        "image": "books"
+      },
+      {
+        "courseNumber": "2110690",
+        "courseName": "Cloud Computing",
+        "maxStudents": "30",
+        "currentStudents": "18",
+        "image": "books"
+      },
+      {
+        "courseNumber": "2110701",
+        "courseName": "Cybersecurity Fundamentals",
+        "maxStudents": "25",
+        "currentStudents": "20",
+        "image": "books"
+      }
+    ]
+  }
+  

@@ -1,0 +1,129 @@
+.advisor-container {
+    padding-left: 25px;
+    padding-right: 25px;
+    padding-top: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 27px;
+}
+
+.section1 {
+    display: flex;
+    width: 100%;
+    gap: 27px;
+}
+
+.section2 {
+    width: 100%;
+    height: 360px;
+}
+
+.section3 {
+    display: flex;
+    height: 518px;
+    gap: 27px;
+}
+
+.advisor-box {
+    display: flex;
+    flex-direction: column;
+    flex: 0 0 213px;
+    height: 343px;
+    border-radius: 20px;
+}
+
+.advisorProfile {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.advisorProfile img {
+    max-width: 100%;
+    max-height: 100%;
+    border-radius: 20px;
+}
+
+.students-container {
+    display: flex;
+    flex-direction: column;
+    max-width: 100%; /* Set maximum width to prevent extending beyond screen size */
+    overflow: hidden; /* Hide any overflow on the container */
+    height: 343px;
+    border-radius: 25px;
+    padding: 8px; 
+}
+
+.student-list, .course-list {
+    display: flex;
+    gap: 18px;
+    overflow-x: auto; /* Enable horizontal scrolling when content overflows */
+    flex-grow: 1;
+
+}
+
+.course-list{
+    align-items: center; /* Centers items vertically in the container */
+    justify-content: center; /* Centers items horizontally when they do not fully occupy the container's width */
+}
+
+.advisor-notification {
+    width: 36%;
+    
+}
+
+.advisor-quest {
+    flex-grow: 1;
+}
+
+.notification-list {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    max-height: 380px; /* Set a maximum height for the notification list */
+    overflow-y: auto; /* Enable vertical scrolling */
+    overflow-x: hidden; /* Hide horizontal scrollbar */
+}
+
+.top-of-student-container {
+    display: flex;
+    justify-content: space-between; /* Aligns items to each end */
+    align-items: center; /* Aligns items vertically */
+}
+
+.student-container-title {
+    flex-grow: 1; /* Allows the title to grow and take available space, helping with centering */
+    text-align: center; /* Centers the text within the title element */
+}
+
+.close-button {
+    position: absolute;
+    right: 20px;
+    top: 10px;
+}
+
+.students-container{
+    display: flex;
+    width: 100vw;
+}
+
+.all-courses-container{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 10px;
+    justify-items: center;
+}
+
+
+.top-of-notification, .top-of-quest{
+    display: flex;
+    justify-content: space-between;
+}
+
+.noti-create-button, .quest-create-button{
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
