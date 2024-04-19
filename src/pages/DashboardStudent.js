@@ -19,7 +19,6 @@ import AchievementBandages from "../components/AchievementBandages";
 import axios from "axios";
 
 const DashboardStudent = () => {
-
   //#region Mock Data
   const advisorID = "ADV002";
   const baseURL = "http://127.0.0.1:4000";
@@ -797,7 +796,7 @@ const DashboardStudent = () => {
                     time={quest.time}
                     dueDate={quest.dueDate}
                   />
-                ))} 
+                ))}
               </div>
             </div>
             <Modal show={showQuestModal} onHide={handleCloseQuestModal}>
