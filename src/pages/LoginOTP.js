@@ -33,7 +33,7 @@ function LoginOTP() {
       console.log("Verification successful:", response.data);
       if (roleFromLogin === "admin") {
         navigate("/DashboardAdvisor");
-      } else if (roleFromLogin === "student") {
+      } else if (roleFromLogin === "user") {
         navigate("/DashboardStudent");
       } else {
         navigate("/"); // default navigation if role is not recognized
