@@ -7,7 +7,7 @@ import AdvisorProfile from '../assets/AdvisorProfile.png';
 import StudentCard from '../components/StudentCard';
 import StudentProfile from '../assets/StudentProfile.png';
 import books from '../assets/books.png';
-import homework from '../assets/homework.png';
+// import homework from '../assets/homework.png';
 import CourseCard from '../components/CourseCard';
 import NotificationCard from '../components/NotificationCard';
 import QuestCard from '../components/QuestCard';
@@ -19,54 +19,6 @@ const DashboardAdvisor = () => {
     const advisorID = "ADV002";
     
     const baseURL = 'http://127.0.0.1:4000';
-
-    
-    const courseData = [
-        {
-            courseID: "2110634",
-            courseName: "Math for Software Engineering",
-            maxStudents: "30",
-            currentStudents: "17",
-            image: books,
-        },
-        {
-            courseID: "2110645",
-            courseName: "Advanced Algorithms",
-            maxStudents: "25",
-            currentStudents: "20",
-            image: books,
-        },
-        {
-            courseID: "2110656",
-            courseName: "System Architecture Design",
-            maxStudents: "28",
-            currentStudents: "28",
-            image: books,
-        },
-        {
-            courseID: "2110690",
-            courseName: "Cloud Computing",
-            maxStudents: "30",
-            currentStudents: "18",
-            image: books,
-        },
-        {
-            courseID: "2110690",
-            courseName: "Cloud Computing",
-            maxStudents: "30",
-            currentStudents: "18",
-            image: books,
-        },
-        {
-            courseID: "2110690",
-            courseName: "Cloud Computing",
-            maxStudents: "30",
-            currentStudents: "18",
-            image: books,
-        },
-        
-        
-    ];
 
     const [selectedStudent, setSelectedStudent] = useState(null);
     const [showStudentInfo, setShowStudentInfo] = useState(false);
@@ -82,13 +34,13 @@ const DashboardAdvisor = () => {
 
     //State for query
     const [notifications, setNotifications] = useState([]);
-    const [quests, setQuests] = useState([]);
+    // const [quests, setQuests] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
 
     const fetchNotifications = async () => {
         setIsLoading(true);  // Start loading
         try {
-            const response = await axios.get(`${baseURL}/api/v1/notifications`);
+            const response = await axios.get(`${baseURL}/api/v1/notifications/by-advisor/${advisorID}`);
             // console.log('noti response', response)
             setNotifications(response.data.data);
         } catch (error) {
@@ -103,27 +55,11 @@ const DashboardAdvisor = () => {
         fetchNotifications();
     }, []);
 
-    const fetchQuests = async () => {
-        setIsLoading(true);
-        try {
-            const response = await axios.get(`${baseURL}/api/v1/assignments`);
-            if (response.data && response.data.data) {
-                setQuests(response.data.data); // Set the quests state to the nested data array
-            } else {
-                console.error('Quest data not found');
-            }
-        } catch (error) {
-            console.error('Failed to fetch quests:', error);
-        }
-        setIsLoading(false);
-    }    
+    // const sortQuestsByDueDate = (quests) => {
+    //     return quests.sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate));
+    // };
 
-    useEffect(() => {
-        fetchQuests();
-    }, []);
     
-    
-
     //handle query loading error
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [submitError, setSubmitError] = useState('');
@@ -190,43 +126,48 @@ const DashboardAdvisor = () => {
     const handleQuestDescriptionChange = (e) => setQuestDescription(e.target.value);
 
     const [questDueDate, setQuestDueDate] = useState('');
-    const [questTime, setQuestTime] = useState('');
+    // const [questTime, setQuestTime] = useState('');
 
     //quest submit
     const handleQuestSubmit = async () => {
-        // Use the current date and time in ISO format for the time field
         const currentTime = new Date().toISOString();
-    
         const formData = {
             courseID: questCourseID,
             title: questTitle,
             description: questDescription,
-            time: currentTime,  // Automatically set to current time
+            time: currentTime, // Automatically set to current time
             dueDate: questDueDate
         };
     
-        setIsLoading(true); // Start loading indicator
+        setIsLoading(true);
         try {
             const response = await axios.post(`${baseURL}/api/v1/assignmentCourse/`, formData);
             console.log('Quest submitted successfully:', response.data);
     
-            // Optionally, update your quests list in state to include the new quest
-            setQuests(prevQuests => [...prevQuests, response.data.data]);
+            // Insert the new quest and re-sort the list
+            // if (response.data && response.data.data) {
+            //     setQuests(prevQuests => sortQuestsByDueDate([...prevQuests, response.data.data]));
+            // }
     
             // Reset form fields
             setQuestCourseID('');
             setQuestTitle('');
             setQuestDescription('');
             setQuestDueDate('');
-            handleCloseQuestModal(); // Close modal after successful submission
+            handleCloseQuestModal();
+            fetchAssignmentData();
         } catch (error) {
             console.error('Failed to submit quest:', error);
             // Optionally set an error message in state to display in the UI
         }
-        setIsLoading(false); // Stop loading indicator
+        setIsLoading(false);
     };
+    
+    
 
     const handleStudentClick = (student) => {
+        // console.log('this is student id');
+        // console.log(student);
         setSelectedStudent(student);
         setShowStudentInfo(true);
         setShowNotificationsAndQuests(false); // Hide Notifications and Quests
@@ -258,19 +199,27 @@ const DashboardAdvisor = () => {
     const fetchStudentData = async () => {
         try {
             const response = await axios.get(`${baseURL}/api/v1/student/${advisorID}`);
+            console.log('Response data:', response.data);
             if (response.data.success && response.data.data) {
                 const updatedStudentData = response.data.data.map(student => ({
                     ...student,
-                    image: StudentProfile  // Assign the static image to each student
+                    image: StudentProfile // Assuming StudentProfile is the correct path or data
                 }));
+                
                 setStudentData(updatedStudentData);
+
             } else {
                 console.error('No student data found or unsuccessful fetch');
             }
+           
         } catch (error) {
             console.error('Error fetching student data:', error);
         }
     };
+
+    useEffect(() => {
+        fetchStudentData();
+    }, []);
     useEffect(() => {
     fetchStudentData();
     }, []);  // Empty dependency array to ensure it runs only once after the component mounts
@@ -310,6 +259,30 @@ const DashboardAdvisor = () => {
         }
     }, [advisorInfo]);
 
+
+    //Course data from advisor id
+    const [courseData, setCourseData] = useState([]);
+
+    // Add fetching logic in useEffect
+    useEffect(() => {
+        fetchCourseData();
+    }, []);
+    
+    const fetchCourseData = async () => {
+        setIsLoading(true);
+        try {
+            const response = await axios.get(`${baseURL}/api/v1/courses/getCoursesByAdvisor/${advisorID}`);
+            if (response.data.success) {
+                setCourseData(response.data.data);
+            } else {
+                console.error('No course data found');
+            }
+        } catch (error) {
+            console.error('Failed to fetch course data:', error);
+        }
+        setIsLoading(false);
+    };
+
     return (
         <div className='advisor-container'>
             <section className='section1'>
@@ -331,7 +304,7 @@ const DashboardAdvisor = () => {
                         <div className='student-list'>
                             {studentData.map((student, index) => (
                                 <div 
-                                    key={student._id}  // Use student._id for the key if available, for better React performance
+                                    key={student._id}
                                     onClick={() => handleStudentClick(student)}
                                     className='student-card-wrapper'
                                     tabIndex="0"
@@ -340,12 +313,13 @@ const DashboardAdvisor = () => {
                                         title={student.title}
                                         image={student.image}
                                         name={student.name}
-                                        status={student.status.toString()}  // Ensure status is a string if needed
-                                        gpa={student.gpa.toString()}  // Ensure GPA is a string if needed
+                                        status={student.status.toString()}
+                                        gpa={student.gpa ? student.gpa.toString() : 'N/A'} // Handle null GPAs
                                     />
                                 </div>
                             ))}
                         </div>
+
                     )}
                 </div>
             </section>
@@ -362,16 +336,22 @@ const DashboardAdvisor = () => {
                 <div className="section2 container-grey">
                     <p style={{fontSize: '20px', fontWeight: 'bold'}}>Your Courses</p>
                     <div className='course-list'>
-                        {courseData.map((course, index) => (
-                            <CourseCard 
-                                key={index}
-                                courseNumber={course.courseID}
-                                courseName={course.courseName}
-                                maxStudents={course.maxStudents}
-                                currentStudents={course.currentStudents}
-                                image={course.image}
-                            />
-                        ))}
+                        {isLoading ? (
+                            <div>Loading courses...</div>
+                        ) : courseData.length > 0 ? (
+                            courseData.map((course, index) => (
+                                <CourseCard 
+                                    key={index}
+                                    courseNumber={course.courseID}
+                                    courseName={course.courseName}
+                                    maxStudents={course.maxStudents.toString()} // Ensure conversion to string if necessary
+                                    currentStudents={course.currentStudents.toString()} // Ensure conversion to string if necessary
+                                    image={books} // Assuming 'books' is a placeholder for all courses
+                                />
+                            ))
+                        ) : (
+                            <div>No courses found</div>
+                        )}
                     </div>
                 </div>
                 <br/>
