@@ -7,7 +7,7 @@ const Modal = ({ isOpen, handleClose, title, content, handleApply, image }) => {
 
   return (
     <div className="modal-overlay">
-      <div className="modal-content">
+      <div className="modal-content2">
         <div className="modal-header">
           {/* Back button to close the modal */}
           <button onClick={handleClose}>&lt; Back</button>

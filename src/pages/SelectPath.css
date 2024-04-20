@@ -46,7 +46,7 @@
     height: auto;
   }
   
-  .card-title {
+  .card-title1 {
     font-size: 1.2rem;
     color: #333;
     margin: 1rem 0;
@@ -68,6 +68,4 @@
     width: calc(100% - 4rem); /* Container width taking into account padding */
     max-width: 1200px; /* Maximum width */
   }
-  
-  /* Rest of the styles remain unchanged */
   
