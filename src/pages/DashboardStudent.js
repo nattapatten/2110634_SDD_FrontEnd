@@ -19,11 +19,15 @@ const DashboardStudent = () => {
   //#region Mock Data
   const advisorID = "ADV002";
   const baseURL = "http://127.0.0.1:4000";
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
 
   const [studentProfileData, setStudentProfileData] = useState(null);
-  const [studentSelectPathData, setStudentSelectPathData] = useState(null);
+  // Adding coursesAssignment to the initial state structure
+  const [studentSelectPathData, setStudentSelectPathData] = useState({
+    student: { courses: [] },
+    coursesAssignment: [],
+  });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   const fetchStudentProfileData = async () => {
     setLoading(true);
@@ -34,15 +38,19 @@ const DashboardStudent = () => {
         headers: { Authorization: `Bearer ${token}` },
       });
 
-      if (response.status === 200 && response.data.success && response.data.data) {
+      if (
+        response.status === 200 &&
+        response.data.success &&
+        response.data.data
+      ) {
         setStudentProfileData(response.data.data);
-        console.log("Current Login:", response.data.data);
         fetchStudentPathData(response.data.data.studentID); // Call to fetch path data here
       } else {
         setError("No student data found or unsuccessful fetch");
       }
     } catch (error) {
       setError(error.message || "Failed to fetch data");
+      console.error("Fetch Profile Error:", error);
     }
     setLoading(false);
   };
@@ -50,21 +58,23 @@ const DashboardStudent = () => {
   const fetchStudentPathData = async (studentID) => {
     try {
       const token = localStorage.getItem("authToken");
-      console.log("studentProfileData.studentID :", studentID);
       const response = await axios.get(
         `${baseURL}/api/v1/studentDashboard/${studentID}/dashboard`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
-      console.log("response from select path :", response);
-      if (response.status === 200 && response.data.success && response.data.student) {
-        setStudentSelectPathData(response.data.student);
+      if (response.status === 200 && response.data.success) {
+        setStudentSelectPathData(response.data); // Assuming response.data includes both student and coursesAssignment
+        console.log(
+          "Updated State with courses and assignments:",
+          response.data
+        );
       } else {
         setError("No student path data found or unsuccessful fetch");
       }
     } catch (error) {
       setError(error.response?.data?.message || "Failed to fetch data");
-      console.error("Error fetching data:", error);
+      console.error("Fetch Path Error:", error);
     }
   };
 
@@ -72,9 +82,21 @@ const DashboardStudent = () => {
     fetchStudentProfileData();
   }, []);
 
-
-
-
+  useEffect(() => {
+    // Logs whenever studentSelectPathData changes and is valid
+    if (studentSelectPathData.student) {
+      console.log("student:", studentSelectPathData.student);
+    }
+    if (studentSelectPathData.student.courses) {
+      console.log("Courses:", studentSelectPathData.student.courses);
+    }
+    if (studentSelectPathData.coursesAssignment) {
+      console.log(
+        "Courses Assignment:",
+        studentSelectPathData.coursesAssignment
+      );
+    }
+  }, [studentSelectPathData]);
 
   const BandageData = [
     {
@@ -450,7 +472,6 @@ const DashboardStudent = () => {
     },
   ];
 
-
   //#endregion
 
   studentData.sort((a, b) => {
@@ -558,8 +579,52 @@ const DashboardStudent = () => {
     fetchAssignmentData();
   }, []);
 
+
+
+
+
+
+  useEffect(() => {
+    // Log the student object itself
+    if (studentSelectPathData?.student) {
+      console.log("Hook student:", studentSelectPathData.student);
+    }
+    // Log the courses array
+    if (studentSelectPathData?.student?.courses) {
+      console.log("Hook Courses:", studentSelectPathData.student.courses);
+    }
+    // Log the coursesAssignment array
+    if (studentSelectPathData?.coursesAssignment) {
+      // Assuming coursesAssignment is directly under studentSelectPathData based on your JSON example
+      console.log(
+        "Hook coursesAssignment:",
+        studentSelectPathData.coursesAssignment
+      );
+    }
+  }, [studentSelectPathData]);
+
+  // Correctly accessing the student object
+  const studentDataPath = studentSelectPathData?.student;
+  console.log("Const studentDataPath:", studentDataPath);
+
+  // Correctly accessing the courses under the student
+  const studentCourses = studentSelectPathData?.student?.courses;
+  console.log("Const studentCourses:", studentCourses);
+
+  // Assuming coursesAssignment is directly under studentSelectPathData based on your JSON example
+  const studentCoursesAssignment = studentSelectPathData?.coursesAssignment;
+  console.log("Const studentCoursesAssignment:", studentCoursesAssignment);
+
+
+
+
+
+
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
+
+
+  
 
   return (
     <div className="advisor-container">
