@@ -231,7 +231,7 @@ function AchievementBandages({ BandageData }) {
 
 
 
-    console.log("Total Count Grade A:", totalA);
+    // console.log("Total Count Grade A:", totalA);
     const achievements = [];
 
     if (thesisPass) {

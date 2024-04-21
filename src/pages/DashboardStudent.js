@@ -6,15 +6,12 @@ import Form from "react-bootstrap/Form";
 import "./DashboardStudent.css";
 import AdvisorProfile from "../assets/AdvisorProfile.png";
 import MissionCard from "../components/MissionCard";
-import StudentProfile from "../assets/StudentProfile.png";
 import books from "../assets/books.png";
 import homework from "../assets/homework.png";
-import CourseCard from "../components/CourseCard";
 import NotificationCard from "../components/NotificationCard";
 import QuestCard from "../components/QuestCard";
 import MissionInfoCard from "../components/MissionInfoCard";
 import StudentAllCourses from "../components/StudentAllCourses";
-import Radialbar_Charts_Gradient from "../components/Radialbar_Charts_Gradient";
 import AchievementBandages from "../components/AchievementBandages";
 import axios from "axios";
 
@@ -22,6 +19,62 @@ const DashboardStudent = () => {
   //#region Mock Data
   const advisorID = "ADV002";
   const baseURL = "http://127.0.0.1:4000";
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  const [studentProfileData, setStudentProfileData] = useState(null);
+  const [studentSelectPathData, setStudentSelectPathData] = useState(null);
+
+  const fetchStudentProfileData = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const token = localStorage.getItem("authToken");
+      const response = await axios.get(`${baseURL}/api/v1/auth/me`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      if (response.status === 200 && response.data.success && response.data.data) {
+        setStudentProfileData(response.data.data);
+        console.log("Current Login:", response.data.data);
+        fetchStudentPathData(response.data.data.studentID); // Call to fetch path data here
+      } else {
+        setError("No student data found or unsuccessful fetch");
+      }
+    } catch (error) {
+      setError(error.message || "Failed to fetch data");
+    }
+    setLoading(false);
+  };
+
+  const fetchStudentPathData = async (studentID) => {
+    try {
+      const token = localStorage.getItem("authToken");
+      console.log("studentProfileData.studentID :", studentID);
+      const response = await axios.get(
+        `${baseURL}/api/v1/studentDashboard/${studentID}/dashboard`,
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+
+      console.log("response from select path :", response);
+      if (response.status === 200 && response.data.success && response.data.student) {
+        setStudentSelectPathData(response.data.student);
+      } else {
+        setError("No student path data found or unsuccessful fetch");
+      }
+    } catch (error) {
+      setError(error.response?.data?.message || "Failed to fetch data");
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchStudentProfileData();
+  }, []);
+
+
+
+
 
   const BandageData = [
     {
@@ -397,54 +450,7 @@ const DashboardStudent = () => {
     },
   ];
 
-  //All quests this advisor created
-  const questData = [
-    {
-      courseID: "2110634",
-      title: "New Student Registration",
-      description:
-        "A new student, Emily Johnson, has successfully completed her registration process for the upcoming academic year under your advisement. Emily is pursuing a degree in Computer Science with a focus on artificial intelligence. It is essential to review her academic file, previous coursework, and plan an initial meeting to discuss her academic goals, course selections, and any specific needs or accommodations she may require.",
-      image: homework,
-      time: "1 Apr",
-      dueDate: "5 May 2024",
-    },
-    {
-      courseID: "2110645",
-      title: "Grade Alert: Low Performance",
-      description:
-        "Student John Smith's performance in the Calculus II course has recently dropped below the academic satisfactory threshold, with his latest test scores indicating a potential risk of failing. This situation calls for a proactive approach to understand the challenges John is facing and to develop an intervention plan. Suggestions include arranging tutoring sessions, discussing study habits, and possibly considering course withdrawal before the deadline to avoid an adverse impact on his GPA.",
-      image: homework,
-      time: "1 Apr",
-      dueDate: "20 April 2024",
-    },
-    {
-      courseID: "2110656",
-      title: "Scholarship Application Deadline",
-      description:
-        "The deadline for the upcoming academic scholarship applications is quickly approaching on April 30th. There are several scholarships available that target students excelling in academic performance, demonstrating community service, or in need of financial aid. Please make an effort to remind your eligible students to prepare their applications, ensuring they include all required documents and personal statements. Holding a brief workshop on how to write a compelling application could significantly benefit our students.",
-      image: homework,
-      time: "1 Apr",
-      dueDate: "2 April 2024",
-    },
-    {
-      courseID: "2110656",
-      title: "Updated Course Catalog",
-      description:
-        "The course catalog for the next academic year has been thoroughly updated, including several new courses that reflect the latest trends and technologies in the field of computer science, such as Advanced Machine Learning, Cybersecurity Ethics, and Blockchain Fundamentals. Please take the time to review these updates and discuss with your advisees how these new courses could fit into their academic and career plans, particularly those students who are nearing the completion of their degree requirements.",
-      image: homework,
-      time: "1 Apr",
-      dueDate: "5 October 2024",
-    },
-    {
-      courseID: "2110690",
-      title: "Internship Opportunities",
-      description:
-        "Our department has recently partnered with several leading tech companies to offer new internship opportunities in software development, data analysis, and cybersecurity. These internships not only provide valuable hands-on experience but also offer potential pathways to full-time positions upon graduation. Encourage students, especially those in their junior and senior years, to apply by May 15th. Assistance with resume writing and interview preparation is available through our career services office.",
-      image: homework,
-      time: "1 Apr",
-      dueDate: "2 April 2024",
-    },
-  ];
+
   //#endregion
 
   studentData.sort((a, b) => {
@@ -531,9 +537,6 @@ const DashboardStudent = () => {
     setShowNotificationsAndQuests(true); // Show Notifications and Quests
   };
 
-  const staticValue = 300; // These values can also come from props, state, or context
-  const maxValue = 500;
-
   //AssignmentCourse
   const [assignmentData, setAssignmentData] = useState([]);
   const fetchAssignmentData = async () => {
@@ -555,6 +558,9 @@ const DashboardStudent = () => {
     fetchAssignmentData();
   }, []);
 
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error}</div>;
+
   return (
     <div className="advisor-container">
       <section className="section1">
@@ -563,7 +569,19 @@ const DashboardStudent = () => {
           <div className="advisorProfile">
             <img src={AdvisorProfile} alt="Advisor" />
           </div>
-          <p style={{ fontSize: "18px" }}>John Smith</p>
+          <p style={{ fontSize: "15px" }}>
+            {" "}
+            <div>
+              {studentProfileData ? (
+                <div>
+                  <p>{studentProfileData.name}</p>
+                  {/* Add more data displays as needed */}
+                </div>
+              ) : (
+                <div>No student data available.</div>
+              )}
+            </div>
+          </p>
         </div>
         <div className="container-grey students-container">
           <div className="top-of-student-container">
