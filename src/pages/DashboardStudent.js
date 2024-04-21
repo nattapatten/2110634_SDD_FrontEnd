@@ -579,11 +579,6 @@ const DashboardStudent = () => {
     fetchAssignmentData();
   }, []);
 
-
-
-
-
-
   useEffect(() => {
     // Log the student object itself
     if (studentSelectPathData?.student) {
@@ -615,16 +610,68 @@ const DashboardStudent = () => {
   const studentCoursesAssignment = studentSelectPathData?.coursesAssignment;
   console.log("Const studentCoursesAssignment:", studentCoursesAssignment);
 
+  // if (studentCoursesAssignment) {
+  //   studentCoursesAssignment.forEach((assignment) => {
+  //     console.log("Loop courseDetails", assignment.courseDetails);
+  //   });
+  // }
+
+  // const list_courses = studentCoursesAssignment.map((assignment) => {
+  //   return assignment.courseDetails;
+  // });
+
+  const listCoursesPath = studentCourses.map((listData) => listData);
+  const listCoursesDetail = studentCoursesAssignment.map(
+    (listData) => listData.courseDetails
+  );
+  const listCoursesAssignments = studentCoursesAssignment.map(
+    (listData) => listData.assignments
+  );
+  const listStudentAssignments = studentCoursesAssignment.map(
+    (listData) => listData.studentAssignments
+  );
+
+  console.log("listCoursesPath", listCoursesPath);
+  console.log("listCoursesDetail", listCoursesDetail);
+  console.log("listCoursesAssignments", listCoursesAssignments);
+  console.log("listStudentAssignments", listStudentAssignments);
 
 
+
+
+  const joinedCourses = listCoursesPath.map((path) => {
+    const details = listCoursesDetail.find(
+      (detail) => detail._id === path.course_ObjectID
+    );
+    return { ...path, courseDetails: details };
+  });
+  console.log("joinedCourses", joinedCourses);
+
+  joinedCourses.forEach(course => {
+    console.log("Course ID:", course.courseID);
+    console.log("Course Object ID:", course.course_ObjectID);
+    console.log("Course enrollStatus:", course.enrollStatus);
+    console.log("Course Name:", course.courseDetails.courseName);
+    console.log("Max Students:", course.courseDetails.maxStudents);
+
+    
+});
+
+const simplifiedCourses = joinedCourses.map(course => ({
+  CourseID: course.courseID,
+  CourseObjectID: course.course_ObjectID,
+  CourseName: course.courseDetails.courseName,
+  MaxStudents: course.courseDetails.maxStudents,
+  CurrentStudents: course.courseDetails.currentStudents, // Assuming you want this too
+  enrollStatus: course.enrollStatus
+}));
+
+console.log("Simplified Courses:", simplifiedCourses);
 
 
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
-
-
-  
 
   return (
     <div className="advisor-container">
