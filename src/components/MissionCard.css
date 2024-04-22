@@ -4,45 +4,48 @@
     align-items: center;
     width: 178px;
     height: 244px;
-    /* padding-bottom: 5px; */
-    border-radius: 20px; /* Ensure this matches your desired border-radius */
-    transition: border-color 0.3s ease; /* Smooth transition for border color */
+    border-radius: 20px;
+    transition: border-color 0.3s ease;
 }
 
 .student-card:hover, .student-card.selected, .student-card:focus {
-    border: 2px solid rgb(255, 255, 255); /* Change border to blue */
+    border: 2px solid rgb(255, 255, 255);
     background-color: rgba(156,87,252,1);
-    outline: none; /* Removes the default focus outline */
-    border-radius: 20px; /* Ensure rounded corners are maintained */
+    outline: none;
+    border-radius: 20px;
 }
 
 .card-image {
-    height: 130px; 
-    overflow: hidden; 
+    height: 130px; /* Adjust as needed */
+    overflow: hidden;
 }
 
 .card-image img {
     width: 100%;
-    height: 100%; 
+    height: 100%;
     object-fit: cover;
-    border-radius: 20px; 
+    border-radius: 20px;
 } 
 
 .card-title {
     margin: 0;
     font-size: 18px;
     font-weight: bold;
-    margin-bottom: 5px;
-    margin-top: 5px;
+    margin-bottom: 5px; /* Reduced margin */
+    margin-top: 5px; /* Reduced margin */
 }
 
 .student-name {
     font-size: 14px;
     font-weight: bold;
-    /* margin-bottom: 25px; */
-    margin-top: 8p  x;
+    margin-bottom: 2px; /* Reduced margin */
+    margin-top: 1px; /* Reduced margin */
 }
 
-.gray-scale{
+.status-bar-spacing {
+    margin-bottom: 20px;
+}
+
+.gray-scale {
     filter: grayscale(100%);
 }

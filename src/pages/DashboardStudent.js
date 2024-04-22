@@ -14,11 +14,20 @@ import MissionInfoCard from "../components/MissionInfoCard";
 import StudentAllCourses from "../components/StudentAllCourses";
 import AchievementBandages from "../components/AchievementBandages";
 import axios from "axios";
+import MissionAssignment from "../components/MissionAssignment"
 
 const DashboardStudent = () => {
   //#region Mock Data
   const advisorID = "ADV002";
   const baseURL = "http://127.0.0.1:4000";
+
+  const EnrollStatusEnum = {
+    0: "Not Enroll",
+    1: "Enroll",
+    2: "Withdraw",
+    3: "Pass"
+  };
+
 
   const [studentProfileData, setStudentProfileData] = useState(null);
   // Adding coursesAssignment to the initial state structure
@@ -260,154 +269,9 @@ const DashboardStudent = () => {
       submitDate: "2024-02-04T11:15:00",
     },
   ];
-  const courseData = [
-    {
-      courseID: "2110634",
-      courseName: "Math for Software Engineering",
-      maxStudents: "30",
-      currentStudents: "17",
-      image: books,
-    },
-    {
-      courseID: "2110645",
-      courseName: "Advanced Algorithms",
-      maxStudents: "25",
-      currentStudents: "20",
-      image: books,
-    },
-    {
-      courseID: "2110656",
-      courseName: "System Architecture Design",
-      maxStudents: "28",
-      currentStudents: "28",
-      image: books,
-    },
-    {
-      courseID: "2110690",
-      courseName: "Cloud Computing",
-      maxStudents: "30",
-      currentStudents: "18",
-      image: books,
-    },
-    {
-      courseID: "2110690",
-      courseName: "Cloud Computing",
-      maxStudents: "30",
-      currentStudents: "18",
-      image: books,
-    },
-    {
-      courseID: "2110690",
-      courseName: "Cloud Computing",
-      maxStudents: "30",
-      currentStudents: "18",
-      image: books,
-    },
-  ];
 
-  const studentData = [
-    {
-      title: "Passed",
-      image: homework,
-      path: "Software Engineer",
-      name: "Math for Software Engineering",
-      studentID: "11111111",
-      status: "100",
-      gpa: "B+",
-      lastUpdated: "2023-12-15T08:30:00",
-    },
-    {
-      title: "Passed",
-      image: homework,
-      path: "Project Manager",
-      name: "Project Manager",
-      studentID: "22222222",
-      status: "100",
-      gpa: "A",
-      lastUpdated: "2023-11-30T14:45:00",
-    },
-    {
-      title: "Studying",
-      image: homework,
-      path: "Software Engineer",
-      name: "Advanced Algorithms",
-      studentID: "33333333",
-      status: "70",
-      gpa: "-",
-      lastUpdated: "2024-01-10T10:20:00",
-    },
-    {
-      title: "Studying",
-      image: homework,
-      path: "Software Engineer",
-      name: "System Architecture Design",
-      studentID: "44444444",
-      status: "80",
-      gpa: "-",
-      lastUpdated: "2024-02-05T11:15:00",
-    },
-    {
-      title: "Passed",
-      image: homework,
-      path: "DevOps Engineer",
-      name: "Cloud Computing",
-      studentID: "55555555",
-      status: "100",
-      gpa: "A",
-      lastUpdated: "2023-10-20T09:00:00",
-    },
-    {
-      title: "Studying",
-      image: homework,
-      path: "Software Engineer",
-      name: "Basic Network",
-      studentID: "66666666",
-      status: "60",
-      gpa: "-",
-      lastUpdated: "2024-03-15T13:30:00",
-    },
-    {
-      title: "Withdraw",
-      image: homework,
-      path: "Software Engineer",
-      name: "Data Structure",
-      studentID: "77777777",
-      status: "50",
-      gpa: "W",
-      lastUpdated: "2023-12-01T16:00:00",
-    },
-    {
-      title: "Studying",
-      image: homework,
-      path: "Software Engineer",
-      name: "Computer Programming",
-      studentID: "88888888",
-      status: "40",
-      gpa: "-",
-      lastUpdated: "2024-04-05T09:45:00",
-    },
-    {
-      title: "Studying",
-      image: homework,
-      path: "Software Engineer",
-      name: "Java Programming",
-      studentID: "12345678",
-      status: "30",
-      gpa: "-",
-      lastUpdated: "2024-02-25T14:00:00",
-    },
-    {
-      title: "Withdraw",
-      image: homework,
-      path: "Software Engineer",
-      name: "Web Programming",
-      studentID: "12345678",
-      status: "20",
-      gpa: "W",
-      lastUpdated: "2023-11-15T10:30:00",
-    },
-    // Add more student data objects with lastUpdated field including time
-  ];
+
+
 
   const notificationData = [
     {
@@ -474,10 +338,8 @@ const DashboardStudent = () => {
 
   //#endregion
 
-  studentData.sort((a, b) => {
-    return new Date(b.lastUpdated) - new Date(a.lastUpdated);
-  });
 
+  const [selectedCourseAssignments, setSelectedCourseAssignments] = useState([]);
   const [selectedStudent, setSelectedStudent] = useState(null);
   const [showStudentInfo, setShowStudentInfo] = useState(false);
   const [showNotificationsAndQuests, setShowNotificationsAndQuests] =
@@ -550,6 +412,15 @@ const DashboardStudent = () => {
     setSelectedStudent(student);
     setShowStudentInfo(true);
     setShowNotificationsAndQuests(false); // Hide Notifications and Quests
+    // console.log("student handle:",student);
+    // console.log("student.CourseID:" ,student.CourseID);
+    // console.log("handleStudentClick:listStudentAssignments", listCoursesAssignments);
+    const flatAssignments = listCoursesAssignments.flat();
+    const filteredAssignments = flatAssignments.filter(assignment => assignment.courseID === student.CourseID);
+    console.log("filteredAssignments", filteredAssignments)
+    setSelectedCourseAssignments(filteredAssignments);
+
+
   };
 
   const handleClose = () => {
@@ -654,19 +525,22 @@ const DashboardStudent = () => {
     console.log("Course Name:", course.courseDetails.courseName);
     console.log("Max Students:", course.courseDetails.maxStudents);
 
-    
-});
 
-const simplifiedCourses = joinedCourses.map(course => ({
-  CourseID: course.courseID,
-  CourseObjectID: course.course_ObjectID,
-  CourseName: course.courseDetails.courseName,
-  MaxStudents: course.courseDetails.maxStudents,
-  CurrentStudents: course.courseDetails.currentStudents, // Assuming you want this too
-  enrollStatus: course.enrollStatus
-}));
+  });
 
-console.log("Simplified Courses:", simplifiedCourses);
+  const simplifiedCourses = joinedCourses.map(course => ({
+    CourseID: course.courseID,
+    CourseObjectID: course.course_ObjectID,
+    CourseName: course.courseDetails.courseName,
+    MaxStudents: course.courseDetails.maxStudents,
+    CurrentStudents: course.courseDetails.currentStudents, // Assuming you want this too
+    GradePercentage: course.gradePercentage,
+    GradeLetter: course.gradeLetter,
+    EnrollStatus: EnrollStatusEnum[course.enrollStatus] || 'Status Unknown', //course.enrollStatus,
+    image: homework,
+  }));
+
+  console.log("Simplified Courses:", simplifiedCourses);
 
 
 
@@ -713,8 +587,27 @@ console.log("Simplified Courses:", simplifiedCourses);
           {showStudentInfo ? (
             <MissionInfoCard student={selectedStudent} onClose={handleClose} />
           ) : (
+
             <div className="student-list">
-              {studentData.map((student, index) => (
+              {simplifiedCourses.map((student, index) => (
+                <div
+                  key={index}
+                  onClick={() => handleStudentClick(student)}
+                  className="student-card-wrapper"
+                  tabIndex="0"
+                >
+                  <MissionCard
+                    // title={student.EnrollStatus}
+                    title={student.EnrollStatus}
+                    image={student.image}
+                    courseID={student.CourseID}
+                    name={student.CourseName}
+                    status={student.GradePercentage}
+                    gpa={student.GradeLetter}
+                  />
+                </div>
+              ))}
+              {/* {studentData.map((student, index) => (
                 <div
                   key={index}
                   onClick={() => handleStudentClick(student)}
@@ -729,7 +622,7 @@ console.log("Simplified Courses:", simplifiedCourses);
                     gpa={student.gpa}
                   />
                 </div>
-              ))}
+              ))} */}
             </div>
           )}
         </div>
@@ -740,10 +633,13 @@ console.log("Simplified Courses:", simplifiedCourses);
             Student's Courses
           </p>
           <div className="all-courses-container">
-            <StudentAllCourses
+            {/* <StudentAllCourses
               studentID={selectedStudent.studentID}
               onClose={handleClose}
-            />
+            /> */}
+            {selectedCourseAssignments.length > 0 && (
+              <MissionAssignment assignments={selectedCourseAssignments} />
+            )}
           </div>
         </div>
       )}
