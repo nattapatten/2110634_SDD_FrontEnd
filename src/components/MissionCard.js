@@ -5,11 +5,16 @@ import StatusBar from './StatusBar';
 const MissionCard = ({ title, courseID, name, image, status, gpa }) => {
   let cardClassName = "student-card";
 
+
+
   if (title === "Enroll" && status < 100) {
     cardClassName += " container-purple2";
   } else if (title === "Pass" && status === 100) {
     cardClassName += " container-purple3";
   } else if (title === "Not Enroll" || title === "Withdraw") {
+    cardClassName += " container-purple2 gray-scale";
+  }
+  else{
     cardClassName += " container-purple2 gray-scale";
   }
 

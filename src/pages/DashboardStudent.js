@@ -14,7 +14,7 @@ import MissionInfoCard from "../components/MissionInfoCard";
 import StudentAllCourses from "../components/StudentAllCourses";
 import AchievementBandages from "../components/AchievementBandages";
 import axios from "axios";
-import MissionAssignment from "../components/MissionAssignment"
+import MissionAssignment from "../components/MissionAssignment";
 import { GiConsoleController } from "react-icons/gi";
 
 const DashboardStudent = () => {
@@ -26,9 +26,8 @@ const DashboardStudent = () => {
     0: "Not Enroll",
     1: "Enroll",
     2: "Withdraw",
-    3: "Pass"
+    3: "Pass",
   };
-
 
   const [studentProfileData, setStudentProfileData] = useState(null);
   // Adding coursesAssignment to the initial state structure
@@ -271,9 +270,6 @@ const DashboardStudent = () => {
     },
   ];
 
-
-
-
   const notificationData = [
     {
       courseID: "2110634",
@@ -339,8 +335,9 @@ const DashboardStudent = () => {
 
   //#endregion
 
-
-  const [selectedCourseAssignments, setSelectedCourseAssignments] = useState([]);
+  const [selectedCourseAssignments, setSelectedCourseAssignments] = useState(
+    []
+  );
   const [selectedStudent, setSelectedStudent] = useState(null);
   const [showStudentInfo, setShowStudentInfo] = useState(false);
   const [showNotificationsAndQuests, setShowNotificationsAndQuests] =
@@ -409,22 +406,23 @@ const DashboardStudent = () => {
     // Optionally reset form fields here if needed
   };
 
-  const handleStudentClick = (student) => {
-    setSelectedStudent(student);
+  const handleStudentClick = (mission) => {
+    console.log("handleStudentClick",mission)
+    setSelectedStudent(mission);
     setShowStudentInfo(true);
     setShowNotificationsAndQuests(false); // Hide Notifications and Quests
 
-    console.log("simplifiedAssignments:",simplifiedAssignments);
-    console.log("student.CourseID:" , student.CourseID);
-    
+    console.log("simplifiedAssignments:", simplifiedAssignments);
+    console.log("student.CourseID:", mission.CourseID);
+
     // const flatAssignments = simplifiedAssignments.flat();
     // console.log("flatAssignments:",flatAssignments);
 
-    const filteredAssignments = simplifiedAssignments.filter(assignment => assignment.CourseID === student.CourseID);
-    console.log("filteredAssignments", filteredAssignments)
+    const filteredAssignments = simplifiedAssignments.filter(
+      (assignment) => assignment.CourseID === mission.CourseID
+    );
+    console.log("filteredAssignments", filteredAssignments);
     setSelectedCourseAssignments(filteredAssignments);
-
-
   };
 
   const handleClose = () => {
@@ -454,10 +452,7 @@ const DashboardStudent = () => {
     fetchAssignmentData();
   }, []);
 
-  useEffect(() => {
-
-  }, [studentSelectPathData]);
-
+  useEffect(() => {}, [studentSelectPathData]);
 
   const studentDataPath = studentSelectPathData?.student;
 
@@ -481,9 +476,6 @@ const DashboardStudent = () => {
   console.log("listCoursesAssignments", listCoursesAssignments);
   console.log("listStudentAssignments", listStudentAssignments);
 
-
-
-
   const joinedCourses = listCoursesPath.map((path) => {
     const details = listCoursesDetail.find(
       (detail) => detail._id === path.course_ObjectID
@@ -492,7 +484,7 @@ const DashboardStudent = () => {
   });
   console.log("joinedCourses", joinedCourses);
 
-  const simplifiedCourses = joinedCourses.map(course => ({
+  const simplifiedCourses = joinedCourses.map((course) => ({
     CourseID: course.courseID,
     CourseObjectID: course.course_ObjectID,
     CourseName: course.courseDetails.courseName,
@@ -500,53 +492,56 @@ const DashboardStudent = () => {
     CurrentStudents: course.courseDetails.currentStudents, // Assuming you want this too
     GradePercentage: course.gradePercentage,
     GradeLetter: course.gradeLetter,
-    EnrollStatus: EnrollStatusEnum[course.enrollStatus] || 'Status Unknown', //course.enrollStatus,
+    EnrollStatus: EnrollStatusEnum[course.enrollStatus] || "Status Unknown", //course.enrollStatus,
     image: homework,
   }));
 
   console.log("Simplified Courses:", simplifiedCourses);
 
-
-
-
   function mergeAssignments(courseAssignments, studentAssignments) {
     return courseAssignments.map((courseGroup, index) => {
-      return courseGroup.map(assignment => {
+      return courseGroup.map((assignment) => {
         // Find the corresponding student assignment
-        const studentAssignment = studentAssignments[index].find(sa => sa.assignmentCourse_ObjectID === assignment._id);
+        const studentAssignment = studentAssignments[index].find(
+          (sa) => sa.assignmentCourse_ObjectID === assignment._id
+        );
 
         // Return a new object merging the assignment with its student details, if any
         return {
           ...assignment,
-          studentDetails: studentAssignment || null // Include student details if found, else null
+          studentDetails: studentAssignment || null, // Include student details if found, else null
         };
       });
     });
   }
 
-  const mergedAssignments = mergeAssignments(listCoursesAssignments, listStudentAssignments);
-  console.log("mergedAssignments", mergedAssignments);
-
-
+  const mergedAssignments = mergeAssignments(
+    listCoursesAssignments,
+    listStudentAssignments
+  );
+  // console.log("mergedAssignments", mergedAssignments);
 
   const flatMergedAssignments = mergedAssignments.flat();
 
+  // console.log("flatMergedAssignments: ", flatMergedAssignments)
   // Transforming merged data into the simplified structure
-  const simplifiedAssignments = flatMergedAssignments.map(course => {
+  const simplifiedAssignments = flatMergedAssignments.map((course) => {
     // Handling cases where studentDetails may be null
-    const studentDetails = course.studentDetails ? {
-      GradePercentage: course.studentDetails.score,
-      submittedDate: course.studentDetails.submittedDate,
-    } : {
-      GradePercentage: null, // or a default value
-      submittedDate: null,  // or a default value
-    };
-
+    const studentDetails = course.studentDetails
+      ? {
+          GradePercentage: course.studentDetails.score,
+          submittedDate: course.studentDetails.submittedDate,
+        }
+      : {
+          GradePercentage: null, // or a default value
+          submittedDate: null, // or a default value
+        };
+    // console.log("studentDetails",studentDetails)
     return {
       AssignmentID: course._id,
       CourseID: course.courseID,
       Title: course.title,
-      Description : course.description,
+      Description: course.description,
       GradePercentage: studentDetails.GradePercentage,
       // GradeLetter: course.gradeLetter, // This should be derived from somewhere, here assumed to be available
       DueDate: course.dueDate,
@@ -555,11 +550,7 @@ const DashboardStudent = () => {
     };
   });
 
-  console.log("simplifiedAssignments: ", simplifiedAssignments)
-
-
-
-
+  console.log("simplifiedAssignments: ", simplifiedAssignments);
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
@@ -602,25 +593,25 @@ const DashboardStudent = () => {
             )}
           </div>
           {showStudentInfo ? (
-            <MissionInfoCard student={selectedStudent} onClose={handleClose} />
+            <MissionInfoCard mission={selectedStudent} onClose={handleClose} />
           ) : (
-
             <div className="student-list">
-              {simplifiedCourses.map((student, index) => (
+              {simplifiedCourses.map((mission, index) => (
                 <div
-                  key={index}
-                  onClick={() => handleStudentClick(student)}
+                  // key={index}
+                  key={mission.CourseID}
+                  onClick={() => handleStudentClick(mission)}
                   className="student-card-wrapper"
                   tabIndex="0"
                 >
                   <MissionCard
                     // title={student.EnrollStatus}
-                    title={student.EnrollStatus}
-                    image={student.image}
-                    courseID={student.CourseID}
-                    name={student.CourseName}
-                    status={student.GradePercentage}
-                    gpa={student.GradeLetter}
+                    title={mission.EnrollStatus}
+                    image={mission.image}
+                    courseID={mission.CourseID}
+                    name={mission.CourseName}
+                    status={mission.GradePercentage}
+                    gpa={mission.GradeLetter}
                   />
                 </div>
               ))}
@@ -647,7 +638,7 @@ const DashboardStudent = () => {
       {showStudentInfo && (
         <div className="container-grey">
           <p style={{ fontSize: "20px", fontWeight: "bold" }}>
-            Student's Courses
+            Your Mission Quests
           </p>
           <div className="all-courses-container">
             {/* <StudentAllCourses
@@ -662,30 +653,6 @@ const DashboardStudent = () => {
       )}
       <Fade in={showNotificationsAndQuests}>
         <section className={showNotificationsAndQuests ? "visible" : "hidden"}>
-          {/* <div className="section_comulative container-grey">
-            <p style={{ fontSize: "20px", fontWeight: "bold" }}>
-              Comulative Scores
-            </p>
-            <div className="chart-list-row">
-              <Radialbar_Charts_Gradient
-                staticValue={100}
-                maxValue={200}
-                label="Gauge 1"
-              />
-              <Radialbar_Charts_Gradient
-                staticValue={10}
-                maxValue={30}
-                label="Gauge 2"
-              />
-              <Radialbar_Charts_Gradient
-                staticValue={3}
-                maxValue={4}
-                label="Gauge 3"
-              />
-            </div>
-          </div> */}
-          {/* <br /> */}
-
           <div className="section_achievement container-grey">
             <p
               style={{

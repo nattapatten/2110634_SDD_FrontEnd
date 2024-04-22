@@ -6,7 +6,7 @@ import books from '../assets/books.png';
 const MissionAssignment = ({ assignments }) => {
 
 
-    const assignment_progress = 100;
+    // const assignment_progress = 100;
     console.log("assignments:", assignments)
     return (
         <>
@@ -16,9 +16,10 @@ const MissionAssignment = ({ assignments }) => {
                     courseNumber={assignment.CourseID} // Assuming you have courseID or similar
                     courseName={assignment.title} // Adjust according to your data structure
                     // status={assignment.status.toString()} // Adjust if necessary
-                    status={assignments.GradePercentage}
+                    gpa={assignment.GradePercentage} // Assuming you have GPA in your assignments
+                    status={assignment.GradePercentage}
                     image={books} // Use the provided image or a default
-                    gpa={assignment.gpa} // Assuming you have GPA in your assignments
+                    
                 />
             ))}
         </>

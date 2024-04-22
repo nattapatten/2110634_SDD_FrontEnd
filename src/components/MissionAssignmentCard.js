@@ -24,8 +24,9 @@ const MissionAssignmentCard = ({ courseName, courseNumber, gpa, status, image })
       </div>
       <p className="course-name">{courseName}</p>
       <div className='bottom-contents'>
-        <StatusBar percentage={numericStatus} />
-        <p className='student-number'>GPA: {gpa ? gpa : "N/A"}</p>
+        {/* <StatusBar percentage={numericStatus} /> */}
+        <StatusBar percentage={status} key="statusBar" />
+        <p className='student-number'>Your Score: {gpa ? gpa : "N/A"}</p>
       </div>
     </div>
   );
