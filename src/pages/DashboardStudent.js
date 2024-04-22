@@ -15,6 +15,7 @@ import StudentAllCourses from "../components/StudentAllCourses";
 import AchievementBandages from "../components/AchievementBandages";
 import axios from "axios";
 import MissionAssignment from "../components/MissionAssignment"
+import { GiConsoleController } from "react-icons/gi";
 
 const DashboardStudent = () => {
   //#region Mock Data
@@ -92,19 +93,19 @@ const DashboardStudent = () => {
   }, []);
 
   useEffect(() => {
-    // Logs whenever studentSelectPathData changes and is valid
-    if (studentSelectPathData.student) {
-      console.log("student:", studentSelectPathData.student);
-    }
-    if (studentSelectPathData.student.courses) {
-      console.log("Courses:", studentSelectPathData.student.courses);
-    }
-    if (studentSelectPathData.coursesAssignment) {
-      console.log(
-        "Courses Assignment:",
-        studentSelectPathData.coursesAssignment
-      );
-    }
+    // // Logs whenever studentSelectPathData changes and is valid
+    // if (studentSelectPathData.student) {
+    //   console.log("student:", studentSelectPathData.student);
+    // }
+    // if (studentSelectPathData.student.courses) {
+    //   console.log("Courses:", studentSelectPathData.student.courses);
+    // }
+    // if (studentSelectPathData.coursesAssignment) {
+    //   console.log(
+    //     "Courses Assignment:",
+    //     studentSelectPathData.coursesAssignment
+    //   );
+    // }
   }, [studentSelectPathData]);
 
   const BandageData = [
@@ -412,11 +413,14 @@ const DashboardStudent = () => {
     setSelectedStudent(student);
     setShowStudentInfo(true);
     setShowNotificationsAndQuests(false); // Hide Notifications and Quests
-    // console.log("student handle:",student);
-    // console.log("student.CourseID:" ,student.CourseID);
-    // console.log("handleStudentClick:listStudentAssignments", listCoursesAssignments);
-    const flatAssignments = listCoursesAssignments.flat();
-    const filteredAssignments = flatAssignments.filter(assignment => assignment.courseID === student.CourseID);
+
+    console.log("simplifiedAssignments:",simplifiedAssignments);
+    console.log("student.CourseID:" , student.CourseID);
+    
+    // const flatAssignments = simplifiedAssignments.flat();
+    // console.log("flatAssignments:",flatAssignments);
+
+    const filteredAssignments = simplifiedAssignments.filter(assignment => assignment.CourseID === student.CourseID);
     console.log("filteredAssignments", filteredAssignments)
     setSelectedCourseAssignments(filteredAssignments);
 
@@ -451,45 +455,15 @@ const DashboardStudent = () => {
   }, []);
 
   useEffect(() => {
-    // Log the student object itself
-    if (studentSelectPathData?.student) {
-      console.log("Hook student:", studentSelectPathData.student);
-    }
-    // Log the courses array
-    if (studentSelectPathData?.student?.courses) {
-      console.log("Hook Courses:", studentSelectPathData.student.courses);
-    }
-    // Log the coursesAssignment array
-    if (studentSelectPathData?.coursesAssignment) {
-      // Assuming coursesAssignment is directly under studentSelectPathData based on your JSON example
-      console.log(
-        "Hook coursesAssignment:",
-        studentSelectPathData.coursesAssignment
-      );
-    }
+
   }, [studentSelectPathData]);
 
-  // Correctly accessing the student object
+
   const studentDataPath = studentSelectPathData?.student;
-  console.log("Const studentDataPath:", studentDataPath);
 
-  // Correctly accessing the courses under the student
   const studentCourses = studentSelectPathData?.student?.courses;
-  console.log("Const studentCourses:", studentCourses);
 
-  // Assuming coursesAssignment is directly under studentSelectPathData based on your JSON example
   const studentCoursesAssignment = studentSelectPathData?.coursesAssignment;
-  console.log("Const studentCoursesAssignment:", studentCoursesAssignment);
-
-  // if (studentCoursesAssignment) {
-  //   studentCoursesAssignment.forEach((assignment) => {
-  //     console.log("Loop courseDetails", assignment.courseDetails);
-  //   });
-  // }
-
-  // const list_courses = studentCoursesAssignment.map((assignment) => {
-  //   return assignment.courseDetails;
-  // });
 
   const listCoursesPath = studentCourses.map((listData) => listData);
   const listCoursesDetail = studentCoursesAssignment.map(
@@ -518,16 +492,6 @@ const DashboardStudent = () => {
   });
   console.log("joinedCourses", joinedCourses);
 
-  joinedCourses.forEach(course => {
-    console.log("Course ID:", course.courseID);
-    console.log("Course Object ID:", course.course_ObjectID);
-    console.log("Course enrollStatus:", course.enrollStatus);
-    console.log("Course Name:", course.courseDetails.courseName);
-    console.log("Max Students:", course.courseDetails.maxStudents);
-
-
-  });
-
   const simplifiedCourses = joinedCourses.map(course => ({
     CourseID: course.courseID,
     CourseObjectID: course.course_ObjectID,
@@ -541,6 +505,57 @@ const DashboardStudent = () => {
   }));
 
   console.log("Simplified Courses:", simplifiedCourses);
+
+
+
+
+  function mergeAssignments(courseAssignments, studentAssignments) {
+    return courseAssignments.map((courseGroup, index) => {
+      return courseGroup.map(assignment => {
+        // Find the corresponding student assignment
+        const studentAssignment = studentAssignments[index].find(sa => sa.assignmentCourse_ObjectID === assignment._id);
+
+        // Return a new object merging the assignment with its student details, if any
+        return {
+          ...assignment,
+          studentDetails: studentAssignment || null // Include student details if found, else null
+        };
+      });
+    });
+  }
+
+  const mergedAssignments = mergeAssignments(listCoursesAssignments, listStudentAssignments);
+  console.log("mergedAssignments", mergedAssignments);
+
+
+
+  const flatMergedAssignments = mergedAssignments.flat();
+
+  // Transforming merged data into the simplified structure
+  const simplifiedAssignments = flatMergedAssignments.map(course => {
+    // Handling cases where studentDetails may be null
+    const studentDetails = course.studentDetails ? {
+      GradePercentage: course.studentDetails.score,
+      submittedDate: course.studentDetails.submittedDate,
+    } : {
+      GradePercentage: null, // or a default value
+      submittedDate: null,  // or a default value
+    };
+
+    return {
+      AssignmentID: course._id,
+      CourseID: course.courseID,
+      GradePercentage: studentDetails.GradePercentage,
+      // GradeLetter: course.gradeLetter, // This should be derived from somewhere, here assumed to be available
+      dueDate: course.dueDate,
+      submittedDate: studentDetails.submittedDate,
+      image: homework, // Assuming 'homework' is a placeholder or predefined variable
+    };
+  });
+
+  console.log("simplifiedAssignments: ", simplifiedAssignments)
+
+
 
 
 
