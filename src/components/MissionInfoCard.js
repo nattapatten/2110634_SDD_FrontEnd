@@ -21,7 +21,7 @@ const MissionInfoCard = ({ mission, onClose }) => {
       <div className="left">
         <div className="student-info">
           <p>Course Name: {mission.CourseName}</p>
-          <p>Path: {mission.path}</p>
+          <p>Status: {mission.EnrollStatus}</p>
           <p>Score Percentage: {mission.GradePercentage}%</p>
           <p>Grade: {mission.GradeLetter}</p>
           {/* <p>Last Updated: {student.lastUpdated}</p> */}
