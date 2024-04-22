@@ -13,10 +13,10 @@ const MissionAssignment = ({ assignments }) => {
             {assignments.map((assignment, index) => (
                 <MissionAssignmentCard
                     key={index}
-                    courseNumber={assignment.courseID} // Assuming you have courseID or similar
+                    courseNumber={assignment.CourseID} // Assuming you have courseID or similar
                     courseName={assignment.title} // Adjust according to your data structure
                     // status={assignment.status.toString()} // Adjust if necessary
-                    status={assignment_progress}
+                    status={assignments.GradePercentage}
                     image={books} // Use the provided image or a default
                     gpa={assignment.gpa} // Assuming you have GPA in your assignments
                 />

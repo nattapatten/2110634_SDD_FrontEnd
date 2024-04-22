@@ -545,11 +545,13 @@ const DashboardStudent = () => {
     return {
       AssignmentID: course._id,
       CourseID: course.courseID,
+      Title: course.title,
+      Description : course.description,
       GradePercentage: studentDetails.GradePercentage,
       // GradeLetter: course.gradeLetter, // This should be derived from somewhere, here assumed to be available
-      dueDate: course.dueDate,
-      submittedDate: studentDetails.submittedDate,
-      image: homework, // Assuming 'homework' is a placeholder or predefined variable
+      DueDate: course.dueDate,
+      SubmittedDate: studentDetails.submittedDate,
+      Image: homework, // Assuming 'homework' is a placeholder or predefined variable
     };
   });
 
