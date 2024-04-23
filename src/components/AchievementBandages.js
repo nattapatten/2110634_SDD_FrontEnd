@@ -192,7 +192,7 @@ function Modal({ show, onClose, children }) {
         <div className="modal" onClick={onClose}>
             <div className="modal-content" onClick={e => e.stopPropagation()}>
                 <div className="modal-header">
-                    <button onClick={onClose}>Close</button>
+                    <button onClick={onClose} className="btn btn-secondary">Close</button>
                 </div>
 
                 <div className="modal-body">
