@@ -17,17 +17,17 @@ import axios from "axios";
 import MissionAssignment from "../components/MissionAssignment.js";
 import { GiConsoleController } from "react-icons/gi";
 import StudentQuestCard from "../components/StudentQuestCard.js";
-import StarStatusBar from '../components/StarStatusBar.js';
+import StarStatusBar from "../components/StarStatusBar.js";
 import { TbRulerOff } from "react-icons/tb";
-import { BandageData, notificationData } from '../datas/data.js';
-import EnrollmentModal from "../components/EnrollmentModal"
+import { BandageData, notificationData } from "../datas/data.js";
+import EnrollmentModal from "../components/EnrollmentModal";
+import { el } from "date-fns/locale";
 
 const DashboardStudent = () => {
-  //#region Mock Data
   const advisorID = "ADV002";
   const baseURL = "http://127.0.0.1:4000";
 
-  const enableEditing = false;  // Set this to false to make the rating static
+  const enableEditing = false; // Set this to false to make the rating static
 
   const EnrollStatusEnum = {
     0: "Not Enroll",
@@ -37,6 +37,8 @@ const DashboardStudent = () => {
   };
 
   const [studentProfileData, setStudentProfileData] = useState(null);
+  const [selectedStudentID, setStudentID] = useState(null);
+  // const [selectedStudentID, setStudentID] = useState({ studentID: null, studentObjectID: null });
   // Adding coursesAssignment to the initial state structure
   const [studentSelectPathData, setStudentSelectPathData] = useState({
     student: { courses: [] },
@@ -62,7 +64,19 @@ const DashboardStudent = () => {
       ) {
         setStudentProfileData(response.data.data);
         fetchStudentPathData(response.data.data.studentID); // Call to fetch path data here
-        console.log("Current Profile Data", response.data)
+        // console.log("Current Profile Data", response.data)
+        console.log("setStudentProfileData:", studentProfileData);
+
+        if (response.data.data.studentID) {
+          setStudentID(response.data.data.studentID);
+          // setStudentID({ studentID: response.data.data.studentID, studentObjectID: response.data.data._id });
+          console.log(
+            "response.data.data.studentID",
+            response.data.data.studentID
+          );
+        } else {
+          console.log("setStudentID Was null");
+        }
       } else {
         setError("No student data found or unsuccessful fetch");
       }
@@ -72,6 +86,8 @@ const DashboardStudent = () => {
     }
     setLoading(false);
   };
+
+  useEffect(() => {}, [selectedStudentID]);
 
   const fetchStudentPathData = async (studentID) => {
     try {
@@ -95,27 +111,13 @@ const DashboardStudent = () => {
       console.error("Fetch Path Error:", error);
     }
   };
-
   useEffect(() => {
-    const loadedData = sessionStorage.getItem('studentPathData');
-    if (loadedData) {
-      setStudentSelectPathData(JSON.parse(loadedData));
-    } else {
-      fetchStudentProfileData();
-    }
+    fetchStudentProfileData();
   }, []);
 
-  useEffect(() => {
-    // if (studentSelectPathData) {
-    //   sessionStorage.setItem('studentPathData', JSON.stringify(studentSelectPathData));
-    // }
-  }, [studentSelectPathData]);
-
-
-
-  //#endregion
-
-  const [selectedCourseAssignments, setSelectedCourseAssignments] = useState([]);
+  const [selectedCourseAssignments, setSelectedCourseAssignments] = useState(
+    []
+  );
   const [selectedStudent, setSelectedStudent] = useState(null);
   const [showStudentInfo, setShowStudentInfo] = useState(false);
   const [showNotificationsAndQuests, setShowNotificationsAndQuests] =
@@ -130,8 +132,6 @@ const DashboardStudent = () => {
 
   const [isModalOpen, setModalOpen] = useState(false);
   const [selectedCourseID, setSelectedCourseID] = useState(null);
-
-
 
   //noti modal
   const handleCloseNotiModal = () => setShowNotiModal(false);
@@ -189,39 +189,13 @@ const DashboardStudent = () => {
     // Optionally reset form fields here if needed
   };
 
-  // const handleStudentClick = (mission) => {
-
-  //   if (mission.EnrollStatus === "Not Enroll") {
-  //     setModalOpen(true);  // Open the modal when not enrolled
-  //   }
-  //   else {
-  //     console.log("handleStudentClick", mission)
-  //     setSelectedStudent(mission);
-  //     setShowStudentInfo(true);
-  //     setShowNotificationsAndQuests(false); // Hide Notifications and Quests
-
-
-
-  //     console.log("simplifiedAssignments:", simplifiedAssignments);
-  //     console.log("student.CourseID:", mission.CourseID);
-
-  //     // const flatAssignments = simplifiedAssignments.flat();
-  //     // console.log("flatAssignments:",flatAssignments);
-
-  //     const filteredAssignments = simplifiedAssignments.filter(
-  //       (assignment) => assignment.CourseID === mission.CourseID
-  //     );
-  //     console.log("filteredAssignments", filteredAssignments);
-  //     setSelectedCourseAssignments(filteredAssignments);
-  //   }
-  // };
   const handleStudentClick = (mission) => {
     if (!mission) return; // Guard clause to handle undefined mission
 
-    console.log("mission",mission)
+    console.log("mission", mission);
 
     if (mission.EnrollStatus === "Not Enroll") {
-      setModalOpen(true);  // Open the modal when not enrolled
+      setModalOpen(true); // Open the modal when not enrolled
       setSelectedCourseID(mission.CourseID);
     } else {
       console.log("handleStudentClick", mission);
@@ -240,7 +214,7 @@ const DashboardStudent = () => {
       }
     }
   };
-
+  useEffect(() => {}, [selectedCourseID]);
 
   const handleClose = () => {
     setShowStudentInfo(false);
@@ -248,20 +222,47 @@ const DashboardStudent = () => {
     setShowNotificationsAndQuests(true); // Show Notifications and Quests
   };
 
+  const [enrollmentStatus, setEnrollmentStatus] = useState({ message: '', type: '' });
 
   const handleCloseModal = () => {
     setModalOpen(false);
+    setEnrollmentStatus({ message: '', type: '' }); // Reset status on close
   };
 
-  const handleEnroll = () => {
-    console.log('Enrolling student...');
-    // Implement enrollment logic here
-    setModalOpen(false);
-    // Optionally update student status or course enrollment data
+  const handleEnroll = async (courseID, studentID, enrollStatus = "1") => {
+    const apiUrl = `${baseURL}/api/v1/studentSelectPath/enrollStudentCourse`; // Your API endpoint
+    try {
+      const token = localStorage.getItem("authToken");
+      const response = await fetch(apiUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          studentID: studentID,
+          courseID: courseID,
+          enrollStatus: enrollStatus,
+        }),
+      });
+      const data = await response.json();
+      if (response.ok) {
+        console.log("Enrollment Successful", data);
+        setEnrollmentStatus({ message: 'Enroll Successful', type: 'success' });
+        fetchStudentProfileData();
+      } else {
+        throw new Error("Failed to enroll"); // Handle server errors or rejections
+      }
+    } catch (error) {
+      console.error("Enrollment failed:", error);
+      setEnrollmentStatus({ message: 'Enroll unsuccessful', type: 'error' });
+    }
   };
-
-
-
+  // useEffect(() => {
+  //   fetchStudentProfileData();
+  // }, [selectedStudentID]); // Re-fetch whenever the selected student ID changes
+  // useEffect(() => {
+  //   fetchStudentProfileData();
+  // }, []);
 
   //AssignmentCourse
   const [assignmentData, setAssignmentData] = useState([]);
@@ -283,14 +284,6 @@ const DashboardStudent = () => {
   useEffect(() => {
     fetchAssignmentData();
   }, []);
-
-  useEffect(() => {
-    // // Logs whenever studentSelectPathData changes and is valid
-    // console.log("Student Path Data Loaded:", studentSelectPathData);
-
-    // console.log("Student Path Data Loaded2:", studentSelectPathData?.student.gpa);
-
-  }, [studentSelectPathData]);
 
   const studentDataPath = studentSelectPathData?.student;
 
@@ -314,7 +307,6 @@ const DashboardStudent = () => {
   // console.log("listCoursesDetail", listCoursesDetail);
   // console.log("listCoursesAssignments", listCoursesAssignments);
   // console.log("listStudentAssignments", listStudentAssignments);
-
 
   const joinedCourses = listCoursesPath.map((path) => {
     const details = listCoursesDetail.find(
@@ -369,13 +361,13 @@ const DashboardStudent = () => {
     // Handling cases where studentDetails may be null
     const studentDetails = course.studentDetails
       ? {
-        GradePercentage: course.studentDetails.score,
-        submittedDate: course.studentDetails.submittedDate,
-      }
+          GradePercentage: course.studentDetails.score,
+          submittedDate: course.studentDetails.submittedDate,
+        }
       : {
-        GradePercentage: null, // or a default value
-        submittedDate: null, // or a default value
-      };
+          GradePercentage: null, // or a default value
+          submittedDate: null, // or a default value
+        };
     // console.log("studentDetails",studentDetails)
     return {
       AssignmentID: course._id,
@@ -390,28 +382,13 @@ const DashboardStudent = () => {
     };
   });
 
-
-  useEffect(() => {
-    // if (studentSelectPathData) {
-    //   sessionStorage.setItem('studentPathData', JSON.stringify(studentSelectPathData));
-    // }
-  }, [studentSelectPathData]);
-
-  useEffect(() => {
-    fetchStudentProfileData();
-  }, []);
-
-
   console.log("simplifiedAssignments: ", simplifiedAssignments);
   console.log("selectedCourseAssignments", selectedCourseAssignments);
   console.log("studentDataPath.gpa", studentDataPath.gpa);
-  console.log("studentProfileData",studentProfileData)
-
+  console.log("studentProfileData Before Return", studentProfileData);
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
-
-
 
   return (
     <div className="advisor-container">
@@ -427,10 +404,14 @@ const DashboardStudent = () => {
               {studentProfileData ? (
                 <div>
                   <p>{studentProfileData.name}</p>
-                  <StarStatusBar gpa={studentSelectPathData?.student.gpa ?? 0} enableFlag={enableEditing} />
-                  {/* <StarStatusBar gpa={4.00} enableFlag={enableEditing} /> */}
-                  <br></br>
-                  <p style={{ fontSize: "20px", fontWeight: "bold" }}>GPA : {studentSelectPathData?.student.gpa ?? 0}</p>
+                  <StarStatusBar
+                    gpa={studentSelectPathData?.student.gpa ?? 0}
+                    enableFlag={enableEditing}
+                  />
+                  {/* <br></br> */}
+                  <p style={{ fontSize: "20px", fontWeight: "bold" }}>
+                    GPA : {studentSelectPathData?.student.gpa ?? 0}
+                  </p>
                   {/* Add more data displays as needed */}
                 </div>
               ) : (
@@ -476,16 +457,17 @@ const DashboardStudent = () => {
                     gpa={mission.GradeLetter}
                   />
                 </div>
-
-                
               ))}
               <EnrollmentModal
                 isOpen={isModalOpen}
                 onClose={handleCloseModal}
-                onEnroll={handleEnroll}
-                courseID = {selectedCourseID}
-                // studentID = {studentProfileData.studentID}
-                // studentObjectID = {studentProfileData._id}
+                // onEnroll={handleEnroll}
+                onEnroll={() =>
+                  handleEnroll(selectedCourseID, selectedStudentID, "1")
+                } // '1' or any other status
+                courseID={selectedCourseID}
+                studentID={selectedStudentID}
+                enrollmentStatus={enrollmentStatus}
               />
             </div>
           )}
@@ -496,8 +478,7 @@ const DashboardStudent = () => {
           <p style={{ fontSize: "20px", fontWeight: "bold" }}>
             Your Mission Quests
           </p>
-          <div className="all-courses-container">
-          </div>
+          <div className="all-courses-container"></div>
           <div className="notification-list">
             {selectedCourseAssignments.map((quest) => (
               <StudentQuestCard
@@ -544,8 +525,7 @@ const DashboardStudent = () => {
                 {" "}
                 Notifications <span style={{ fontSize: "40px" }}>📢</span>
               </p>
-              <div className="top-of-notification">
-              </div>
+              <div className="top-of-notification"></div>
 
               <div className="notification-list">
                 {notificationData.map((notification, index) => (
