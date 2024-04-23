@@ -1,0 +1,96 @@
+.quest-title, .quest-description {
+    color: black;
+    text-align: left;
+    margin-left: 0px;
+
+}
+
+.quest-title{
+    font-weight: 600;
+    margin-bottom: 2px;
+    font-size: 16px;
+}
+
+.quest-description{
+    font-size: 14px;
+    color: #625F68;
+    
+}
+
+
+.quest-container{
+    height: 197px;
+}
+
+.container-grey2{
+    padding-top: 16px !important;
+}
+
+.clock-icon{
+    margin-right: 8px;
+}
+
+.see-more-button{
+    width: 168px;
+}
+
+.button-container{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.quest-container{
+    color: black;
+    display: flex;
+    flex-direction: column;
+    height: 159px;
+    
+}
+
+.quest-top-section{
+    height: 96px;
+    display: flex;
+    align-items: center;
+}
+
+.quest-posted-time{
+    margin-left: auto;
+    width: 81px;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    height: 100%;
+    color: #A8A6AC;
+    font-size: 14px;
+}
+
+.due-date{
+    font-size: 13;
+    font-weight: 500;
+}
+
+.due-date-container{
+    padding-left: 16px;
+}
+
+.quest-image-container {
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-bottom: 16px;
+    display: flex;
+    overflow: hidden; /* Hide any parts of the image that overflow the container */
+}
+
+.quest-image {
+    width: 64px;
+    height: 64px;
+    object-fit: cover; 
+}
+
+
+.quest-bottom-section{
+    height: 63px;
+    display: flex;
+    justify-content: space-between;
+}

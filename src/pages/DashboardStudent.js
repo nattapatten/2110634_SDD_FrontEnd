@@ -5,22 +5,29 @@ import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import "./DashboardStudent.css";
 import AdvisorProfile from "../assets/AdvisorProfile.png";
-import MissionCard from "../components/MissionCard";
+import MissionCard from "../components/MissionCard.js";
 import books from "../assets/books.png";
 import homework from "../assets/homework.png";
-import NotificationCard from "../components/NotificationCard";
-import QuestCard from "../components/QuestCard";
-import MissionInfoCard from "../components/MissionInfoCard";
-import StudentAllCourses from "../components/StudentAllCourses";
-import AchievementBandages from "../components/AchievementBandages";
+import NotificationCard from "../components/NotificationCard.js";
+import QuestCard from "../components/QuestCard.js";
+import MissionInfoCard from "../components/MissionInfoCard.js";
+import StudentAllCourses from "../components/StudentAllCourses.js";
+import AchievementBandages from "../components/AchievementBandages.js";
 import axios from "axios";
-import MissionAssignment from "../components/MissionAssignment";
+import MissionAssignment from "../components/MissionAssignment.js";
 import { GiConsoleController } from "react-icons/gi";
+import StudentQuestCard from "../components/StudentQuestCard.js";
+import StarStatusBar from '../components/StarStatusBar.js';
+import { TbRulerOff } from "react-icons/tb";
+import { BandageData, notificationData } from '../datas/data.js';
+import EnrollmentModal from "../components/EnrollmentModal"
 
 const DashboardStudent = () => {
   //#region Mock Data
   const advisorID = "ADV002";
   const baseURL = "http://127.0.0.1:4000";
+
+  const enableEditing = false;  // Set this to false to make the rating static
 
   const EnrollStatusEnum = {
     0: "Not Enroll",
@@ -41,6 +48,7 @@ const DashboardStudent = () => {
   const fetchStudentProfileData = async () => {
     setLoading(true);
     setError(null);
+    console.log("Fetching student profile data...");
     try {
       const token = localStorage.getItem("authToken");
       const response = await axios.get(`${baseURL}/api/v1/auth/me`, {
@@ -54,6 +62,7 @@ const DashboardStudent = () => {
       ) {
         setStudentProfileData(response.data.data);
         fetchStudentPathData(response.data.data.studentID); // Call to fetch path data here
+        console.log("Current Profile Data", response.data)
       } else {
         setError("No student data found or unsuccessful fetch");
       }
@@ -88,256 +97,25 @@ const DashboardStudent = () => {
   };
 
   useEffect(() => {
-    fetchStudentProfileData();
+    const loadedData = sessionStorage.getItem('studentPathData');
+    if (loadedData) {
+      setStudentSelectPathData(JSON.parse(loadedData));
+    } else {
+      fetchStudentProfileData();
+    }
   }, []);
 
   useEffect(() => {
-    // // Logs whenever studentSelectPathData changes and is valid
-    // if (studentSelectPathData.student) {
-    //   console.log("student:", studentSelectPathData.student);
-    // }
-    // if (studentSelectPathData.student.courses) {
-    //   console.log("Courses:", studentSelectPathData.student.courses);
-    // }
-    // if (studentSelectPathData.coursesAssignment) {
-    //   console.log(
-    //     "Courses Assignment:",
-    //     studentSelectPathData.coursesAssignment
-    //   );
+    // if (studentSelectPathData) {
+    //   sessionStorage.setItem('studentPathData', JSON.stringify(studentSelectPathData));
     // }
   }, [studentSelectPathData]);
 
-  const BandageData = [
-    {
-      courseID: "2110634",
-      courseName: "Math for Software Engineering",
-      Grade: "A",
-      image: "course Icon Image",
-      dueDate: "2024-02-05T11:15:00",
-      submitDate: "2024-02-04T11:15:00",
-    },
-    {
-      courseID: "2110645",
-      courseName: "Advanced Algorithms",
-      Grade: "A",
-      image: "course Icon Image",
-      dueDate: "2024-02-05T11:15:00",
-      submitDate: "2024-02-04T11:15:00",
-    },
-    {
-      courseID: "2110656",
-      courseName: "System Architecture Design",
-      Grade: "B+",
-      image: "course Icon Image",
-      dueDate: "2024-02-05T11:15:00",
-      submitDate: "2024-02-04T11:15:00",
-    },
-    {
-      courseID: "2110691",
-      courseName: "Cloud Computing",
-      Grade: "C+",
-      image: "course Icon Image",
-      dueDate: "2024-02-05T11:15:00",
-      submitDate: "2024-02-04T11:15:00",
-    },
-    {
-      courseID: "2110692",
-      courseName: "Cloud Computing",
-      Grade: "D",
-      image: "course Icon Image",
-      dueDate: "2024-02-05T11:15:00",
-      submitDate: "2024-02-04T11:15:00",
-    },
-    {
-      courseID: "2110690",
-      courseName: "Cloud Computing",
-      Grade: "A",
-      image: "course Icon Image",
-      dueDate: "2024-02-05T11:15:00",
-      submitDate: "2024-02-04T11:15:00",
-    },
-    {
-      courseID: "2110634",
-      courseName: "Math for Software Engineering",
-      Grade: "A",
-      image: "course Icon Image",
-      dueDate: "2024-02-05T11:15:00",
-      submitDate: "2024-02-04T11:15:00",
-    },
-    {
-      courseID: "2110645",
-      courseName: "Advanced Algorithms",
-      Grade: "A",
-      image: "course Icon Image",
-      dueDate: "2024-02-05T11:15:00",
-      submitDate: "2024-02-04T11:15:00",
-    },
-    {
-      courseID: "2110656",
-      courseName: "System Architecture Design",
-      Grade: "B+",
-      image: "course Icon Image",
-      dueDate: "2024-02-05T11:15:00",
-      submitDate: "2024-02-04T11:15:00",
-    },
-    {
-      courseID: "2110691",
-      courseName: "Cloud Computing",
-      Grade: "C+",
-      image: "course Icon Image",
-      dueDate: "2024-02-05T11:15:00",
-      submitDate: "2024-02-04T11:15:00",
-    },
-    {
-      courseID: "2110692",
-      courseName: "Cloud Computing",
-      Grade: "D",
-      image: "course Icon Image",
-      dueDate: "2024-02-05T11:15:00",
-      submitDate: "2024-02-04T11:15:00",
-    },
-    {
-      courseID: "2110690",
-      courseName: "Cloud Computing",
-      Grade: "A",
-      image: "course Icon Image",
-      dueDate: "2024-02-05T11:15:00",
-      submitDate: "2024-02-04T11:15:00",
-    },
-    {
-      courseID: "2110634",
-      courseName: "Math for Software Engineering",
-      Grade: "A",
-      image: "course Icon Image",
-      dueDate: "2024-02-05T11:15:00",
-      submitDate: "2024-02-04T11:15:00",
-    },
-    {
-      courseID: "2110645",
-      courseName: "Advanced Algorithms",
-      Grade: "A",
-      image: "course Icon Image",
-      dueDate: "2024-02-05T11:15:00",
-      submitDate: "2024-02-04T11:15:00",
-    },
-    {
-      courseID: "2110656",
-      courseName: "System Architecture Design",
-      Grade: "B+",
-      image: "course Icon Image",
-      dueDate: "2024-02-05T11:15:00",
-      submitDate: "2024-02-04T11:15:00",
-    },
-    {
-      courseID: "2110691",
-      courseName: "Cloud Computing",
-      Grade: "C+",
-      image: "course Icon Image",
-      dueDate: "2024-02-05T11:15:00",
-      submitDate: "2024-02-04T11:15:00",
-    },
-    {
-      courseID: "2110692",
-      courseName: "Cloud Computing",
-      Grade: "D",
-      image: "course Icon Image",
-      dueDate: "2024-02-05T11:15:00",
-      submitDate: "2024-02-04T11:15:00",
-    },
-    {
-      courseID: "2110690",
-      courseName: "Cloud Computing",
-      Grade: "A",
-      image: "course Icon Image",
-      dueDate: "2024-02-05T11:15:00",
-      submitDate: "2024-02-04T11:15:00",
-    },
-    {
-      courseID: "2110699",
-      courseName: "Thesis",
-      Grade: "pass",
-      image: "course Icon Image",
-      dueDate: "2024-02-05T11:15:00",
-      submitDate: "2024-02-04T11:15:00",
-    },
-    {
-      courseID: "2110670",
-      courseName: "Comprehensive Test",
-      Grade: "pass",
-      image: "course Icon Image",
-      dueDate: "2024-02-05T11:15:00",
-      submitDate: "2024-02-04T11:15:00",
-    },
-  ];
 
-  const notificationData = [
-    {
-      courseID: "2110634",
-      title: "New Student Registration",
-      description:
-        "A new student, Emily Johnson, has successfully completed her registration process for the upcoming academic year under your advisement. Emily is pursuing a degree in Computer Science with a focus on artificial intelligence. It is essential to review her academic file, previous coursework, and plan an initial meeting to discuss her academic goals, course selections, and any specific needs or accommodations she may require.",
-    },
-    {
-      courseID: "2110645",
-      title: "Grade Alert: Low Performance",
-      description:
-        "Student John Smith's performance in the Calculus II course has recently dropped below the academic satisfactory threshold, with his latest test scores indicating a potential risk of failing. This situation calls for a proactive approach to understand the challenges John is facing and to develop an intervention plan. Suggestions include arranging tutoring sessions, discussing study habits, and possibly considering course withdrawal before the deadline to avoid an adverse impact on his GPA.",
-    },
-    {
-      courseID: "2110645",
-      title: "Scholarship Application Deadline",
-      description:
-        "The deadline for the upcoming academic scholarship applications is quickly approaching on April 30th. There are several scholarships available that target students excelling in academic performance, demonstrating community service, or in need of financial aid. Please make an effort to remind your eligible students to prepare their applications, ensuring they include all required documents and personal statements. Holding a brief workshop on how to write a compelling application could significantly benefit our students.",
-    },
-    {
-      courseID: "2110656",
-      title: "Updated Course Catalog",
-      description:
-        "The course catalog for the next academic year has been thoroughly updated, including several new courses that reflect the latest trends and technologies in the field of computer science, such as Advanced Machine Learning, Cybersecurity Ethics, and Blockchain Fundamentals. Please take the time to review these updates and discuss with your advisees how these new courses could fit into their academic and career plans, particularly those students who are nearing the completion of their degree requirements.",
-    },
-    {
-      courseID: "2110656",
-      title: "Internship Opportunities",
-      description:
-        "Our department has recently partnered with several leading tech companies to offer new internship opportunities in software development, data analysis, and cybersecurity. These internships not only provide valuable hands-on experience but also offer potential pathways to full-time positions upon graduation. Encourage students, especially those in their junior and senior years, to apply by May 15th. Assistance with resume writing and interview preparation is available through our career services office.",
-    },
-    {
-      courseID: "2110656",
-      title: "Student Withdrawal Notice",
-      description:
-        "Student Alice Williams has formally notified the administration of her decision to withdraw from the semester due to personal health reasons. Alice was making satisfactory progress in her studies, and her decision was not made lightly. Please update your records to reflect this change and reach out to Alice to offer support and discuss plans for her return to her studies, ensuring she is aware of the resources available to her during this time.",
-    },
-    {
-      courseID: "2110690",
-      title: "Advisory Meeting Schedule",
-      description:
-        "The next advisory board meeting is scheduled for June 5th at 10:00 AM in the main conference hall. The meeting's agenda includes critical discussions on curriculum updates, strategies for increasing student engagement and retention, and the integration of new educational technologies into our teaching methodologies. Your participation and insights into these topics are highly valued, and you are encouraged to submit any additional items for discussion ahead of the meeting.",
-    },
-    {
-      courseID: "2110690",
-      title: "Final Exam Schedules Posted",
-      description:
-        "The final exam schedules for this semester have now been posted on the university portal. These exams are a crucial component of the academic assessment process, and it is vital that all students are aware of their exam times, locations, and the materials permitted in the exam room. Please ensure your advisees review their schedules promptly and begin their preparations early to avoid any last-minute stress. Consider hosting review sessions for courses with historically high rates of difficulty.",
-    },
-    {
-      courseID: "2110690",
-      title: "Student Achievement",
-      description:
-        "We are thrilled to announce that your advisee, Mark Lee, has won the prestigious National Coding Competition, showcasing his exceptional skills in algorithm design and problem-solving. This remarkable achievement not only highlights Mark's talent and hard work but also brings honor and recognition to our department. We encourage you to acknowledge Mark's achievement, perhaps by featuring him in the department's newsletter or organizing a small celebration within the department to inspire his peers.",
-    },
-    {
-      courseID: "2110690",
-      title: "Summer Course Enrollment",
-      description:
-        "Enrollment for summer courses will begin next week, offering students the opportunity to advance their studies, explore new interests, or catch up on credits needed for graduation. The summer session provides a range of courses, including some that are typically highly subscribed during the regular semesters. Discuss with your students whether taking summer courses aligns with their academic plans, particularly those who may benefit from the smaller class sizes and more intensive study environment.",
-    },
-  ];
 
   //#endregion
 
-  const [selectedCourseAssignments, setSelectedCourseAssignments] = useState(
-    []
-  );
+  const [selectedCourseAssignments, setSelectedCourseAssignments] = useState([]);
   const [selectedStudent, setSelectedStudent] = useState(null);
   const [showStudentInfo, setShowStudentInfo] = useState(false);
   const [showNotificationsAndQuests, setShowNotificationsAndQuests] =
@@ -349,6 +127,9 @@ const DashboardStudent = () => {
   const [courseID, setCourseID] = useState("");
   const [summary, setSummary] = useState("");
   const [description, setDescription] = useState("");
+
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [selectedMission, setSelectedMission] = useState(null);
 
   //noti modal
   const handleCloseNotiModal = () => setShowNotiModal(false);
@@ -406,30 +187,76 @@ const DashboardStudent = () => {
     // Optionally reset form fields here if needed
   };
 
+  // const handleStudentClick = (mission) => {
+
+  //   if (mission.EnrollStatus === "Not Enroll") {
+  //     setModalOpen(true);  // Open the modal when not enrolled
+  //   }
+  //   else {
+  //     console.log("handleStudentClick", mission)
+  //     setSelectedStudent(mission);
+  //     setShowStudentInfo(true);
+  //     setShowNotificationsAndQuests(false); // Hide Notifications and Quests
+
+
+
+  //     console.log("simplifiedAssignments:", simplifiedAssignments);
+  //     console.log("student.CourseID:", mission.CourseID);
+
+  //     // const flatAssignments = simplifiedAssignments.flat();
+  //     // console.log("flatAssignments:",flatAssignments);
+
+  //     const filteredAssignments = simplifiedAssignments.filter(
+  //       (assignment) => assignment.CourseID === mission.CourseID
+  //     );
+  //     console.log("filteredAssignments", filteredAssignments);
+  //     setSelectedCourseAssignments(filteredAssignments);
+  //   }
+  // };
   const handleStudentClick = (mission) => {
-    console.log("handleStudentClick",mission)
-    setSelectedStudent(mission);
-    setShowStudentInfo(true);
-    setShowNotificationsAndQuests(false); // Hide Notifications and Quests
+    if (!mission) return; // Guard clause to handle undefined mission
 
-    console.log("simplifiedAssignments:", simplifiedAssignments);
-    console.log("student.CourseID:", mission.CourseID);
+    if (mission.EnrollStatus === "Not Enroll") {
+      setModalOpen(true);  // Open the modal when not enrolled
+    } else {
+      console.log("handleStudentClick", mission);
+      setSelectedStudent(mission);
+      setShowStudentInfo(true);
+      setShowNotificationsAndQuests(false); // Hide Notifications and Quests
 
-    // const flatAssignments = simplifiedAssignments.flat();
-    // console.log("flatAssignments:",flatAssignments);
-
-    const filteredAssignments = simplifiedAssignments.filter(
-      (assignment) => assignment.CourseID === mission.CourseID
-    );
-    console.log("filteredAssignments", filteredAssignments);
-    setSelectedCourseAssignments(filteredAssignments);
+      if (simplifiedAssignments) {
+        const filteredAssignments = simplifiedAssignments.filter(
+          (assignment) => assignment.CourseID === mission.CourseID
+        );
+        console.log("filteredAssignments", filteredAssignments);
+        setSelectedCourseAssignments(filteredAssignments);
+      } else {
+        console.log("No assignments to display");
+      }
+    }
   };
+
 
   const handleClose = () => {
     setShowStudentInfo(false);
     setSelectedStudent(null);
     setShowNotificationsAndQuests(true); // Show Notifications and Quests
   };
+
+
+  const handleCloseModal = () => {
+    setModalOpen(false);
+  };
+
+  const handleEnroll = () => {
+    console.log('Enrolling student...');
+    // Implement enrollment logic here
+    setModalOpen(false);
+    // Optionally update student status or course enrollment data
+  };
+
+
+
 
   //AssignmentCourse
   const [assignmentData, setAssignmentData] = useState([]);
@@ -452,7 +279,13 @@ const DashboardStudent = () => {
     fetchAssignmentData();
   }, []);
 
-  useEffect(() => {}, [studentSelectPathData]);
+  useEffect(() => {
+    // // Logs whenever studentSelectPathData changes and is valid
+    console.log("Student Path Data Loaded:", studentSelectPathData);
+
+    console.log("Student Path Data Loaded2:", studentSelectPathData?.student.gpa);
+
+  }, [studentSelectPathData]);
 
   const studentDataPath = studentSelectPathData?.student;
 
@@ -471,10 +304,12 @@ const DashboardStudent = () => {
     (listData) => listData.studentAssignments
   );
 
+  console.log("studentDataPath", studentDataPath);
   console.log("listCoursesPath", listCoursesPath);
   console.log("listCoursesDetail", listCoursesDetail);
   console.log("listCoursesAssignments", listCoursesAssignments);
   console.log("listStudentAssignments", listStudentAssignments);
+
 
   const joinedCourses = listCoursesPath.map((path) => {
     const details = listCoursesDetail.find(
@@ -529,13 +364,13 @@ const DashboardStudent = () => {
     // Handling cases where studentDetails may be null
     const studentDetails = course.studentDetails
       ? {
-          GradePercentage: course.studentDetails.score,
-          submittedDate: course.studentDetails.submittedDate,
-        }
+        GradePercentage: course.studentDetails.score,
+        submittedDate: course.studentDetails.submittedDate,
+      }
       : {
-          GradePercentage: null, // or a default value
-          submittedDate: null, // or a default value
-        };
+        GradePercentage: null, // or a default value
+        submittedDate: null, // or a default value
+      };
     // console.log("studentDetails",studentDetails)
     return {
       AssignmentID: course._id,
@@ -550,10 +385,27 @@ const DashboardStudent = () => {
     };
   });
 
+
+  useEffect(() => {
+    // if (studentSelectPathData) {
+    //   sessionStorage.setItem('studentPathData', JSON.stringify(studentSelectPathData));
+    // }
+  }, [studentSelectPathData]);
+
+  useEffect(() => {
+    fetchStudentProfileData();
+  }, []);
+
+
   console.log("simplifiedAssignments: ", simplifiedAssignments);
+  console.log("selectedCourseAssignments", selectedCourseAssignments);
+  console.log("studentDataPath.gpa", studentDataPath.gpa);
+
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
+
+
 
   return (
     <div className="advisor-container">
@@ -569,6 +421,10 @@ const DashboardStudent = () => {
               {studentProfileData ? (
                 <div>
                   <p>{studentProfileData.name}</p>
+                  <StarStatusBar gpa={studentSelectPathData?.student.gpa ?? 0} enableFlag={enableEditing} />
+                  {/* <StarStatusBar gpa={4.00} enableFlag={enableEditing} /> */}
+                  <br></br>
+                  <p style={{ fontSize: "20px", fontWeight: "bold" }}>GPA : {studentSelectPathData?.student.gpa ?? 0}</p>
                   {/* Add more data displays as needed */}
                 </div>
               ) : (
@@ -615,22 +471,11 @@ const DashboardStudent = () => {
                   />
                 </div>
               ))}
-              {/* {studentData.map((student, index) => (
-                <div
-                  key={index}
-                  onClick={() => handleStudentClick(student)}
-                  className="student-card-wrapper"
-                  tabIndex="0"
-                >
-                  <MissionCard
-                    title={student.title}
-                    image={student.image}
-                    name={student.name}
-                    status={student.status}
-                    gpa={student.gpa}
-                  />
-                </div>
-              ))} */}
+              <EnrollmentModal
+                isOpen={isModalOpen}
+                onClose={handleCloseModal}
+                onEnroll={handleEnroll}
+              />
             </div>
           )}
         </div>
@@ -641,13 +486,19 @@ const DashboardStudent = () => {
             Your Mission Quests
           </p>
           <div className="all-courses-container">
-            {/* <StudentAllCourses
-              studentID={selectedStudent.studentID}
-              onClose={handleClose}
-            /> */}
-            {selectedCourseAssignments.length > 0 && (
-              <MissionAssignment assignments={selectedCourseAssignments} />
-            )}
+          </div>
+          <div className="notification-list">
+            {selectedCourseAssignments.map((quest) => (
+              <StudentQuestCard
+                key={quest.AssignmentID} // More reliable key
+                title={quest.Title}
+                description={quest.Description}
+                image={quest.Image}
+                courseID={quest.CourseID}
+                time={quest.SubmittedDate}
+                dueDate={quest.DueDate}
+              />
+            ))}
           </div>
         </div>
       )}
@@ -670,24 +521,6 @@ const DashboardStudent = () => {
           </div>
           <br />
 
-          {/* <div className="section2 container-grey">
-            <p style={{ fontSize: "20px", fontWeight: "bold" }}>Your Courses</p>
-            <div className="course-list">
-              {courseData.map((course, index) => (
-                <CourseCard
-                  key={index}
-                  courseNumber={course.courseID}
-                  courseName={course.courseName}
-                  maxStudents={course.maxStudents}
-                  currentStudents={course.currentStudents}
-                  image={course.image}
-                />
-              ))}
-            </div>
-          </div> */}
-          {/* <br />
-
-          <br /> */}
           <div className="section3 ">
             <div className="advisor-notification container-grey">
               <p
@@ -701,15 +534,6 @@ const DashboardStudent = () => {
                 Notifications <span style={{ fontSize: "40px" }}>📢</span>
               </p>
               <div className="top-of-notification">
-                {/* <p style={{ fontSize: "20px", fontWeight: "bold", textAlign: "center" }}> Notifications <span style={{ fontSize: "40px" }}>📢</span></p> */}
-                {/* <Button
-                  className="noti-create-button"
-                  variant="primary"
-                  size="sm"
-                  onClick={handleShowNotiModal}
-                >
-                  Create
-                </Button> */}
               </div>
 
               <div className="notification-list">
