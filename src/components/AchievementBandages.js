@@ -293,7 +293,7 @@ function AchievementBandages({ BandageData }) {
                 </div>
             ))}
             <Modal show={modalShow} onClose={() => setModalShow(false)}>
-                <h2>{selectedAchievement?.label}</h2>
+                <p>{selectedAchievement?.label}</p>
                 <p>{selectedAchievement?.description}</p>
             </Modal>
         </>

@@ -129,7 +129,9 @@ const DashboardStudent = () => {
   const [description, setDescription] = useState("");
 
   const [isModalOpen, setModalOpen] = useState(false);
-  const [selectedMission, setSelectedMission] = useState(null);
+  const [selectedCourseID, setSelectedCourseID] = useState(null);
+
+
 
   //noti modal
   const handleCloseNotiModal = () => setShowNotiModal(false);
@@ -216,8 +218,11 @@ const DashboardStudent = () => {
   const handleStudentClick = (mission) => {
     if (!mission) return; // Guard clause to handle undefined mission
 
+    console.log("mission",mission)
+
     if (mission.EnrollStatus === "Not Enroll") {
       setModalOpen(true);  // Open the modal when not enrolled
+      setSelectedCourseID(mission.CourseID);
     } else {
       console.log("handleStudentClick", mission);
       setSelectedStudent(mission);
@@ -281,9 +286,9 @@ const DashboardStudent = () => {
 
   useEffect(() => {
     // // Logs whenever studentSelectPathData changes and is valid
-    console.log("Student Path Data Loaded:", studentSelectPathData);
+    // console.log("Student Path Data Loaded:", studentSelectPathData);
 
-    console.log("Student Path Data Loaded2:", studentSelectPathData?.student.gpa);
+    // console.log("Student Path Data Loaded2:", studentSelectPathData?.student.gpa);
 
   }, [studentSelectPathData]);
 
@@ -304,11 +309,11 @@ const DashboardStudent = () => {
     (listData) => listData.studentAssignments
   );
 
-  console.log("studentDataPath", studentDataPath);
-  console.log("listCoursesPath", listCoursesPath);
-  console.log("listCoursesDetail", listCoursesDetail);
-  console.log("listCoursesAssignments", listCoursesAssignments);
-  console.log("listStudentAssignments", listStudentAssignments);
+  // console.log("studentDataPath", studentDataPath);
+  // console.log("listCoursesPath", listCoursesPath);
+  // console.log("listCoursesDetail", listCoursesDetail);
+  // console.log("listCoursesAssignments", listCoursesAssignments);
+  // console.log("listStudentAssignments", listStudentAssignments);
 
 
   const joinedCourses = listCoursesPath.map((path) => {
@@ -317,7 +322,7 @@ const DashboardStudent = () => {
     );
     return { ...path, courseDetails: details };
   });
-  console.log("joinedCourses", joinedCourses);
+  // console.log("joinedCourses", joinedCourses);
 
   const simplifiedCourses = joinedCourses.map((course) => ({
     CourseID: course.courseID,
@@ -400,6 +405,7 @@ const DashboardStudent = () => {
   console.log("simplifiedAssignments: ", simplifiedAssignments);
   console.log("selectedCourseAssignments", selectedCourseAssignments);
   console.log("studentDataPath.gpa", studentDataPath.gpa);
+  console.log("studentProfileData",studentProfileData)
 
 
   if (loading) return <div>Loading...</div>;
@@ -470,11 +476,16 @@ const DashboardStudent = () => {
                     gpa={mission.GradeLetter}
                   />
                 </div>
+
+                
               ))}
               <EnrollmentModal
                 isOpen={isModalOpen}
                 onClose={handleCloseModal}
                 onEnroll={handleEnroll}
+                courseID = {selectedCourseID}
+                // studentID = {studentProfileData.studentID}
+                // studentObjectID = {studentProfileData._id}
               />
             </div>
           )}

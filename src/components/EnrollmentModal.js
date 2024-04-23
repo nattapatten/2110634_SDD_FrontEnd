@@ -1,9 +1,13 @@
 import React, { useEffect, useRef } from 'react';
 import './EnrollmentModal.css';
 
-function EnrollmentModal({ isOpen, onClose, onEnroll }) {
+function EnrollmentModal({ isOpen, onClose, onEnroll ,courseID ,studentID  }) {
   const modalRef = useRef(null);
 
+  console.log("courseID Enroll Modal",courseID);
+  console.log("studentID Enroll Modal",studentID);
+
+  
   useEffect(() => {
     function keyListener(event) {
       if (event.keyCode === 27) {

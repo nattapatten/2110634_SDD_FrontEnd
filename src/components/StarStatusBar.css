@@ -11,3 +11,11 @@
 .glow span {
     box-shadow: 0 0 8px 2px gold; /* Glowing effect */
 }
+
+.glow {
+    box-shadow: 0 0 10px gold;  /* Glowing effect for interactive state */
+}
+
+.no-glow {
+    box-shadow: none;  /* No effect for static display */
+}

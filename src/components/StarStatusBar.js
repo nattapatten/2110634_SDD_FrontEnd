@@ -1,8 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import StarRatings from 'react-star-ratings';
 import './StarStatusBar.css';
+
 function GpaStarRating({ gpa, enableFlag }) {
-    const [rating, setRating] = useState(convertGpaToStars(gpa));
+    const [rating, setRating] = useState(0);
+
+    // Update the rating whenever the GPA changes
+    useEffect(() => {
+        setRating(convertGpaToStars(gpa));
+    }, [gpa]);
 
     const changeRating = (newRating) => {
         if (enableFlag) {
@@ -12,7 +18,6 @@ function GpaStarRating({ gpa, enableFlag }) {
 
     return (
         <div>
-            {/* <h2>GPA Star Rating</h2> */}
             <StarRatings
                  rating={rating}
                  starRatedColor="gold"
@@ -20,11 +25,10 @@ function GpaStarRating({ gpa, enableFlag }) {
                  numberOfStars={5}
                  starDimension="25px"
                  starSpacing="2px"
-                 starHoverColor={enableFlag ? "blue" : undefined}
+                 starHoverColor={enableFlag ? "blue" : "gold"}
                  isSelectable={enableFlag}
-                 className={enableFlag ? 'glow' : 'glow'}
+                 className={enableFlag ? 'glow' : 'no-glow'}  // Assuming 'no-glow' is another CSS class for non-interactive state
             />
-            {/* <p>{enableFlag ? 'Interactive Rating' : 'Static Display'}</p> */}
         </div>
     );
 }
@@ -32,7 +36,8 @@ function GpaStarRating({ gpa, enableFlag }) {
 // Helper function to convert GPA to a star rating
 function convertGpaToStars(gpa, maxStars = 5) {
     const maxGPA = 4.0;  // Adjust this if your GPA scale is different
-    return (gpa / maxGPA) * maxStars;
+    if (typeof gpa !== 'number' || isNaN(gpa)) return 0;  // Handle undefined or non-numeric GPA
+    return Math.min((gpa / maxGPA) * maxStars, maxStars);  // Ensure it doesn't exceed maxStars
 }
 
 export default GpaStarRating;
