@@ -3,12 +3,14 @@ import StarRatings from 'react-star-ratings';
 import './StarStatusBar.css';
 
 function GpaStarRating({ gpa, enableFlag }) {
+
+    const gpaint = Number(gpa);
     const [rating, setRating] = useState(0);
 
     // Update the rating whenever the GPA changes
     useEffect(() => {
-        setRating(convertGpaToStars(gpa));
-    }, [gpa]);
+        setRating(convertGpaToStars(gpaint));
+    }, [gpaint]);
 
     const changeRating = (newRating) => {
         if (enableFlag) {
@@ -34,10 +36,10 @@ function GpaStarRating({ gpa, enableFlag }) {
 }
 
 // Helper function to convert GPA to a star rating
-function convertGpaToStars(gpa, maxStars = 5) {
+function convertGpaToStars(gpaint, maxStars = 5) {
     const maxGPA = 4.0;  // Adjust this if your GPA scale is different
-    if (typeof gpa !== 'number' || isNaN(gpa)) return 0;  // Handle undefined or non-numeric GPA
-    return Math.min((gpa / maxGPA) * maxStars, maxStars);  // Ensure it doesn't exceed maxStars
+    if (typeof gpaint !== 'number' || isNaN(gpaint)) return 0;  // Handle undefined or non-numeric GPA
+    return Math.min((gpaint / maxGPA) * maxStars, maxStars);  // Ensure it doesn't exceed maxStars
 }
 
 export default GpaStarRating;

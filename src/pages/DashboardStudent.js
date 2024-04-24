@@ -259,6 +259,8 @@ const DashboardStudent = () => {
 
   const handleEnroll = async (courseID, studentID, enrollStatus = "1") => {
     const apiUrl = `${baseURL}/api/v1/studentSelectPath/enrollStudentCourse`; // Your API endpoint
+
+    console.log("Enroll Value:" , courseID ,studentID, enrollStatus);
     try {
       const token = localStorage.getItem("authToken");
       const response = await fetch(apiUrl, {
@@ -312,7 +314,7 @@ const DashboardStudent = () => {
 
   const joinedCourses = listCoursesPath.map((path) => {
     const details = listCoursesDetail.find(
-      (detail) => detail._id === path.course_ObjectID
+      (detail) => detail.courseID === path.courseID//detail._id === path.course_ObjectID
     );
     return { ...path, courseDetails: details };
   });
@@ -324,8 +326,10 @@ const DashboardStudent = () => {
     CourseName: course.courseDetails.courseName,
     MaxStudents: course.courseDetails.maxStudents,
     CurrentStudents: course.courseDetails.currentStudents, // Assuming you want this too
-    GradePercentage: course.gradePercentage,
-    GradeLetter: course.gradeLetter,
+    //GradePercentage: course.gradePercentage,
+    GradePercentage: course.courseStatus,
+    // GradeLetter: course.gradeLetter,
+    GradeLetter: course.courseGpa,
     EnrollStatus: EnrollStatusEnum[course.enrollStatus] || "Status Unknown", //course.enrollStatus,
     image: homework,
   }));
@@ -445,7 +449,7 @@ const DashboardStudent = () => {
               className="student-container-title"
               style={{ fontSize: "30px", fontWeight: "bold" }}
             >
-              {studentSelectPathData?.student.studentPath ?? 0} - Main Mission<span style={{ fontSize: "40px" }}>📌</span>
+              {studentSelectPathData?.student.pathName ?? 0} - Main Mission<span style={{ fontSize: "40px" }}>📌</span>
             </p>
 
             {showStudentInfo && (
