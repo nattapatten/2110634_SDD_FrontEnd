@@ -37,9 +37,9 @@ const StudentQuestCard = ({ title, description, image, time, courseID, dueDate }
   };
 
   const formatPostedTime = (timeString) => {
-    if (!timeString) return "No date provided";  // Check if the time string is null or undefined
+    if (!timeString) return "Not Submitted";  // Check if the time string is null or undefined
 
-    return format(parseISO(timeString), 'dd-MMM');
+    return format(parseISO(timeString), 'dd-MMM-yyyy');
   };
 
   const dueDateDisplay = formatDateAndDueDate(dueDate);

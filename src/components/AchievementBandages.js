@@ -24,163 +24,7 @@ const images = importAll(require.context('../assets/Bandage_Icon', false, /\.(pn
 //         dueDate:"2024-02-05T11:15:00",
 //         submitDate:"2024-02-04T11:15:00",
 
-//     },
-//     {
-//         courseID: "2110645",
-//         courseName: "Advanced Algorithms",
-//         Grade: "A",
-//         image: "course Icon Image",
-//         dueDate:"2024-02-05T11:15:00",
-//         submitDate:"2024-02-04T11:15:00",
-//     },
-//     {
-//         courseID: "2110656",
-//         courseName: "System Architecture Design",
-//         Grade: "B+",
-//         image: "course Icon Image",
-//         dueDate:"2024-02-05T11:15:00",
-//         submitDate:"2024-02-04T11:15:00",
-//     },
-//     {
-//         courseID: "2110691",
-//         courseName: "Cloud Computing",
-//         Grade: "C+",
-//         image: "course Icon Image",
-//         dueDate:"2024-02-05T11:15:00",
-//         submitDate:"2024-02-04T11:15:00",
-//     },
-//     {
-//         courseID: "2110692",
-//         courseName: "Cloud Computing",
-//         Grade: "D",
-//         image: "course Icon Image",
-//         dueDate:"2024-02-05T11:15:00",
-//         submitDate:"2024-02-04T11:15:00",
-//     },
-//     {
-//         courseID: "2110690",
-//         courseName: "Cloud Computing",
-//         Grade: "A",
-//         image: "course Icon Image",
-//         dueDate:"2024-02-05T11:15:00",
-//         submitDate:"2024-02-04T11:15:00",
-//     },
-//     {
-//         courseID: "2110634",
-//         courseName: "Math for Software Engineering",
-//         Grade: "A",
-//         image: "course Icon Image",
-//         dueDate:"2024-02-05T11:15:00",
-//         submitDate:"2024-02-04T11:15:00",
-//     },
-//     {
-//         courseID: "2110645",
-//         courseName: "Advanced Algorithms",
-//         Grade: "A",
-//         image: "course Icon Image",
-//         dueDate:"2024-02-05T11:15:00",
-//         submitDate:"2024-02-04T11:15:00",
-//     },
-//     {
-//         courseID: "2110656",
-//         courseName: "System Architecture Design",
-//         Grade: "B+",
-//         image: "course Icon Image",
-//         dueDate:"2024-02-05T11:15:00",
-//         submitDate:"2024-02-04T11:15:00",
-//     },
-//     {
-//         courseID: "2110691",
-//         courseName: "Cloud Computing",
-//         Grade: "C+",
-//         image: "course Icon Image",
-//         dueDate:"2024-02-05T11:15:00",
-//         submitDate:"2024-02-04T11:15:00",
-//     },
-//     {
-//         courseID: "2110692",
-//         courseName: "Cloud Computing",
-//         Grade: "D",
-//         image: "course Icon Image",
-//         dueDate:"2024-02-05T11:15:00",
-//         submitDate:"2024-02-04T11:15:00",
-//     },
-//     {
-//         courseID: "2110690",
-//         courseName: "Cloud Computing",
-//         Grade: "A",
-//         image: "course Icon Image",
-//         dueDate:"2024-02-05T11:15:00",
-//         submitDate:"2024-02-04T11:15:00",
-//     },
-//     {
-//         courseID: "2110634",
-//         courseName: "Math for Software Engineering",
-//         Grade: "A",
-//         image: "course Icon Image",
-//         dueDate:"2024-02-05T11:15:00",
-//         submitDate:"2024-02-04T11:15:00",
-//     },
-//     {
-//         courseID: "2110645",
-//         courseName: "Advanced Algorithms",
-//         Grade: "A",
-//         image: "course Icon Image",
-//         dueDate:"2024-02-05T11:15:00",
-//         submitDate:"2024-02-04T11:15:00",
-//     },
-//     {
-//         courseID: "2110656",
-//         courseName: "System Architecture Design",
-//         Grade: "B+",
-//         image: "course Icon Image",
-//         dueDate:"2024-02-05T11:15:00",
-//         submitDate:"2024-02-04T11:15:00",
-//     },
-//     {
-//         courseID: "2110691",
-//         courseName: "Cloud Computing",
-//         Grade: "C+",
-//         image: "course Icon Image",
-//         dueDate:"2024-02-05T11:15:00",
-//         submitDate:"2024-02-04T11:15:00",
-//     },
-//     {
-//         courseID: "2110692",
-//         courseName: "Cloud Computing",
-//         Grade: "D",
-//         image: "course Icon Image",
-//         dueDate:"2024-02-05T11:15:00",
-//         submitDate:"2024-02-04T11:15:00",
-//     },
-//     {
-//         courseID: "2110690",
-//         courseName: "Cloud Computing",
-//         Grade: "A",
-//         image: "course Icon Image",
-//         dueDate:"2024-02-05T11:15:00",
-//         submitDate:"2024-02-04T11:15:00",
-//     },
-//     {
-//         courseID: "2110699",
-//         courseName: "Thesis",
-//         Grade: "pass",
-//         image: "course Icon Image",
-//         dueDate:"2024-02-05T11:15:00",
-//         submitDate:"2024-02-04T11:15:00",
-//     },
-//     {
-//         courseID: "2110670",
-//         courseName: "Comprehensive Test",
-//         Grade: "pass",
-//         image: "course Icon Image",
-//         dueDate:"2024-02-05T11:15:00",
-//         submitDate:"2024-02-04T11:15:00",
-//     }
-// ];
-
-
-
+//     }]
 
 
 function Modal({ show, onClose, children }) {
@@ -204,10 +48,11 @@ function Modal({ show, onClose, children }) {
     );
 }
 
-
+// function AchievementBandages({ BandageData })
 function AchievementBandages({ BandageData }) {
     const [modalShow, setModalShow] = useState(false);
     const [selectedAchievement, setSelectedAchievement] = useState(null);
+
 
     const handleImageClick = (achievement) => {
         setSelectedAchievement(achievement);
@@ -216,17 +61,50 @@ function AchievementBandages({ BandageData }) {
 
     // Grouping and counting grades by course
     // Calculate the total number of "Grade A"
-    const totalA = BandageData.reduce((acc, course) => acc + (course.Grade === 'A' ? 1 : 0), 0);
 
-    const thesisPass = BandageData.some(course => course.courseName === "Thesis" && course.Grade.toLowerCase() === "pass");
+    // console.log("AchievementBandages simplifiedCourses", BandageData[0].simplifiedCourses)
+    // console.log("AchievementBandages simplifiedAssignments", BandageData[1].simplifiedAssignments)
 
 
-    const comprehensivePass = BandageData.some(course => course.courseName === "Comprehensive Test" && course.Grade.toLowerCase() === "pass");
+    // const totalA = BandageData.reduce((acc, course) => acc + (course.GradeLetter === 'A' ? 1 : 0), 0);
 
-    const onTimeSubmissions = BandageData.filter(course => {
-        const due = new Date(course.dueDate);
-        const submitted = new Date(course.submitDate);
-        return submitted <= due;
+    const totalA = BandageData[0].simplifiedCourses.reduce((acc, course) => acc + (course.GradeLetter === 'A' && course.EnrollStatus != 'Not Enroll' ? 1 : 0), 0);
+
+    const thesisPass = BandageData[0].simplifiedCourses.some(course => course.CourseName === "Thesis" && course.GradeLetter.toLowerCase() === "pass");
+
+    const comprehensivePass = BandageData[0].simplifiedCourses.some(course => course.courseName === "Comprehensive Test" && course.Grade.toLowerCase() === "pass");
+
+
+    const enroll_corse = BandageData[0].simplifiedCourses.reduce((acc, course) => acc + (course.EnrollStatus != 'Not Enroll' ? 1 : 0), 0);
+
+
+
+    const activeCourses = BandageData[0].simplifiedCourses.filter(course => course.EnrollStatus !== 'Not Enroll');
+
+    // console.log("activeCourses", activeCourses);
+
+    // Group assignments by course and check time conditions
+    const assignmentsByCourse = BandageData[1].simplifiedAssignments.reduce((acc, assignment) => {
+        const due = new Date(assignment.DueDate);
+        const submitted = assignment.SubmittedDate ? new Date(assignment.SubmittedDate) : null;
+
+        if (!acc[assignment.CourseID]) {
+            acc[assignment.CourseID] = [];
+        }
+        acc[assignment.CourseID].push({ submitted, due });
+        return acc;
+    }, {});
+
+    // console.log("assignmentsByCourse" , assignmentsByCourse);
+
+    const coursesEligibleForBandage = Object.keys(assignmentsByCourse).filter(courseID => {
+        const isCourseActive = activeCourses.some(course => course.CourseID === courseID);
+        const allOnTime = assignmentsByCourse[courseID].some(({ submitted, due }) => {
+            // console.log(`Course ID: ${courseID}, Submitted: ${submitted}, Due: ${due}`);
+            return submitted && submitted <= due;
+        });
+        // console.log(`Is course ${courseID} active: ${isCourseActive} and all assignments on time: ${allOnTime}`);
+        return isCourseActive && allOnTime;
     });
 
 
@@ -266,8 +144,7 @@ function AchievementBandages({ BandageData }) {
         });
     }
 
-    // Adding a default participant badge if no A's are found
-    if (achievements.length >= 1) {
+    if (enroll_corse >= 1) {
         // If there's at least one other achievement, add the participant badge
         achievements.push({
             label: "Participant",
@@ -276,7 +153,7 @@ function AchievementBandages({ BandageData }) {
         });
     }
 
-    if (onTimeSubmissions.length >=5) {
+    if (coursesEligibleForBandage.length >= 1) {
         achievements.push({
             label: "On Time Completion",
             image: images['clock.png'],

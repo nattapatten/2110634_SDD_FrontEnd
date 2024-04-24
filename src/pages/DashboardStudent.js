@@ -38,6 +38,7 @@ const DashboardStudent = () => {
 
   const [studentProfileData, setStudentProfileData] = useState(null);
   const [selectedStudentID, setStudentID] = useState(null);
+  const [coursesNotifications, setNotifications] = useState([]);
   // const [selectedStudentID, setStudentID] = useState({ studentID: null, studentObjectID: null });
   // Adding coursesAssignment to the initial state structure
   const [studentSelectPathData, setStudentSelectPathData] = useState({
@@ -64,6 +65,7 @@ const DashboardStudent = () => {
       ) {
         setStudentProfileData(response.data.data);
         fetchStudentPathData(response.data.data.studentID); // Call to fetch path data here
+        fetchNotifications(response.data.data.studentID);
         // console.log("Current Profile Data", response.data)
         console.log("setStudentProfileData:", studentProfileData);
 
@@ -87,7 +89,7 @@ const DashboardStudent = () => {
     setLoading(false);
   };
 
-  useEffect(() => {}, [selectedStudentID]);
+  useEffect(() => { }, [selectedStudentID]);
 
   const fetchStudentPathData = async (studentID) => {
     try {
@@ -111,9 +113,35 @@ const DashboardStudent = () => {
       console.error("Fetch Path Error:", error);
     }
   };
+
+  const fetchNotifications = async (studentIDs) => {
+    console.log("fetchNotifications courseIDs", studentIDs);
+
+    // Generate a query string that appends each courseID as a separate parameter
+    const queryString = studentIDs;
+    const endpoint = `${baseURL}/api/v1/notifications/by-student/${queryString}`;  // Set your API endpoint URL
+    // console.log("endpoint", endpoint);
+
+    try {
+      const response = await fetch(endpoint);
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      const result = await response.json();
+      console.log("result noti", result.data);
+      setNotifications(result.data);  // Update the state with the fetched data
+    } catch (error) {
+      console.error('Error fetching notifications:', error);
+    }
+  };
+
+
+
   useEffect(() => {
     fetchStudentProfileData();
   }, []);
+
+
 
   const [selectedCourseAssignments, setSelectedCourseAssignments] = useState(
     []
@@ -214,7 +242,7 @@ const DashboardStudent = () => {
       }
     }
   };
-  useEffect(() => {}, [selectedCourseID]);
+  useEffect(() => { }, [selectedCourseID]);
 
   const handleClose = () => {
     setShowStudentInfo(false);
@@ -257,33 +285,7 @@ const DashboardStudent = () => {
       setEnrollmentStatus({ message: 'Enroll unsuccessful', type: 'error' });
     }
   };
-  // useEffect(() => {
-  //   fetchStudentProfileData();
-  // }, [selectedStudentID]); // Re-fetch whenever the selected student ID changes
-  // useEffect(() => {
-  //   fetchStudentProfileData();
-  // }, []);
 
-  //AssignmentCourse
-  const [assignmentData, setAssignmentData] = useState([]);
-  const fetchAssignmentData = async () => {
-    try {
-      const response = await axios.get(
-        `${baseURL}/api/v1/assignmentCourse/getByAdvisor/${advisorID}`
-      );
-      if (response.data.success && response.data.data) {
-        console.log("inside");
-        setAssignmentData(response.data.data); // Update state with fetched data
-      } else {
-        console.error("No assignment data found or unsuccessful fetch");
-      }
-    } catch (error) {
-      console.error("Error fetching assignment data:", error);
-    }
-  };
-  useEffect(() => {
-    fetchAssignmentData();
-  }, []);
 
   const studentDataPath = studentSelectPathData?.student;
 
@@ -361,13 +363,13 @@ const DashboardStudent = () => {
     // Handling cases where studentDetails may be null
     const studentDetails = course.studentDetails
       ? {
-          GradePercentage: course.studentDetails.score,
-          submittedDate: course.studentDetails.submittedDate,
-        }
+        GradePercentage: course.studentDetails.score,
+        submittedDate: course.studentDetails.submittedDate,
+      }
       : {
-          GradePercentage: null, // or a default value
-          submittedDate: null, // or a default value
-        };
+        GradePercentage: null, // or a default value
+        submittedDate: null, // or a default value
+      };
     // console.log("studentDetails",studentDetails)
     return {
       AssignmentID: course._id,
@@ -386,6 +388,23 @@ const DashboardStudent = () => {
   console.log("selectedCourseAssignments", selectedCourseAssignments);
   console.log("studentDataPath.gpa", studentDataPath.gpa);
   console.log("studentProfileData Before Return", studentProfileData);
+
+
+
+  //Start Set Your Upcoming Quest Data
+  const activeCourses = simplifiedCourses.filter(course => course.EnrollStatus !== 'Not Enroll' && course.EnrollStatus !== 'Withdraw');
+  const activeCourseIDs = activeCourses.map(course => course.CourseID);
+
+  console.log("activeCourses", activeCourses);
+
+  const topAssignments = simplifiedAssignments
+    .filter(assignment => activeCourseIDs.includes(assignment.CourseID))
+    .sort((a, b) => new Date(a.DueDate) - new Date(b.DueDate))
+    .slice(0, 10);
+  //End Set Your Upcoming Quest Data
+
+
+
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
@@ -409,7 +428,7 @@ const DashboardStudent = () => {
                     enableFlag={enableEditing}
                   />
                   {/* <br></br> */}
-                  <p style={{ fontSize: "20px", fontWeight: "bold" }}>
+                  <p style={{ fontSize: "18px", fontWeight: "bold" }}>
                     GPA : {studentSelectPathData?.student.gpa ?? 0}
                   </p>
                   {/* Add more data displays as needed */}
@@ -508,7 +527,8 @@ const DashboardStudent = () => {
               Achievements <span style={{ fontSize: "40px" }}>🏆</span>
             </p>
             <div className="archivement-list-row">
-              <AchievementBandages BandageData={BandageData} />
+              {/* <AchievementBandages BandageData={BandageData} /> */}
+              <AchievementBandages BandageData={[{ simplifiedCourses }, { simplifiedAssignments }]} />
             </div>
           </div>
           <br />
@@ -528,14 +548,22 @@ const DashboardStudent = () => {
               <div className="top-of-notification"></div>
 
               <div className="notification-list">
-                {notificationData.map((notification, index) => (
+                {coursesNotifications.map((notification) => (
+                  <NotificationCard
+                    key={notification.id || notification._id} // Use unique identifier if available
+                    title={notification.title}
+                    description={notification.description}
+                    courseID={notification.courseID}
+                  />
+                ))}
+                {/* {notificationData.map((notification, index) => (
                   <NotificationCard
                     key={index}
                     title={notification.title}
                     description={notification.description}
                     courseID={notification.courseID}
                   />
-                ))}
+                ))} */}
               </div>
             </div>
 
@@ -611,7 +639,7 @@ const DashboardStudent = () => {
                 </Button> */}
               </div>
               <div className="notification-list">
-                {assignmentData.map((quest, index) => (
+                {/* {assignmentData.map((quest, index) => (
                   <QuestCard
                     key={index}
                     title={quest.title}
@@ -620,6 +648,17 @@ const DashboardStudent = () => {
                     courseID={quest.courseID}
                     time={quest.time}
                     dueDate={quest.dueDate}
+                  />
+                ))} */}
+                {topAssignments.map((quest) => (
+                  <StudentQuestCard
+                    key={quest.AssignmentID}
+                    title={quest.Title}
+                    description={quest.Description}
+                    image={quest.Image}
+                    courseID={quest.CourseID}
+                    time={quest.SubmittedDate}
+                    dueDate={quest.DueDate}
                   />
                 ))}
               </div>
