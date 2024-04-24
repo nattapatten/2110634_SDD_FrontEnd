@@ -445,7 +445,7 @@ const DashboardStudent = () => {
               className="student-container-title"
               style={{ fontSize: "30px", fontWeight: "bold" }}
             >
-              Main Mission<span style={{ fontSize: "40px" }}>📌</span>
+              {studentSelectPathData?.student.studentPath ?? 0} - Main Mission<span style={{ fontSize: "40px" }}>📌</span>
             </p>
 
             {showStudentInfo && (
