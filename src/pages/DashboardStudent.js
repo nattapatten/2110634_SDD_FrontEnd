@@ -260,7 +260,7 @@ const DashboardStudent = () => {
   const handleEnroll = async (courseID, studentID, enrollStatus = "1") => {
     const apiUrl = `${baseURL}/api/v1/studentSelectPath/enrollStudentCourse`; // Your API endpoint
 
-    console.log("Enroll Value:" , courseID ,studentID, enrollStatus);
+    console.log("Enroll Value:", courseID, studentID, enrollStatus);
     try {
       const token = localStorage.getItem("authToken");
       const response = await fetch(apiUrl, {
@@ -414,9 +414,9 @@ const DashboardStudent = () => {
   if (error) return <div>Error: {error}</div>;
 
   return (
-    <div className="advisor-container">
-      <section className="section1">
-        <div className="container-grey advisor-box">
+    <div className="student-dashboard-advisor-container">
+      <section className="student-dashboard-section1">
+        <div className="container-grey student-dashboard-advisor-box">
           <p style={{ fontSize: "20px", fontWeight: "bold" }}>Student</p>
           <div className="advisorProfile">
             <img src={AdvisorProfile} alt="Advisor" />
@@ -443,7 +443,7 @@ const DashboardStudent = () => {
             </div>
           </p>
         </div>
-        <div className="container-grey students-container">
+        <div className="container-grey student-dashboard-students-container">
           <div className="top-of-student-container">
             <p
               className="student-container-title"
@@ -461,7 +461,7 @@ const DashboardStudent = () => {
           {showStudentInfo ? (
             <MissionInfoCard mission={selectedStudent} onClose={handleClose} />
           ) : (
-            <div className="student-list">
+            <div className="student-dashboard-student-list">
               {simplifiedCourses.map((mission, index) => (
                 <div
                   // key={index}

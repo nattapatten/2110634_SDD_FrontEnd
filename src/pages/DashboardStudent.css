@@ -1,4 +1,4 @@
-.advisor-container {
+.student-dashboard-advisor-container {
     padding-left: 25px;
     padding-right: 25px;
     padding-top: 25px;
@@ -7,10 +7,14 @@
     gap: 27px;
 }
 
-.section1 {
+.student-dashboard-section1 {
     display: flex;
     width: 100%;
     gap: 27px;
+    height: 390px;
+    /* overflow: hidden; */
+
+
 }
 
 .section2 {
@@ -73,26 +77,11 @@
 }
 
 
-
-
-
-
-.chart-list-row {
-    display: flex;
-    flex-direction: row; /* Ensure items are laid out in a row */
-    gap: 18px; /* Adjust the gap between items as needed */
-    overflow-x: auto; /* Enable horizontal scrolling if needed */
-    flex-grow: 1; /* Allow the row to grow to fill available space */
-    align-items: center; /* Center items vertically */
-    justify-content: center; /* Center items horizontally */
-}
-
-
-.advisor-box {
+.student-dashboard-advisor-box {
     display: flex;
     flex-direction: column;
     flex: 0 0 213px;
-    height: 343px;
+    height: 390px;
     border-radius: 20px;
 }
 
@@ -109,38 +98,32 @@
     border-radius: 20px;
 }
 
-.students-container {
+.student-dashboard-students-container {
     display: flex;
     flex-direction: column;
     max-width: 100%; /* Set maximum width to prevent extending beyond screen size */
     overflow: hidden; /* Hide any overflow on the container */
-    height: 343px;
+    height: 390px;
     border-radius: 25px;
     padding: 8px; 
-    justify-content: center; /* Center items horizontally */
-
 
 }
 
-.student-list, .course-list {
+.student-dashboard-student-list, .student-dashboard-course-list {
     /* display: flex;
     gap: 18px;
     overflow-x: auto; 
     flex-grow: 1; */
+
     display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center; /* Center items horizontally */
-    flex-wrap: wrap; /* Allow the items to wrap */
-    flex-wrap: wrap; /* Allow the items to wrap */
-    overflow-x: auto; /* Allows horizontal scrolling */
-    width: 100%; /* Ensures the container stretches horizontally */
-    gap: 10px; /* Space between each badge */
-    
+    gap: 18px;
+    overflow-x: auto; /* Enable horizontal scrolling when content overflows */
+    flex-grow: 1;
+
 
 }
 
-.course-list{
+.student-dashboard-course-list{
     align-items: center; /* Centers items vertically in the container */
     justify-content: center; /* Centers items horizontally when they do not fully occupy the container's width */
 }
